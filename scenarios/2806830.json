@@ -1,0 +1,220 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 150
+        }
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "name": "",
+        "type": ""
+      },
+      "module": "json:AggregateToJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "label": "Type"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [1]"
+            }
+          },
+          "parameters": {
+            "type": {
+              "label": "[1/3] Base Creation API"
+            },
+            "space": {
+              "label": "Empty"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 150
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "space",
+            "type": "select",
+            "label": "Indentation",
+            "validate": {
+              "enum": [
+                "tab",
+                "2",
+                "4"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "type": 171424,
+        "space": "",
+        "feeder": 1
+      }
+    },
+    {
+      "id": 4,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "mapper": {
+                "json": "{\"array\": {{2.json}}}"
+              },
+              "module": "json:ParseJSON",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "json",
+                    "type": "text",
+                    "label": "JSON string",
+                    "required": true
+                  }
+                ],
+                "restore": {
+                  "parameters": {
+                    "type": {
+                      "label": "Choose a data structure"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 900,
+                  "y": 0,
+                  "messages": [
+                    {
+                      "message": "A transformer should not be the last module in the route.",
+                      "category": "last",
+                      "severity": "warning"
+                    }
+                  ]
+                },
+                "parameters": [
+                  {
+                    "name": "type",
+                    "type": "udt",
+                    "label": "Data structure"
+                  }
+                ]
+              },
+              "parameters": {
+                "type": ""
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "json:ParseJSON",
+              "version": 1,
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 300,
+                  "messages": [
+                    {
+                      "message": "Value must not be empty.",
+                      "category": "setup",
+                      "severity": "error"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 6,
+              "mapper": {},
+              "module": "builtin:BasicAggregator",
+              "version": 1,
+              "metadata": {
+                "restore": {
+                  "extra": {
+                    "feeder": {
+                      "label": "JSON - Parse JSON [5]"
+                    },
+                    "target": {
+                      "label": "Custom"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1200,
+                  "y": 300,
+                  "messages": [
+                    {
+                      "message": "A transformer should not be the last module in the route.",
+                      "category": "last",
+                      "severity": "warning"
+                    }
+                  ]
+                }
+              },
+              "parameters": {
+                "feeder": 5
+              }
+            }
+          ]
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 150
+        }
+      }
+    }
+  ],
+  "name": "Showcase: JSON to Array",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
