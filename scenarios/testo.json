@@ -1,21 +1,464 @@
 {
   "flow": [
     {
-      "id": 4,
+      "id": 2,
+      "filter": {
+        "name": "Challenge",
+        "conditions": []
+      },
+      "mapper": {
+        "ca": "",
+        "qs": [
+          {
+            "name": "username",
+            "value": "karim@el-kassas.com"
+          },
+          {
+            "name": "pw",
+            "value": "{{sha512(\"make\")}}"
+          }
+        ],
+        "url": "https://hook.eu1.make.com/e51to7o9324bv7b1nc9153mr94si6ceu",
+        "gzip": true,
+        "method": "get",
+        "headers": [],
+        "timeout": "",
+        "useMtls": false,
+        "authPass": "",
+        "authUser": "",
+        "bodyType": "",
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      },
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": [
+                "raw",
+                "x_www_form_urlencoded",
+                "multipart_form_data"
+              ]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Empty"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Hack Database"
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      }
+    },
+    {
+      "id": 51,
+      "filter": {
+        "name": "Step 1",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.additional_student_metadata}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Additional All"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 54,
+      "mapper": {
+        "array": "{{keys(get(2.data.additional_student_metadata; 51.`__IMTINDEX__`))}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Get Keys"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 56,
+      "flags": {
+        "groupBy": "{{51.`__IMTINDEX__`}}"
+      },
+      "filter": {
+        "name": "Correct Key",
+        "conditions": [
+          [
+            {
+              "a": "{{54.value}}",
+              "b": "interest_",
+              "o": "text:startwith"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "value": "{{get(2.data.additional_student_metadata; 51.`__IMTINDEX__` + \".\" + 54.value)}}"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text",
+            "multiline": true
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "2.additional_metadata [51]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "Other"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Combine Interests"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "otherRowSeparator",
+            "type": "text",
+            "label": "Separator"
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 51,
+        "rowSeparator": "other",
+        "otherRowSeparator": ","
+      }
+    },
+    {
+      "id": 106,
+      "mapper": {
+        "text": "{{56.text}}",
+        "__IMTKEY__": "{{56.`__IMTKEY__`}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Combine Interests - Text aggregator [56]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Additional Interests"
+        }
+      },
+      "parameters": {
+        "feeder": 56
+      }
+    },
+    {
+      "id": 109,
+      "filter": {
+        "name": "Step 2",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.additional_student_metadata}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "name": "Additional All"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 110,
       "mapper": {
         "scope": "roundtrip",
         "variables": [
           {
-            "name": "Internal Channel Name",
-            "value": "internal-client"
+            "name": "student_id",
+            "value": "{{109.student_id}}"
           },
           {
-            "name": "External Channel Name",
-            "value": "client-zynera"
+            "name": "last_name",
+            "value": "{{109.last_name}}"
           },
           {
-            "name": "Executive Channel Name",
-            "value": "client-executive-zynera"
+            "name": "interests",
+            "value": "{{first(map(106.array; \"text\"; \"__IMTKEY__\"; 109.`__IMTINDEX__`))}}"
           }
         ]
       },
@@ -69,2125 +512,1118 @@
           }
         },
         "designer": {
-          "x": 0,
-          "y": 600,
-          "name": "Airtable Form Submission"
+          "x": 1800,
+          "y": 0
         },
         "interface": [
           {
-            "name": "Internal Channel Name",
+            "name": "student_id",
             "type": "any",
-            "label": "Internal Channel Name"
+            "label": "student_id"
           },
           {
-            "name": "External Channel Name",
+            "name": "last_name",
             "type": "any",
-            "label": "External Channel Name"
+            "label": "last_name"
           },
           {
-            "name": "Executive Channel Name",
+            "name": "interests",
             "type": "any",
-            "label": "Executive Channel Name"
+            "label": "interests"
           }
         ]
       },
       "parameters": {}
     },
     {
-      "id": 1,
+      "id": 111,
       "mapper": {
-        "name": "{{4.`Internal Channel Name`}}",
-        "is_private": true
+        "interests": "{{110.interests}}",
+        "last_name": "{{110.last_name}}",
+        "student_id": "{{110.student_id}}"
       },
-      "module": "slack:CreateChannel",
-      "version": 4,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
       "metadata": {
-        "expect": [
-          {
-            "name": "name",
-            "type": "text",
-            "label": "Name",
-            "required": true
-          },
-          {
-            "name": "is_private",
-            "type": "boolean",
-            "label": "Is private",
-            "required": true
-          }
-        ],
         "restore": {
-          "expect": {
-            "is_private": {
-              "mode": "chose"
-            }
-          },
-          "parameters": {
-            "__IMTCONN__": {
-              "data": {
-                "scoped": "true",
-                "connection": "slack2"
-              },
-              "label": "My Slack (user) connection (karim)"
+          "extra": {
+            "feeder": {
+              "label": "Iterator [146]"
+            },
+            "target": {
+              "label": "Custom"
             }
           }
         },
         "designer": {
-          "x": 300,
-          "y": 600,
-          "name": "Create Internal"
-        },
-        "parameters": [
-          {
-            "name": "__IMTCONN__",
-            "type": "account:slack2",
-            "label": "Connection",
-            "required": true
-          }
-        ]
+          "x": 2100,
+          "y": 0,
+          "name": "Addtional All"
+        }
       },
       "parameters": {
-        "__IMTCONN__": 2736810
+        "feeder": 109
       }
     },
     {
-      "id": 5,
-      "mapper": {
-        "type": "private",
-        "users": [
-          "U079DMV8D6C",
-          "U07EF8P5D2Q"
-        ],
-        "channel": "{{1.id}}"
+      "id": 48,
+      "filter": {
+        "name": "Step 3",
+        "conditions": []
       },
-      "module": "slack:InviteUsers",
-      "version": 4,
+      "mapper": {
+        "array": "{{sort(flatten(map(2.data.school_classes; \"members\")); \"student_id\")}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
       "metadata": {
         "expect": [
           {
-            "name": "type",
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 2400,
+          "y": 0,
+          "name": "Sort Members"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 49,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "student_id",
+            "value": "{{48.student_id}}"
+          },
+          {
+            "name": "first_name",
+            "value": "{{48.name}}"
+          },
+          {
+            "name": "last_name",
+            "value": "{{first(map(111.array; \"last_name\"; \"student_id\"; 48.student_id))}}"
+          },
+          {
+            "name": "email",
+            "value": "{{48.email}}"
+          },
+          {
+            "name": "date_of_birth",
+            "value": "{{48.date_of_birth}}"
+          },
+          {
+            "name": "correct_age",
+            "value": "{{floor((parseDate(\"2023-05-03\") - parseDate(48.date_of_birth)) / 1000 / 60 / 60 / 24 / 365)}}"
+          },
+          {
+            "name": "interests",
+            "value": "{{ifempty(join(48.interests; \",\"); first(map(111.array; \"interests\"; \"student_id\"; 48.student_id)))}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
             "type": "select",
-            "label": "Channel type",
+            "label": "Variable lifetime",
             "required": true,
             "validate": {
               "enum": [
-                "public",
-                "private"
+                "roundtrip",
+                "execution"
               ]
             }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 2700,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "student_id",
+            "type": "any",
+            "label": "student_id"
           },
           {
-            "name": "users",
-            "type": "select",
-            "label": "Users",
-            "multiple": true,
-            "required": true
+            "name": "first_name",
+            "type": "any",
+            "label": "first_name"
           },
           {
-            "name": "channel",
+            "name": "last_name",
+            "type": "any",
+            "label": "last_name"
+          },
+          {
+            "name": "email",
+            "type": "any",
+            "label": "email"
+          },
+          {
+            "name": "date_of_birth",
+            "type": "any",
+            "label": "date_of_birth"
+          },
+          {
+            "name": "correct_age",
+            "type": "any",
+            "label": "correct_age"
+          },
+          {
+            "name": "interests",
+            "type": "any",
+            "label": "interests"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 47,
+      "mapper": {
+        "email": "{{49.email}}",
+        "interests": "{{49.interests}}",
+        "last_name": "{{49.last_name}}",
+        "first_name": "{{49.first_name}}",
+        "student_id": "{{49.student_id}}",
+        "correct_age": "{{49.correct_age}}",
+        "date_of_birth": "{{49.date_of_birth}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Sort Members [48]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 3000,
+          "y": 0,
+          "name": "Existing Students"
+        }
+      },
+      "parameters": {
+        "feeder": 48
+      }
+    },
+    {
+      "id": 58,
+      "filter": {
+        "name": "Step 4",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.unassigned_students}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 3300,
+          "y": 0,
+          "name": "New Students"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 107,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "student_id",
+            "value": "{{last(map(47.array; \"student_id\")) + 58.`__IMTINDEX__`}}"
+          },
+          {
+            "name": "first_name",
+            "value": "{{58.name}}"
+          },
+          {
+            "name": "last_name",
+            "value": "{{ifempty(58.last_name; 58.lasttttt_name)}}"
+          },
+          {
+            "name": "email",
+            "value": "{{58.email}}"
+          },
+          {
+            "name": "date_of_birth",
+            "value": "{{58.date_of_birth}}"
+          },
+          {
+            "name": "correct_age",
+            "value": "{{floor((parseDate(\"2023-05-03\") - parseDate(58.date_of_birth)) / 1000 / 60 / 60 / 24 / 365)}}"
+          },
+          {
+            "name": "interests",
+            "value": "{{join(58.interests; \",\")}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
             "type": "select",
-            "label": "Private channel",
+            "label": "Variable lifetime",
+            "default": "roundtrip",
+            "options": [
+              {
+                "label": "One cycle",
+                "value": "roundtrip"
+              },
+              {
+                "label": "One execution",
+                "value": "execution"
+              }
+            ],
             "required": true
           }
         ],
         "restore": {
           "expect": {
-            "type": {
-              "label": "Private channel"
+            "scope": {
+              "label": "One cycle"
             },
-            "users": {
-              "mode": "chose",
-              "label": [
-                "harez",
-                "zarvis"
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
               ]
-            },
-            "channel": {
-              "mode": "edit"
-            }
-          },
-          "parameters": {
-            "__IMTCONN__": {
-              "data": {
-                "scoped": "true",
-                "connection": "slack2"
-              },
-              "label": "My Slack (user) connection (karim)"
             }
           }
         },
         "designer": {
-          "x": 600,
-          "y": 600,
-          "name": "Invite Team Internal"
+          "x": 3600,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "student_id",
+            "type": "any",
+            "label": "student_id"
+          },
+          {
+            "name": "first_name",
+            "type": "any",
+            "label": "first_name"
+          },
+          {
+            "name": "last_name",
+            "type": "any",
+            "label": "last_name"
+          },
+          {
+            "name": "email",
+            "type": "any",
+            "label": "email"
+          },
+          {
+            "name": "date_of_birth",
+            "type": "any",
+            "label": "date_of_birth"
+          },
+          {
+            "name": "correct_age",
+            "type": "any",
+            "label": "correct_age"
+          },
+          {
+            "name": "interests",
+            "type": "any",
+            "label": "interests"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 108,
+      "mapper": {
+        "email": "{{107.email}}",
+        "interests": "{{107.interests}}",
+        "last_name": "{{107.last_name}}",
+        "first_name": "{{107.first_name}}",
+        "student_id": "{{107.student_id}}",
+        "correct_age": "{{107.correct_age}}",
+        "date_of_birth": "{{107.date_of_birth}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "New Students [58]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 3900,
+          "y": 0,
+          "name": "New Students"
+        }
+      },
+      "parameters": {
+        "feeder": 58
+      }
+    },
+    {
+      "id": 100,
+      "filter": {
+        "name": "Step 5",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{merge(47.array; 108.array)}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 4200,
+          "y": 0,
+          "name": "Merge Students"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 30,
+      "mapper": {
+        "value": "<tr>\n        <td>{{emptystring}}</td>\n        <td>{{100.student_id}}</td>\n        <td>{{100.first_name}}</td>\n        <td>{{100.last_name}}</td>\n        <td>{{100.email}}</td>\n        <td>{{100.date_of_birth}}</td>\n        <td>{{100.correct_age}}</td>\n        <td>{{100.interests}}</td>\n      </tr>"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Merge Students [100]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 4500,
+          "y": 0,
+          "name": "Table 1"
         },
         "parameters": [
           {
-            "name": "__IMTCONN__",
-            "type": "account:slack2",
-            "label": "Connection",
-            "required": true
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
           }
         ]
       },
       "parameters": {
-        "__IMTCONN__": 2736810
+        "feeder": 100,
+        "rowSeparator": "\n"
       }
     },
     {
-      "id": 6,
-      "mapper": null,
-      "module": "builtin:BasicRouter",
-      "routes": [
-        {
-          "flow": [
-            {
-              "id": 2,
-              "mapper": {
-                "name": "{{4.`External Channel Name`}}",
-                "is_private": true
-              },
-              "module": "slack:CreateChannel",
-              "version": 4,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "name",
-                    "type": "text",
-                    "label": "Name",
-                    "required": true
-                  },
-                  {
-                    "name": "is_private",
-                    "type": "boolean",
-                    "label": "Is private",
-                    "required": true
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "is_private": {
-                      "mode": "chose"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "slack2"
-                      },
-                      "label": "My Slack (user) connection (karim)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1200,
-                  "y": 450,
-                  "name": "Create External"
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:slack2",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2736810
-              }
-            },
-            {
-              "id": 7,
-              "mapper": {
-                "type": "private",
-                "users": [
-                  "U079DMV8D6C",
-                  "U07EF8P5D2Q"
-                ],
-                "channel": "{{2.id}}"
-              },
-              "module": "slack:InviteUsers",
-              "version": 4,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "type",
-                    "type": "select",
-                    "label": "Channel type",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "public",
-                        "private"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "users",
-                    "type": "select",
-                    "label": "Users",
-                    "multiple": true,
-                    "required": true
-                  },
-                  {
-                    "name": "channel",
-                    "type": "select",
-                    "label": "Private channel",
-                    "required": true
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "type": {
-                      "label": "Private channel"
-                    },
-                    "users": {
-                      "mode": "chose",
-                      "label": [
-                        "harez",
-                        "zarvis"
-                      ]
-                    },
-                    "channel": {
-                      "mode": "edit"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "slack2"
-                      },
-                      "label": "My Slack (user) connection (karim)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1500,
-                  "y": 450,
-                  "name": "Invite Team External"
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:slack2",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2736810
-              }
-            },
-            {
-              "id": 9,
-              "mapper": null,
-              "module": "builtin:BasicRouter",
-              "routes": [
-                {
-                  "flow": [
-                    {
-                      "id": 3,
-                      "mapper": {
-                        "name": "{{4.`Executive Channel Name`}}",
-                        "is_private": true
-                      },
-                      "module": "slack:CreateChannel",
-                      "version": 4,
-                      "metadata": {
-                        "expect": [
-                          {
-                            "name": "name",
-                            "type": "text",
-                            "label": "Name",
-                            "required": true
-                          },
-                          {
-                            "name": "is_private",
-                            "type": "boolean",
-                            "label": "Is private",
-                            "required": true
-                          }
-                        ],
-                        "restore": {
-                          "expect": {
-                            "is_private": {
-                              "mode": "chose"
-                            }
-                          },
-                          "parameters": {
-                            "__IMTCONN__": {
-                              "data": {
-                                "scoped": "true",
-                                "connection": "slack2"
-                              },
-                              "label": "My Slack (user) connection (karim)"
-                            }
-                          }
-                        },
-                        "designer": {
-                          "x": 2100,
-                          "y": 0,
-                          "name": "Create Executive"
-                        },
-                        "parameters": [
-                          {
-                            "name": "__IMTCONN__",
-                            "type": "account:slack2",
-                            "label": "Connection",
-                            "required": true
-                          }
-                        ]
-                      },
-                      "parameters": {
-                        "__IMTCONN__": 2736810
-                      }
-                    },
-                    {
-                      "id": 8,
-                      "mapper": {
-                        "type": "private",
-                        "users": [
-                          "U079DMV8D6C",
-                          "U07EF8P5D2Q"
-                        ],
-                        "channel": "{{3.id}}"
-                      },
-                      "module": "slack:InviteUsers",
-                      "version": 4,
-                      "metadata": {
-                        "expect": [
-                          {
-                            "name": "type",
-                            "type": "select",
-                            "label": "Channel type",
-                            "required": true,
-                            "validate": {
-                              "enum": [
-                                "public",
-                                "private"
-                              ]
-                            }
-                          },
-                          {
-                            "name": "users",
-                            "type": "select",
-                            "label": "Users",
-                            "multiple": true,
-                            "required": true
-                          },
-                          {
-                            "name": "channel",
-                            "type": "select",
-                            "label": "Private channel",
-                            "required": true
-                          }
-                        ],
-                        "restore": {
-                          "expect": {
-                            "type": {
-                              "label": "Private channel"
-                            },
-                            "users": {
-                              "mode": "chose",
-                              "label": [
-                                "harez",
-                                "zarvis"
-                              ]
-                            },
-                            "channel": {
-                              "mode": "edit"
-                            }
-                          },
-                          "parameters": {
-                            "__IMTCONN__": {
-                              "data": {
-                                "scoped": "true",
-                                "connection": "slack2"
-                              },
-                              "label": "My Slack (user) connection (karim)"
-                            }
-                          }
-                        },
-                        "designer": {
-                          "x": 2400,
-                          "y": 0,
-                          "name": "Invite Team Executive"
-                        },
-                        "parameters": [
-                          {
-                            "name": "__IMTCONN__",
-                            "type": "account:slack2",
-                            "label": "Connection",
-                            "required": true
-                          }
-                        ]
-                      },
-                      "parameters": {
-                        "__IMTCONN__": 2736810
-                      }
-                    }
-                  ],
-                  "disabled": true
-                },
-                {
-                  "flow": [
-                    {
-                      "id": 11,
-                      "mapper": {
-                        "scope": "roundtrip",
-                        "variables": [
-                          {
-                            "name": "Invitee Array",
-                            "value": "{{map(emptyarray; )}}"
-                          }
-                        ]
-                      },
-                      "module": "util:SetVariables",
-                      "version": 1,
-                      "metadata": {
-                        "expect": [
-                          {
-                            "name": "variables",
-                            "spec": [
-                              {
-                                "name": "name",
-                                "type": "text",
-                                "label": "Variable name",
-                                "required": true
-                              },
-                              {
-                                "name": "value",
-                                "type": "any",
-                                "label": "Variable value"
-                              }
-                            ],
-                            "type": "array",
-                            "label": "Variables"
-                          },
-                          {
-                            "name": "scope",
-                            "type": "select",
-                            "label": "Variable lifetime",
-                            "required": true,
-                            "validate": {
-                              "enum": [
-                                "roundtrip",
-                                "execution"
-                              ]
-                            }
-                          }
-                        ],
-                        "restore": {
-                          "expect": {
-                            "scope": {
-                              "label": "One cycle"
-                            },
-                            "variables": {
-                              "items": [
-                                null
-                              ]
-                            }
-                          }
-                        },
-                        "designer": {
-                          "x": 2100,
-                          "y": 600,
-                          "name": "Invitee Array"
-                        },
-                        "interface": [
-                          {
-                            "name": "Invitee Array",
-                            "type": "any",
-                            "label": "Invitee Array"
-                          }
-                        ]
-                      },
-                      "parameters": {}
-                    },
-                    {
-                      "id": 12,
-                      "mapper": null,
-                      "module": "builtin:BasicRouter",
-                      "routes": [
-                        {
-                          "flow": [
-                            {
-                              "id": 13,
-                              "mapper": {
-                                "array": "{{11.`Invitee Array`}}"
-                              },
-                              "module": "builtin:BasicFeeder",
-                              "version": 1,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "mode": "edit",
-                                    "name": "array",
-                                    "spec": [],
-                                    "type": "array",
-                                    "label": "Array"
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "array": {
-                                      "mode": "edit"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 2700,
-                                  "y": 300,
-                                  "name": "Invitee Array"
-                                }
-                              },
-                              "parameters": {}
-                            },
-                            {
-                              "id": 14,
-                              "mapper": {
-                                "url": "/conversations.inviteShared",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"emails\": \"{{13.value}}\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3000,
-                                  "y": 300,
-                                  "name": "Invite Client External"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            },
-                            {
-                              "id": 23,
-                              "mapper": null,
-                              "module": "builtin:BasicRouter",
-                              "routes": [
-                                {
-                                  "flow": [
-                                    {
-                                      "id": 15,
-                                      "mapper": {
-                                        "url": "/conversations.inviteShared",
-                                        "body": "{\n  \"channel\": \"\",\n  \"emails\": \"{{13.value}}\"\n}",
-                                        "domain": "https://slack.com/api/",
-                                        "method": "POST",
-                                        "headers": [
-                                          {
-                                            "key": "Content-Type",
-                                            "value": "application/json"
-                                          }
-                                        ]
-                                      },
-                                      "module": "slack:MakeAPICall",
-                                      "version": 4,
-                                      "metadata": {
-                                        "expect": [
-                                          {
-                                            "name": "url",
-                                            "type": "text",
-                                            "label": "URL",
-                                            "required": true
-                                          },
-                                          {
-                                            "name": "method",
-                                            "type": "select",
-                                            "label": "Method",
-                                            "required": true,
-                                            "validate": {
-                                              "enum": [
-                                                "GET",
-                                                "POST",
-                                                "PUT",
-                                                "PATCH",
-                                                "DELETE"
-                                              ]
-                                            }
-                                          },
-                                          {
-                                            "name": "headers",
-                                            "spec": [
-                                              {
-                                                "name": "key",
-                                                "type": "text",
-                                                "label": "Key"
-                                              },
-                                              {
-                                                "name": "value",
-                                                "type": "text",
-                                                "label": "Value"
-                                              }
-                                            ],
-                                            "type": "array",
-                                            "label": "Headers"
-                                          },
-                                          {
-                                            "name": "qs",
-                                            "spec": [
-                                              {
-                                                "name": "key",
-                                                "type": "text",
-                                                "label": "Key"
-                                              },
-                                              {
-                                                "name": "value",
-                                                "type": "text",
-                                                "label": "Value"
-                                              }
-                                            ],
-                                            "type": "array",
-                                            "label": "Query String"
-                                          },
-                                          {
-                                            "name": "body",
-                                            "type": "any",
-                                            "label": "Body"
-                                          },
-                                          {
-                                            "name": "domain",
-                                            "type": "select",
-                                            "label": "Base URL",
-                                            "validate": {
-                                              "enum": [
-                                                "https://slack.com/api/",
-                                                "https://hooks.slack.com/"
-                                              ]
-                                            }
-                                          }
-                                        ],
-                                        "restore": {
-                                          "expect": {
-                                            "qs": {
-                                              "mode": "chose"
-                                            },
-                                            "domain": {
-                                              "mode": "chose",
-                                              "label": "https://slack.com/api/"
-                                            },
-                                            "method": {
-                                              "mode": "chose",
-                                              "label": "POST"
-                                            },
-                                            "headers": {
-                                              "mode": "chose",
-                                              "items": [
-                                                null
-                                              ]
-                                            }
-                                          },
-                                          "parameters": {
-                                            "__IMTCONN__": {
-                                              "data": {
-                                                "scoped": "true",
-                                                "connection": "slack3"
-                                              },
-                                              "label": "My Slack (bot) connection (zarvis)"
-                                            }
-                                          }
-                                        },
-                                        "designer": {
-                                          "x": 3600,
-                                          "y": 300,
-                                          "name": "Invite Client Executive"
-                                        },
-                                        "parameters": [
-                                          {
-                                            "name": "__IMTCONN__",
-                                            "type": "account:slack2,slack3",
-                                            "label": "Connection",
-                                            "required": true
-                                          }
-                                        ]
-                                      },
-                                      "parameters": {
-                                        "__IMTCONN__": 2736305
-                                      }
-                                    }
-                                  ],
-                                  "disabled": true
-                                }
-                              ],
-                              "version": 1,
-                              "metadata": {
-                                "designer": {
-                                  "x": 3300,
-                                  "y": 300
-                                }
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "flow": [
-                            {
-                              "id": 16,
-                              "mapper": {
-                                "url": "/bookmarks.add",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"type\": \"link\",\n\"title\": \"Company Brain\",\n\"emoji\": \":brain:\",\n\"link\": \"https://zynera.ai\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 2700,
-                                  "y": 600,
-                                  "name": "Company Brain Bookmark"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            },
-                            {
-                              "id": 17,
-                              "mapper": {
-                                "url": "/bookmarks.add",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"type\": \"link\",\n\"title\": \"Roadmap\",\n\"emoji\": \":motorway:\",\n\"link\": \"https://zynera.ai\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3000,
-                                  "y": 600,
-                                  "name": "Roadmap Bookmark"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            },
-                            {
-                              "id": 18,
-                              "mapper": {
-                                "url": "/bookmarks.add",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"type\": \"link\",\n\"title\": \"How does this work?\",\n\"emoji\": \":thinking_face:\",\n\"link\": \"https://zynera.ai\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3300,
-                                  "y": 600,
-                                  "name": "FAQ Bookmark"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            },
-                            {
-                              "id": 19,
-                              "mapper": {
-                                "url": "/bookmarks.add",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"type\": \"link\",\n\"title\": \"Feedback\",\n\"emoji\": \":star:\",\n\"link\": \"https://zynera.ai\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3600,
-                                  "y": 600,
-                                  "name": "Feedback Bookmark"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            },
-                            {
-                              "id": 20,
-                              "mapper": {
-                                "url": "/bookmarks.add",
-                                "body": "{\n  \"channel\": \"{{2.id}}\",\n  \"type\": \"link\",\n\"title\": \"Company Brain\",\n\"emoji\": \":star:\",\n\"link\": \"https://zynera.ai\"\n}",
-                                "domain": "https://slack.com/api/",
-                                "method": "POST",
-                                "headers": [
-                                  {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                  }
-                                ]
-                              },
-                              "module": "slack:MakeAPICall",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "url",
-                                    "type": "text",
-                                    "label": "URL",
-                                    "required": true
-                                  },
-                                  {
-                                    "name": "method",
-                                    "type": "select",
-                                    "label": "Method",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "GET",
-                                        "POST",
-                                        "PUT",
-                                        "PATCH",
-                                        "DELETE"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "headers",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Headers"
-                                  },
-                                  {
-                                    "name": "qs",
-                                    "spec": [
-                                      {
-                                        "name": "key",
-                                        "type": "text",
-                                        "label": "Key"
-                                      },
-                                      {
-                                        "name": "value",
-                                        "type": "text",
-                                        "label": "Value"
-                                      }
-                                    ],
-                                    "type": "array",
-                                    "label": "Query String"
-                                  },
-                                  {
-                                    "name": "body",
-                                    "type": "any",
-                                    "label": "Body"
-                                  },
-                                  {
-                                    "name": "domain",
-                                    "type": "select",
-                                    "label": "Base URL",
-                                    "validate": {
-                                      "enum": [
-                                        "https://slack.com/api/",
-                                        "https://hooks.slack.com/"
-                                      ]
-                                    }
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "qs": {
-                                      "mode": "chose"
-                                    },
-                                    "domain": {
-                                      "mode": "chose",
-                                      "label": "https://slack.com/api/"
-                                    },
-                                    "method": {
-                                      "mode": "chose",
-                                      "label": "POST"
-                                    },
-                                    "headers": {
-                                      "mode": "chose",
-                                      "items": [
-                                        null
-                                      ]
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3900,
-                                  "y": 600,
-                                  "name": "Feedback Bookmark Executive"
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            }
-                          ],
-                          "disabled": true
-                        },
-                        {
-                          "flow": [
-                            {
-                              "id": 21,
-                              "module": "util:SetVariables",
-                              "version": 1,
-                              "metadata": {
-                                "designer": {
-                                  "x": 2700,
-                                  "y": 900,
-                                  "name": "Airtable Update Channel IDs"
-                                }
-                              }
-                            },
-                            {
-                              "id": 22,
-                              "mapper": {
-                                "parse": false,
-                                "blocks": "{\n\t\"blocks\": [\n\t\t{\n\t\t\t\"type\": \"header\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\"text\": \"Kick-off automation ran successfully.\",\n\t\t\t\t\"emoji\": true\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\"text\": \"This means\\n◌ <{{20.webViewLink}}|{{19.Name}} Gdrive Folders> has been created.\\n◌ External & Exec Channels created <#{{11.id}}> <#{{49.id}}>\\n◌ Internal Channel created (that's this one)\\n◌ Invited all of us here :D \\n◌ Invited {{16.`Contact Email`}} to <#{{11.id}}> \"\n\t\t\t}\n\t\t}\n\t]\n}",
-                                "mrkdwn": true,
-                                "channel": "{{1.id}}",
-                                "channelWType": "manualy"
-                              },
-                              "module": "slack:CreateMessage",
-                              "version": 4,
-                              "metadata": {
-                                "expect": [
-                                  {
-                                    "name": "channelWType",
-                                    "type": "select",
-                                    "label": "Enter a channel ID or name",
-                                    "required": true,
-                                    "validate": {
-                                      "enum": [
-                                        "manualy",
-                                        "list"
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "name": "text",
-                                    "type": "text",
-                                    "label": "Text"
-                                  },
-                                  {
-                                    "name": "blocks",
-                                    "type": "text",
-                                    "label": "Blocks"
-                                  },
-                                  {
-                                    "name": "thread_ts",
-                                    "type": "text",
-                                    "label": "Thread message ID (time stamp)"
-                                  },
-                                  {
-                                    "name": "reply_broadcast",
-                                    "type": "boolean",
-                                    "label": "Reply broadcast"
-                                  },
-                                  {
-                                    "name": "link_names",
-                                    "type": "boolean",
-                                    "label": "Link names"
-                                  },
-                                  {
-                                    "name": "parse",
-                                    "type": "boolean",
-                                    "label": "Parse message text"
-                                  },
-                                  {
-                                    "name": "mrkdwn",
-                                    "type": "boolean",
-                                    "label": "Use markdown"
-                                  },
-                                  {
-                                    "name": "unfurl_links",
-                                    "type": "boolean",
-                                    "label": "Unfurl primarily text-based content"
-                                  },
-                                  {
-                                    "name": "unfurl_media",
-                                    "type": "boolean",
-                                    "label": "Unfurl media content"
-                                  },
-                                  {
-                                    "name": "icon_emoji",
-                                    "type": "text",
-                                    "label": "Icon emoji"
-                                  },
-                                  {
-                                    "name": "icon_url",
-                                    "type": "url",
-                                    "label": "Icon url"
-                                  },
-                                  {
-                                    "name": "username",
-                                    "type": "text",
-                                    "label": "User name"
-                                  },
-                                  {
-                                    "name": "channel",
-                                    "type": "text",
-                                    "label": "Channel ID or name",
-                                    "required": true
-                                  }
-                                ],
-                                "restore": {
-                                  "expect": {
-                                    "parse": {
-                                      "mode": "chose"
-                                    },
-                                    "mrkdwn": {
-                                      "mode": "chose"
-                                    },
-                                    "link_names": {
-                                      "mode": "chose"
-                                    },
-                                    "channelWType": {
-                                      "label": "Enter manually"
-                                    },
-                                    "unfurl_links": {
-                                      "mode": "chose"
-                                    },
-                                    "unfurl_media": {
-                                      "mode": "chose"
-                                    },
-                                    "reply_broadcast": {
-                                      "mode": "chose"
-                                    }
-                                  },
-                                  "parameters": {
-                                    "__IMTCONN__": {
-                                      "data": {
-                                        "scoped": "true",
-                                        "connection": "slack3"
-                                      },
-                                      "label": "My Slack (bot) connection (zarvis)"
-                                    }
-                                  }
-                                },
-                                "designer": {
-                                  "x": 3000,
-                                  "y": 900,
-                                  "name": "Confirmation Message Internal",
-                                  "messages": [
-                                    {
-                                      "message": "Module references non-existing module '49'.",
-                                      "category": "reference",
-                                      "severity": "error"
-                                    },
-                                    {
-                                      "message": "Referenced module 'Slack - Make an API Call' [16] is not accessible.",
-                                      "category": "reference",
-                                      "severity": "warning"
-                                    },
-                                    {
-                                      "message": "Referenced module 'Slack - Make an API Call' [19] is not accessible.",
-                                      "category": "reference",
-                                      "severity": "warning"
-                                    },
-                                    {
-                                      "message": "Referenced module 'Slack - Make an API Call' [20] is not accessible.",
-                                      "category": "reference",
-                                      "severity": "warning"
-                                    }
-                                  ]
-                                },
-                                "parameters": [
-                                  {
-                                    "name": "__IMTCONN__",
-                                    "type": "account:slack2,slack3",
-                                    "label": "Connection",
-                                    "required": true
-                                  }
-                                ]
-                              },
-                              "parameters": {
-                                "__IMTCONN__": 2736305
-                              }
-                            }
-                          ]
-                        }
-                      ],
-                      "version": 1,
-                      "metadata": {
-                        "designer": {
-                          "x": 2400,
-                          "y": 600
-                        }
-                      }
-                    }
-                  ]
-                }
-              ],
-              "version": 1,
-              "metadata": {
-                "designer": {
-                  "x": 1800,
-                  "y": 450
-                }
-              }
-            }
-          ]
-        },
-        {
-          "flow": [
-            {
-              "id": 24,
-              "mapper": {
-                "name": "{{emptystring}}",
-                "send": false,
-                "fields": {},
-                "tokens": {},
-                "template": "F2s3y6DU6d6dZes7L5wSSL",
-                "folder_uuid": null
-              },
-              "module": "pandadoc:createADocuments",
-              "version": 1,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "name",
-                    "type": "text",
-                    "label": "Document Name",
-                    "required": true
-                  },
-                  {
-                    "name": "template",
-                    "type": "select",
-                    "label": "Template ID",
-                    "required": true
-                  },
-                  {
-                    "name": "send",
-                    "type": "boolean",
-                    "label": "Send a document",
-                    "required": true
-                  },
-                  {
-                    "name": "folder_uuid",
-                    "type": "folder",
-                    "label": "Folder"
-                  },
-                  {
-                    "name": "tags",
-                    "spec": {
-                      "name": "value",
-                      "type": "text",
-                      "label": "Tag"
-                    },
-                    "type": "array",
-                    "label": "Tags"
-                  },
-                  {
-                    "name": "images",
-                    "spec": [
-                      {
-                        "name": "name",
-                        "type": "text",
-                        "label": "Image Block Name",
-                        "required": true
-                      },
-                      {
-                        "name": "urls",
-                        "type": "url",
-                        "label": "Image URL",
-                        "required": true
-                      }
-                    ],
-                    "type": "array",
-                    "label": "Images"
-                  },
-                  {
-                    "name": "metadata",
-                    "spec": [
-                      {
-                        "name": "key",
-                        "type": "text",
-                        "label": "Key",
-                        "required": true
-                      },
-                      {
-                        "name": "value",
-                        "type": "text",
-                        "label": "Value",
-                        "required": true
-                      }
-                    ],
-                    "type": "array",
-                    "label": "Document Metadata"
-                  },
-                  {
-                    "name": "content_placeholders",
-                    "spec": [
-                      {
-                        "name": "block_id",
-                        "type": "select",
-                        "label": "Block ID",
-                        "dynamic": true,
-                        "options": [],
-                        "required": true
-                      },
-                      {
-                        "name": "content_library_items",
-                        "spec": [
-                          {
-                            "name": "id",
-                            "type": "select",
-                            "label": "Content Library Item ID",
-                            "dynamic": true,
-                            "options": {
-                              "store": []
-                            },
-                            "required": true
-                          }
-                        ],
-                        "type": "array",
-                        "label": "Content Library Items",
-                        "required": true
-                      }
-                    ],
-                    "type": "array",
-                    "label": "Content Placeholders"
-                  },
-                  {
-                    "name": "tokens",
-                    "spec": [
-                      {
-                        "name": "Client.Email",
-                        "type": "email",
-                        "label": "Role: Client Email",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Sender.Email",
-                        "type": "email",
-                        "label": "Role: Sender Email",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Client.City",
-                        "type": "text",
-                        "label": "Role: Client  City ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Client.Company",
-                        "type": "text",
-                        "label": "Role: Client  Company ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Client.FirstName",
-                        "type": "text",
-                        "label": "Role: Client  First Name ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Client.LastName",
-                        "type": "text",
-                        "label": "Role: Client  Last Name ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Client.PostalCode",
-                        "type": "text",
-                        "label": "Role: Client  Postal Code ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Client.StreetAddress",
-                        "type": "text",
-                        "label": "Role: Client  Street Address ",
-                        "metadata": {
-                          "role": "Client"
-                        }
-                      },
-                      {
-                        "name": "Sender.City",
-                        "type": "text",
-                        "label": "Role: Sender  City ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Sender.Company",
-                        "type": "text",
-                        "label": "Role: Sender  Company ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Sender.FirstName",
-                        "type": "text",
-                        "label": "Role: Sender  First Name ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Sender.LastName",
-                        "type": "text",
-                        "label": "Role: Sender  Last Name ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Sender.PostalCode",
-                        "type": "text",
-                        "label": "Role: Sender  Postal Code ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      },
-                      {
-                        "name": "Sender.StreetAddress",
-                        "type": "text",
-                        "label": "Role: Sender  Street Address ",
-                        "metadata": {
-                          "role": "Sender"
-                        }
-                      }
-                    ],
-                    "type": "collection",
-                    "label": "Tokens"
-                  },
-                  {
-                    "name": "fields",
-                    "spec": [
-                      {
-                        "name": "MM / DD / YYYY",
-                        "type": "text",
-                        "label": "Sender MM / DD / YYYY"
-                      }
-                    ],
-                    "type": "collection",
-                    "label": "Fields"
-                  },
-                  {
-                    "name": "recipients",
-                    "spec": [
-                      {
-                        "name": "email",
-                        "type": "email",
-                        "label": "Email",
-                        "required": true
-                      },
-                      {
-                        "name": "first_name",
-                        "type": "text",
-                        "label": "First name"
-                      },
-                      {
-                        "name": "last_name",
-                        "type": "text",
-                        "label": "Last name"
-                      }
-                    ],
-                    "type": "array",
-                    "label": "CC Recipients"
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "tags": {
-                      "mode": "chose"
-                    },
-                    "images": {
-                      "mode": "chose"
-                    },
-                    "metadata": {
-                      "mode": "chose"
-                    },
-                    "template": {
-                      "mode": "chose",
-                      "label": "Beratungsvertrag V1"
-                    },
-                    "recipients": {
-                      "mode": "chose"
-                    },
-                    "folder_uuid": {
-                      "mode": "chose"
-                    },
-                    "content_placeholders": {
-                      "mode": "chose"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "pandadoc"
-                      },
-                      "label": "My PandaDoc connection (hello@zynera.de)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1200,
-                  "y": 1200
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:pandadoc",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2756561
-              }
-            }
-          ]
-        }
-      ],
+      "id": 75,
+      "filter": {
+        "name": "Step 6",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{shuffle(merge(47.array; 108.array))}}"
+      },
+      "module": "builtin:BasicFeeder",
       "version": 1,
       "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
         "designer": {
-          "x": 900,
-          "y": 600
+          "x": 4800,
+          "y": 0,
+          "name": "Shuffle Students"
         }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 103,
+      "mapper": {
+        "value": "<tr>\n        <td>{{if(75.`__IMTINDEX__` < 6; \"Alpha\"; \"Beta\")}}</td>\n        <td>{{75.student_id}}</td>\n        <td>{{75.first_name}}</td>\n        <td>{{75.last_name}}</td>\n        <td>{{75.email}}</td>\n        <td>{{75.date_of_birth}}</td>\n        <td>{{75.correct_age}}</td>\n        <td>{{75.interests}}</td>\n      </tr>"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Shuffle Students [75]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 5100,
+          "y": 0,
+          "name": "Table 2"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 75,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 33,
+      "filter": {
+        "name": "Step 7",
+        "conditions": []
+      },
+      "mapper": {
+        "cc": [],
+        "to": [
+          "karim@el-kassas.com",
+          "partner-certification-tests-level5@make.com"
+        ],
+        "bcc": [],
+        "from": "",
+        "html": "### {{var.scenario.url}} ###\n<br>\n<br>\nSorting method: student_id\n<table style=\"border: 1px solid black;\">\n  <thead>\n    <tr>\n      <th>class</th>\n      <th>student_id</th>\n      <th>first_name</th>\n      <th>last_name</th>\n      <th>email</th>\n      <th>date_of_birth</th>\n      <th>correct_age</th>\n      <th>interests</th>\n    </tr>\n  </thead>\n  <tbody>\n    {{30.text}}\n  </tbody>\n</table>\n<br>\nSorting method: random\n<table style=\"border: 1px solid black;\">\n  <thead>\n    <tr>\n      <th>Class</th>\n      <th>Student ID</th>\n      <th>First Name</th>\n      <th>Last Name</th>\n      <th>Email</th>\n      <th>Date of Birth</th>\n      <th>Correct Age</th>\n      <th>Interests</th>\n    </tr>\n  </thead>\n  <tbody>\n    {{103.text}}\n  </tbody>\n</table>",
+        "sender": "",
+        "headers": [],
+        "replyTo": "",
+        "subject": "Certification Level 5 | Practical Challenge | karim@el-kassas.com | {{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+        "priority": "normal",
+        "inReplyTo": "",
+        "references": [],
+        "attachments": [],
+        "contentType": "html"
+      },
+      "module": "email:ActionSendEmail",
+      "version": 7,
+      "metadata": {
+        "expect": [
+          {
+            "name": "to",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address",
+              "required": true
+            },
+            "type": "array",
+            "label": "To",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "html",
+                "text"
+              ]
+            }
+          },
+          {
+            "name": "attachments",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "required": true,
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "required": true,
+                "semantic": "file:data"
+              },
+              {
+                "name": "cid",
+                "type": "text",
+                "label": "Content-ID"
+              }
+            ],
+            "type": "array",
+            "label": "Attachments"
+          },
+          {
+            "name": "cc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Copy recipient"
+          },
+          {
+            "name": "bcc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Blind copy recipient"
+          },
+          {
+            "name": "from",
+            "type": "text",
+            "label": "From"
+          },
+          {
+            "name": "sender",
+            "type": "text",
+            "label": "Sender"
+          },
+          {
+            "name": "replyTo",
+            "type": "text",
+            "label": "Reply-To"
+          },
+          {
+            "name": "inReplyTo",
+            "type": "text",
+            "label": "In-Reply-To"
+          },
+          {
+            "name": "references",
+            "spec": {
+              "name": "value",
+              "type": "text",
+              "label": "Reference",
+              "required": true
+            },
+            "type": "array",
+            "label": "References"
+          },
+          {
+            "name": "priority",
+            "type": "select",
+            "label": "Priority",
+            "validate": {
+              "enum": [
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value",
+                "required": true
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "html",
+            "type": "text",
+            "label": "Content"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cc": {
+              "mode": "chose"
+            },
+            "to": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "bcc": {
+              "mode": "chose"
+            },
+            "priority": {
+              "label": "Normal"
+            },
+            "references": {
+              "mode": "chose"
+            },
+            "attachments": {
+              "mode": "chose"
+            },
+            "contentType": {
+              "label": "HTML"
+            }
+          },
+          "parameters": {
+            "account": {
+              "data": {
+                "scoped": "true",
+                "connection": "smtp"
+              },
+              "label": "karim@el-kassas.com (SMTP karim@el-kassas.com)"
+            },
+            "saveAfterSent": {
+              "label": "No"
+            }
+          }
+        },
+        "designer": {
+          "x": 5400,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "account",
+            "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "saveAfterSent",
+            "type": "select",
+            "label": "Save message after sending",
+            "required": true,
+            "validate": {
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "account": 2357943,
+        "saveAfterSent": false
       }
     }
   ],
-  "name": "1 - Onboarding Submission | Airtable > Slack @kelkassas",
+  "name": "2 - Level 5 - Practical Challenge",
   "metadata": {
     "instant": false,
     "version": 1,
     "designer": {
-      "orphans": []
+      "orphans": [],
+      "samples": {
+        "2": {
+          "data": {
+            "message": "What a hacker you are!...",
+            "school_classes": [
+              {
+                "members": [
+                  {
+                    "age": "27...",
+                    "name": "Olivia...",
+                    "email": "jane@novak.com...",
+                    "interests": "a text string which is not an array, random id: ca1dc4b1-0a5a-4c56-b09e-537011a36fd4...",
+                    "student_id": 12,
+                    "date_of_birth": "2000-06-15..."
+                  }
+                ],
+                "class_ids": {
+                  "external_id": "4544582339...",
+                  "internal_id": 12
+                },
+                "class_name": "Class B...",
+                "class_description": "This is a sample Class B..."
+              }
+            ],
+            "current_datetime": "2024-02-21 19:27:16...",
+            "json_description": "Good luck with Level 5 challenge!...",
+            "last_json_update": "2022-12-28T10:41:32+0100...",
+            "unassigned_students": [
+              {
+                "age": 0,
+                "name": "Mark...",
+                "email": "mark@clark.com...",
+                "interests": [
+                  "snowboarding..."
+                ],
+                "last_name": "Clark...",
+                "date_of_birth": "1999-12-03...",
+                "lasttttt_name": "Wilson..."
+              }
+            ],
+            "additional_student_metadata": [
+              {
+                "ecb1d": "This is a really odd key name, which changes every time you request data....",
+                "last_name": "Rodriguez...",
+                "interest_1": "running...",
+                "interest_2": "hiking...",
+                "interest_3": "baseball...",
+                "student_id": 12,
+                "interest_6d8ab": "rugby..."
+              }
+            ]
+          },
+          "headers": [
+            {
+              "name": "cf-ray...",
+              "value": "85910add7d42956f-DUB..."
+            }
+          ],
+          "fileSize": 2978,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "30": {
+          "text": "<tr>\n        <td></td>\n        <td>1</td>\n        <td>Joe</td>\n        <td>Doe</td>\n        <td>joe@..."
+        },
+        "33": {
+          "messageId": "<340e9cb2-ccca-e1d2-2c8b-f6d4ec7827fe@el-kassas.com>..."
+        },
+        "47": {
+          "array": [
+            {
+              "email": null,
+              "interests": "running,hiking,baseball...",
+              "last_name": "Rodriguez...",
+              "first_name": "Olivia...",
+              "student_id": 12,
+              "correct_age": 22,
+              "date_of_birth": "2000-06-15..."
+            }
+          ],
+          "__IMTAGGLENGTH__": 7
+        },
+        "48": {
+          "age": "15...",
+          "name": "Joe...",
+          "email": "joe@doe.com...",
+          "interests": [
+            "skiing..."
+          ],
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "date_of_birth": "2000-01-01..."
+        },
+        "49": {
+          "email": "joe@doe.com...",
+          "interests": "skiing,cycling...",
+          "last_name": "Doe...",
+          "first_name": "Joe...",
+          "student_id": 1,
+          "correct_age": 23,
+          "date_of_birth": "2000-01-01..."
+        },
+        "51": {
+          "ecb1d": null,
+          "last_name": "Doe...",
+          "interest_1": null,
+          "interest_2": null,
+          "interest_3": null,
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "interest_6d8ab": null
+        },
+        "54": {
+          "value": "student_id...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 2
+        },
+        "56": {
+          "text": "rugby...",
+          "__IMTKEY__": 3
+        },
+        "58": {
+          "age": 12,
+          "name": "Maria...",
+          "email": "maria@hernandez.com...",
+          "interests": [],
+          "last_name": "Hernandez...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 3,
+          "date_of_birth": "1999-12-01...",
+          "lasttttt_name": null
+        },
+        "75": {
+          "email": "maria@hernandez.com...",
+          "interests": null,
+          "last_name": "Hernandez...",
+          "first_name": "Maria...",
+          "student_id": 13,
+          "correct_age": 23,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 10,
+          "date_of_birth": "1999-12-01..."
+        },
+        "100": {
+          "email": "joe@doe.com...",
+          "interests": "skiing,cycling...",
+          "last_name": "Doe...",
+          "first_name": "Joe...",
+          "student_id": 1,
+          "correct_age": 23,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 10,
+          "date_of_birth": "2000-01-01..."
+        },
+        "103": {
+          "text": "<tr>\n        <td>Alpha</td>\n        <td>13</td>\n        <td>Maria</td>\n        <td>Hernandez</td>\n  ..."
+        },
+        "106": {
+          "array": [
+            {
+              "text": "running,hiking,baseball...",
+              "__IMTKEY__": 7
+            }
+          ],
+          "__IMTAGGLENGTH__": 2
+        },
+        "107": {
+          "email": "maria@hernandez.com...",
+          "interests": null,
+          "last_name": "Hernandez...",
+          "first_name": "Maria...",
+          "student_id": 13,
+          "correct_age": 23,
+          "date_of_birth": "1999-12-01..."
+        },
+        "108": {
+          "array": [
+            {
+              "email": "mark@clark.com...",
+              "interests": "snowboarding,skiing...",
+              "last_name": "Clark...",
+              "first_name": "Mark...",
+              "student_id": 15,
+              "correct_age": 23,
+              "date_of_birth": "1999-12-03..."
+            }
+          ],
+          "__IMTAGGLENGTH__": 3
+        },
+        "109": {
+          "ecb1d": null,
+          "last_name": "Doe...",
+          "interest_1": null,
+          "interest_2": null,
+          "interest_3": null,
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "interest_6d8ab": null
+        },
+        "110": {
+          "interests": null,
+          "last_name": "Doe...",
+          "student_id": 1
+        },
+        "111": {
+          "array": [
+            {
+              "interests": "running,hiking,baseball...",
+              "last_name": "Rodriguez...",
+              "student_id": 12
+            }
+          ],
+          "__IMTAGGLENGTH__": 7
+        }
+      }
     },
     "scenario": {
       "dlq": false,
