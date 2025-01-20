@@ -1,0 +1,572 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {},
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "MA C05 U01"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 450
+        },
+        "interface": [
+          {
+            "name": "tickets",
+            "spec": [
+              {
+                "name": "first name",
+                "type": "text"
+              },
+              {
+                "name": "last name",
+                "type": "text"
+              },
+              {
+                "name": "email",
+                "type": "text"
+              },
+              {
+                "name": "event",
+                "type": "text"
+              },
+              {
+                "name": "number of tickets",
+                "type": "number"
+              }
+            ],
+            "type": "collection"
+          },
+          {
+            "name": "__IMTHEADERS__",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      },
+      "parameters": {
+        "hook": 1707898,
+        "maxResults": 1
+      }
+    },
+    {
+      "id": 9,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 8,
+              "filter": {
+                "name": "",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{first(map(1.`__IMTHEADERS__`; \"value\"; \"name\"; \"authorization\"))}}",
+                      "o": "notexist"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "body": "",
+                "status": "401",
+                "headers": [
+                  {
+                    "key": "WWW-Authenticate",
+                    "value": "Basic realm=make-training"
+                  }
+                ]
+              },
+              "module": "gateway:WebhookRespond",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "status",
+                    "type": "uinteger",
+                    "label": "Status",
+                    "required": true,
+                    "validate": {
+                      "min": 100
+                    }
+                  },
+                  {
+                    "name": "body",
+                    "type": "any",
+                    "label": "Body"
+                  },
+                  {
+                    "name": "headers",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key",
+                        "required": true,
+                        "validate": {
+                          "max": 256
+                        }
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value",
+                        "required": true,
+                        "validate": {
+                          "max": 4096
+                        }
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Custom headers",
+                    "validate": {
+                      "maxItems": 16
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "headers": {
+                      "mode": "chose",
+                      "items": [
+                        null
+                      ]
+                    }
+                  }
+                },
+                "advanced": true,
+                "designer": {
+                  "x": 600,
+                  "y": 0,
+                  "name": "No Auth"
+                }
+              },
+              "parameters": {}
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 11,
+              "filter": {
+                "name": "",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{first(map(1.`__IMTHEADERS__`; \"value\"; \"name\"; \"authorization\"))}}",
+                      "o": "exist"
+                    },
+                    {
+                      "a": "{{first(map(1.`__IMTHEADERS__`; \"value\"; \"name\"; \"authorization\"))}}",
+                      "b": "Basic {{base64(\"lucas:verySecret\")}}",
+                      "o": "text:notequal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "body": "Nope, I cannot identify you",
+                "status": "401",
+                "headers": []
+              },
+              "module": "gateway:WebhookRespond",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "status",
+                    "type": "uinteger",
+                    "label": "Status",
+                    "required": true,
+                    "validate": {
+                      "min": 100
+                    }
+                  },
+                  {
+                    "name": "body",
+                    "type": "any",
+                    "label": "Body"
+                  },
+                  {
+                    "name": "headers",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key",
+                        "required": true,
+                        "validate": {
+                          "max": 256
+                        }
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value",
+                        "required": true,
+                        "validate": {
+                          "max": 4096
+                        }
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Custom headers",
+                    "validate": {
+                      "maxItems": 16
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "headers": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "advanced": true,
+                "designer": {
+                  "x": 600,
+                  "y": 300,
+                  "name": "Wrong Auth"
+                }
+              },
+              "parameters": {}
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 12,
+              "filter": {
+                "name": "",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{first(map(1.`__IMTHEADERS__`; \"value\"; \"name\"; \"authorization\"))}}",
+                      "b": "Basic {{base64(\"lucas:verySecret\")}}",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "body": "Yup, I can identify you",
+                "status": "200",
+                "headers": []
+              },
+              "module": "gateway:WebhookRespond",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "status",
+                    "type": "uinteger",
+                    "label": "Status",
+                    "required": true,
+                    "validate": {
+                      "min": 100
+                    }
+                  },
+                  {
+                    "name": "body",
+                    "type": "any",
+                    "label": "Body"
+                  },
+                  {
+                    "name": "headers",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key",
+                        "required": true,
+                        "validate": {
+                          "max": 256
+                        }
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value",
+                        "required": true,
+                        "validate": {
+                          "max": 4096
+                        }
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Custom headers",
+                    "validate": {
+                      "maxItems": 16
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "headers": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "advanced": true,
+                "designer": {
+                  "x": 600,
+                  "y": 600,
+                  "name": "Correct Auth"
+                }
+              },
+              "parameters": {}
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 2,
+              "mapper": {
+                "step": "1",
+                "start": "1",
+                "repeats": "{{1.tickets.`number of tickets`}}"
+              },
+              "module": "builtin:BasicRepeater",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "start",
+                    "type": "number",
+                    "label": "Initial value",
+                    "required": true
+                  },
+                  {
+                    "name": "repeats",
+                    "type": "number",
+                    "label": "Repeats",
+                    "required": true,
+                    "validate": {
+                      "max": 10000,
+                      "min": 0
+                    }
+                  },
+                  {
+                    "name": "step",
+                    "type": "number",
+                    "label": "Step",
+                    "required": true
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 600,
+                  "y": 900
+                }
+              },
+              "parameters": {}
+            },
+            {
+              "id": 3,
+              "mapper": {
+                "duration": "{{ceil(random * 10)}}"
+              },
+              "module": "util:FunctionSleep",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "duration",
+                    "type": "uinteger",
+                    "label": "Delay",
+                    "required": true,
+                    "validate": {
+                      "max": 300,
+                      "min": 1
+                    }
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 900,
+                  "y": 900
+                }
+              },
+              "parameters": {}
+            },
+            {
+              "id": 4,
+              "mapper": {
+                "key": "",
+                "data": {
+                  "date": "{{now}}",
+                  "email": "{{1.tickets.email}}",
+                  "event": "{{1.tickets.event}}",
+                  "last name": "{{1.tickets.`last name`}}",
+                  "ticket ID": "ticket {{2.i}} / {{1.tickets.`number of tickets`}}",
+                  "first name": "{{1.tickets.`first name`}}"
+                },
+                "overwrite": false
+              },
+              "module": "datastore:AddRecord",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "key",
+                    "type": "text",
+                    "label": "Key"
+                  },
+                  {
+                    "name": "overwrite",
+                    "type": "boolean",
+                    "label": "Overwrite an existing record",
+                    "required": true
+                  },
+                  {
+                    "name": "data",
+                    "spec": [
+                      {
+                        "name": "date",
+                        "type": "text",
+                        "label": "Date"
+                      },
+                      {
+                        "name": "event",
+                        "type": "text",
+                        "label": "Event"
+                      },
+                      {
+                        "name": "first name",
+                        "type": "text",
+                        "label": "First Name"
+                      },
+                      {
+                        "name": "last name",
+                        "type": "text",
+                        "label": "Last Name"
+                      },
+                      {
+                        "name": "email",
+                        "type": "text",
+                        "label": "Email"
+                      },
+                      {
+                        "name": "ticket ID",
+                        "type": "text",
+                        "label": "Ticket ID"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Record"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "overwrite": {
+                      "mode": "chose"
+                    }
+                  },
+                  "parameters": {
+                    "datastore": {
+                      "label": "MA C05 U01"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1200,
+                  "y": 900
+                },
+                "parameters": [
+                  {
+                    "name": "datastore",
+                    "type": "datastore",
+                    "label": "Data store",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "datastore": 62326
+              }
+            }
+          ],
+          "disabled": true
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 450
+        }
+      }
+    }
+  ],
+  "name": "MA C05 U01",
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "__IMTHEADERS__": [
+            {
+              "name": "cf-connecting-ip",
+              "value": "176.3.126.63"
+            }
+          ]
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
