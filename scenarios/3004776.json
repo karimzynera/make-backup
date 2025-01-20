@@ -1,0 +1,474 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {
+        "organization": 277690
+      },
+      "module": "make:listScenarios",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "organization",
+            "type": "select",
+            "label": "Organization ID"
+          },
+          {
+            "name": "islinked",
+            "type": "boolean",
+            "label": "Only Active Scenarios"
+          },
+          {
+            "name": "cols",
+            "type": "select",
+            "label": "Fields",
+            "multiple": true,
+            "validate": {
+              "enum": [
+                "created",
+                "createdByUser",
+                "description",
+                "deviceId",
+                "deviceScope",
+                "dlqCount",
+                "folderId",
+                "hookId",
+                "isinvalid",
+                "islinked",
+                "islocked",
+                "isPaused",
+                "iswaiting",
+                "lastEdit",
+                "name",
+                "nextExec",
+                "id",
+                "scheduling",
+                "teamId",
+                "updatedByUser",
+                "usedPackages",
+                "customProperties"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "type": "uinteger",
+            "label": "Limit"
+          },
+          {
+            "name": "team",
+            "type": "select",
+            "label": "Team ID"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cols": {
+              "mode": "chose"
+            },
+            "team": {
+              "mode": "chose",
+              "label": "Empty"
+            },
+            "limit": {
+              "empty": true
+            },
+            "islinked": {
+              "mode": "chose"
+            },
+            "organization": {
+              "mode": "chose",
+              "label": "🟣 Zynera"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "make"
+              },
+              "label": "Karim's Make connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:make",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2417656
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "select": "file",
+        "scenario": "{{1.id}}"
+      },
+      "module": "make:getAScenarioBlueprint",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "scenario",
+            "type": "text",
+            "label": "Scenario ID",
+            "required": true
+          },
+          {
+            "name": "draft",
+            "type": "boolean",
+            "label": "Draft"
+          },
+          {
+            "name": "select",
+            "type": "select",
+            "label": "Return a Blueprint",
+            "required": true,
+            "validate": {
+              "enum": [
+                "json",
+                "string",
+                "file"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "draft": {
+              "mode": "chose"
+            },
+            "select": {
+              "mode": "chose",
+              "label": "In a JSON File"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "make"
+              },
+              "label": "Karim's Make connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "blueprint",
+            "type": "buffer",
+            "label": "Blueprint Data",
+            "semantic": "file:data"
+          },
+          {
+            "name": "filename",
+            "type": "filename",
+            "label": "File Name",
+            "semantic": "file:name"
+          },
+          {
+            "name": "gitSHA",
+            "type": "text",
+            "label": "GitHub SHA"
+          },
+          {
+            "name": "scheduling",
+            "spec": [
+              {
+                "name": "type",
+                "type": "text",
+                "label": "Type"
+              },
+              {
+                "name": "between",
+                "spec": {
+                  "type": "date"
+                },
+                "type": "array",
+                "label": "Between"
+              },
+              {
+                "name": "interval",
+                "type": "number",
+                "label": "Interval"
+              },
+              {
+                "name": "restrict",
+                "spec": {
+                  "spec": [
+                    {
+                      "name": "days",
+                      "spec": {
+                        "type": "number"
+                      },
+                      "type": "array",
+                      "label": "Days"
+                    },
+                    {
+                      "name": "time",
+                      "spec": {
+                        "type": "text"
+                      },
+                      "type": "array",
+                      "label": "Time"
+                    },
+                    {
+                      "name": "months",
+                      "spec": {
+                        "type": "number"
+                      },
+                      "type": "array",
+                      "label": "Months"
+                    }
+                  ],
+                  "type": "collection"
+                },
+                "type": "array",
+                "label": "Restrict"
+              },
+              {
+                "name": "date",
+                "time": true,
+                "type": "date",
+                "label": "Date"
+              },
+              {
+                "name": "time",
+                "type": "text",
+                "label": "Time"
+              },
+              {
+                "name": "days",
+                "type": "array",
+                "label": "Days"
+              },
+              {
+                "name": "months",
+                "type": "array",
+                "label": "Months"
+              }
+            ],
+            "type": "collection",
+            "label": "Scheduling"
+          },
+          {
+            "name": "concept",
+            "type": "boolean",
+            "label": "Concept"
+          },
+          {
+            "name": "idSequence",
+            "type": "uinteger",
+            "label": "ID Sequence"
+          },
+          {
+            "name": "created",
+            "time": true,
+            "type": "date",
+            "label": "Created"
+          },
+          {
+            "name": "last_edit",
+            "time": true,
+            "type": "date",
+            "label": "Last Edit"
+          },
+          {
+            "name": "metadata",
+            "spec": [
+              {
+                "name": "input_spec",
+                "type": "any",
+                "label": "Input Spec"
+              },
+              {
+                "name": "output_spec",
+                "type": "any",
+                "label": "Output Spec"
+              }
+            ],
+            "type": "collection",
+            "label": "Metadata"
+          },
+          {
+            "name": "length",
+            "type": "number",
+            "label": "Length"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:make",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2417656
+      }
+    },
+    {
+      "id": 3,
+      "module": "airtable:ActionGetRecord",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "Test",
+            "value": ""
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "Test",
+            "type": "any",
+            "label": "Test"
+          }
+        ]
+      },
+      "parameters": {}
+    }
+  ],
+  "name": "Airtable Dependencies Test",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "id": 2569510,
+          "name": "Discovery Call | Cal.com > Slack @kelkassas",
+          "slots": null,
+          "hookId": 1477289,
+          "teamId": 170759,
+          "concept": false,
+          "created": "2024-06-27T10:40:00.079Z",
+          "deviceId": null,
+          "dlqCount": 0,
+          "folderId": 198180,
+          "isActive": true,
+          "isPaused": false,
+          "islinked": true,
+          "islocked": false,
+          "lastEdit": "2024-11-05T13:25:57.305Z",
+          "nextExec": null,
+          "isinvalid": false,
+          "iswaiting": false,
+          "scheduling": {
+            "type": "immediately"
+          },
+          "description": "",
+          "deviceScope": null,
+          "__IMTINDEX__": 1,
+          "chainingRole": "none",
+          "usedPackages": [
+            "gateway"
+          ],
+          "__IMTLENGTH__": 57,
+          "createdByUser": {
+            "id": 294192,
+            "name": "Karim El Kassas",
+            "email": "karim@zynera.ai"
+          },
+          "updatedByUser": {
+            "id": 294192,
+            "name": "Karim El Kassas",
+            "email": "karim@zynera.ai"
+          }
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
