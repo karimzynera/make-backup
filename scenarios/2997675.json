@@ -1,0 +1,841 @@
+{
+  "flow": [
+    {
+      "id": 6,
+      "mapper": {
+        "ca": "",
+        "qs": [],
+        "url": "https://api.github.com/repos/karimzynera/make-backup/contents/scenarios",
+        "data": "",
+        "gzip": true,
+        "method": "get",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "X-GitHub-Api-Version",
+            "value": "2022-11-28"
+          }
+        ],
+        "timeout": "",
+        "useMtls": false,
+        "authPass": "",
+        "authUser": "",
+        "bodyType": "raw",
+        "contentType": "application/json",
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      },
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": [
+                "raw",
+                "x_www_form_urlencoded",
+                "multipart_form_data"
+              ]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content type",
+            "validate": {
+              "enum": [
+                "text/plain",
+                "application/json",
+                "application/xml",
+                "text/xml",
+                "text/html",
+                "custom"
+              ]
+            }
+          },
+          {
+            "name": "data",
+            "type": "buffer",
+            "label": "Request content"
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose"
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "bodyType": {
+              "label": "Raw"
+            },
+            "contentType": {
+              "label": "JSON (application/json)"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 150,
+          "name": "Get Repo File"
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDeCompress": true
+      }
+    },
+    {
+      "id": 18,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 8,
+              "mapper": {
+                "array": "{{6.data}}"
+              },
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "mode": "edit",
+                    "name": "array",
+                    "spec": [],
+                    "type": "array",
+                    "label": "Array"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 600,
+                  "y": 0
+                }
+              },
+              "parameters": {}
+            },
+            {
+              "id": 7,
+              "filter": {
+                "name": "Filter",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{8.`__IMTINDEX__`}}",
+                      "b": "4",
+                      "o": "number:less"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "url": "{{8.download_url}}",
+                "method": "get",
+                "serializeUrl": false,
+                "shareCookies": false
+              },
+              "module": "http:ActionGetFile",
+              "version": 3,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "url",
+                    "type": "url",
+                    "label": "URL",
+                    "required": true
+                  },
+                  {
+                    "name": "serializeUrl",
+                    "type": "boolean",
+                    "label": "Serialize URL",
+                    "required": true
+                  },
+                  {
+                    "name": "method",
+                    "type": "hidden",
+                    "label": "Method"
+                  },
+                  {
+                    "name": "shareCookies",
+                    "type": "boolean",
+                    "label": "Share cookies with other HTTP modules",
+                    "required": true
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 900,
+                  "y": 0
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "handleErrors": false
+              }
+            },
+            {
+              "id": 14,
+              "mapper": {
+                "text": "{{7.data}}"
+              },
+              "module": "regexp:Parser",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "text",
+                    "type": "text",
+                    "label": "Text"
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 1200,
+                  "y": 0,
+                  "name": "Field"
+                },
+                "interface": [
+                  {
+                    "name": "i",
+                    "type": "uinteger",
+                    "label": "i"
+                  },
+                  {
+                    "name": "__IMTMATCH__",
+                    "type": "any",
+                    "label": "Fallback Match"
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "pattern",
+                    "type": "text",
+                    "label": "Pattern",
+                    "required": true
+                  },
+                  {
+                    "name": "global",
+                    "type": "boolean",
+                    "label": "Global match",
+                    "required": true
+                  },
+                  {
+                    "name": "sensitive",
+                    "type": "boolean",
+                    "label": "Case sensitive",
+                    "required": true
+                  },
+                  {
+                    "name": "multiline",
+                    "type": "boolean",
+                    "label": "Multiline",
+                    "required": true
+                  },
+                  {
+                    "name": "singleline",
+                    "type": "boolean",
+                    "label": "Singleline",
+                    "required": true
+                  },
+                  {
+                    "name": "continueWhenNoRes",
+                    "type": "boolean",
+                    "label": "Continue the execution of the route even if the module finds no matches",
+                    "required": true
+                  },
+                  {
+                    "name": "ignoreInfiniteLoopsWhenGlobal",
+                    "type": "boolean",
+                    "label": "Ignore errors when there is an infinite search loop",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "global": true,
+                "pattern": "\\bfld\\w{14}\\b",
+                "multiline": false,
+                "sensitive": true,
+                "singleline": false,
+                "continueWhenNoRes": false,
+                "ignoreInfiniteLoopsWhenGlobal": false
+              }
+            },
+            {
+              "id": 9,
+              "flags": {
+                "groupBy": "{{14.`__IMTMATCH__`}}"
+              },
+              "mapper": {
+                "i": "{{14.i}}",
+                "data": "{{7.data}}",
+                "__IMTMATCH__": "{{14.`__IMTMATCH__`}}"
+              },
+              "module": "builtin:BasicAggregator",
+              "version": 1,
+              "metadata": {
+                "restore": {
+                  "extra": {
+                    "feeder": {
+                      "label": "Iterator [8]"
+                    },
+                    "target": {
+                      "label": "Custom"
+                    }
+                  }
+                },
+                "advanced": true,
+                "designer": {
+                  "x": 1500,
+                  "y": 0
+                }
+              },
+              "parameters": {
+                "feeder": 8
+              }
+            },
+            {
+              "id": 15,
+              "module": "airtable:makeApiCall",
+              "version": 3,
+              "metadata": {
+                "designer": {
+                  "x": 1800,
+                  "y": 0,
+                  "name": "Bases"
+                }
+              }
+            },
+            {
+              "id": 16,
+              "module": "airtable:makeApiCall",
+              "version": 3,
+              "metadata": {
+                "designer": {
+                  "x": 2100,
+                  "y": 0,
+                  "name": "Tables"
+                }
+              }
+            },
+            {
+              "id": 17,
+              "module": "airtable:makeApiCall",
+              "version": 3,
+              "metadata": {
+                "designer": {
+                  "x": 2400,
+                  "y": 0,
+                  "name": "Update Description",
+                  "messages": [
+                    {
+                      "message": "Value must not be empty.",
+                      "category": "setup",
+                      "severity": "error"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 12,
+              "mapper": {
+                "text": "{{7.data}}"
+              },
+              "module": "regexp:Parser",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "text",
+                    "type": "text",
+                    "label": "Text"
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 600,
+                  "y": 300,
+                  "name": "Base",
+                  "messages": [
+                    {
+                      "message": "Referenced module 'HTTP - Get a file' [7] is not accessible.",
+                      "category": "reference",
+                      "severity": "warning"
+                    }
+                  ]
+                },
+                "interface": [
+                  {
+                    "name": "i",
+                    "type": "uinteger",
+                    "label": "i"
+                  },
+                  {
+                    "name": "__IMTMATCH__",
+                    "type": "any",
+                    "label": "Fallback Match"
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "pattern",
+                    "type": "text",
+                    "label": "Pattern",
+                    "required": true
+                  },
+                  {
+                    "name": "global",
+                    "type": "boolean",
+                    "label": "Global match",
+                    "required": true
+                  },
+                  {
+                    "name": "sensitive",
+                    "type": "boolean",
+                    "label": "Case sensitive",
+                    "required": true
+                  },
+                  {
+                    "name": "multiline",
+                    "type": "boolean",
+                    "label": "Multiline",
+                    "required": true
+                  },
+                  {
+                    "name": "singleline",
+                    "type": "boolean",
+                    "label": "Singleline",
+                    "required": true
+                  },
+                  {
+                    "name": "continueWhenNoRes",
+                    "type": "boolean",
+                    "label": "Continue the execution of the route even if the module finds no matches",
+                    "required": true
+                  },
+                  {
+                    "name": "ignoreInfiniteLoopsWhenGlobal",
+                    "type": "boolean",
+                    "label": "Ignore errors when there is an infinite search loop",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "global": true,
+                "pattern": "\\bapp\\w{14}\\b",
+                "multiline": false,
+                "sensitive": true,
+                "singleline": false,
+                "continueWhenNoRes": false,
+                "ignoreInfiniteLoopsWhenGlobal": false
+              }
+            },
+            {
+              "id": 13,
+              "mapper": {
+                "text": "{{7.data}}"
+              },
+              "module": "regexp:Parser",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "text",
+                    "type": "text",
+                    "label": "Text"
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 900,
+                  "y": 300,
+                  "name": "Table",
+                  "messages": [
+                    {
+                      "message": "A transformer should not be the last module in the route.",
+                      "category": "last",
+                      "severity": "warning"
+                    },
+                    {
+                      "message": "Referenced module 'HTTP - Get a file' [7] is not accessible.",
+                      "category": "reference",
+                      "severity": "warning"
+                    }
+                  ]
+                },
+                "interface": [
+                  {
+                    "name": "i",
+                    "type": "uinteger",
+                    "label": "i"
+                  },
+                  {
+                    "name": "__IMTMATCH__",
+                    "type": "any",
+                    "label": "Fallback Match"
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "pattern",
+                    "type": "text",
+                    "label": "Pattern",
+                    "required": true
+                  },
+                  {
+                    "name": "global",
+                    "type": "boolean",
+                    "label": "Global match",
+                    "required": true
+                  },
+                  {
+                    "name": "sensitive",
+                    "type": "boolean",
+                    "label": "Case sensitive",
+                    "required": true
+                  },
+                  {
+                    "name": "multiline",
+                    "type": "boolean",
+                    "label": "Multiline",
+                    "required": true
+                  },
+                  {
+                    "name": "singleline",
+                    "type": "boolean",
+                    "label": "Singleline",
+                    "required": true
+                  },
+                  {
+                    "name": "continueWhenNoRes",
+                    "type": "boolean",
+                    "label": "Continue the execution of the route even if the module finds no matches",
+                    "required": true
+                  },
+                  {
+                    "name": "ignoreInfiniteLoopsWhenGlobal",
+                    "type": "boolean",
+                    "label": "Ignore errors when there is an infinite search loop",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "global": true,
+                "pattern": "\\btbl\\w{14}\\b",
+                "multiline": false,
+                "sensitive": true,
+                "singleline": false,
+                "continueWhenNoRes": false,
+                "ignoreInfiniteLoopsWhenGlobal": false
+              }
+            }
+          ],
+          "disabled": true
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 150
+        }
+      }
+    }
+  ],
+  "name": "Airtable Dependencies Prod",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "6": {
+          "data": [
+            {
+              "sha": "1be89e0d108d3688e1d98baf5f1bc916d530e42d",
+              "url": "https://api.github.com/repos/karimzynera/make-backup/contents/scenarios/blueprint%20(22).json?ref=ma...",
+              "name": "blueprint (22).json",
+              "path": "scenarios/blueprint (22).json",
+              "size": 56160,
+              "type": "file",
+              "_links": {
+                "git": "https://api.github.com/repos/karimzynera/make-backup/git/blobs/1be89e0d108d3688e1d98baf5f1bc916d530e...",
+                "html": "https://github.com/karimzynera/make-backup/blob/main/scenarios/blueprint%20(22).json",
+                "self": "https://api.github.com/repos/karimzynera/make-backup/contents/scenarios/blueprint%20(22).json?ref=ma..."
+              },
+              "git_url": "https://api.github.com/repos/karimzynera/make-backup/git/blobs/1be89e0d108d3688e1d98baf5f1bc916d530e...",
+              "html_url": "https://github.com/karimzynera/make-backup/blob/main/scenarios/blueprint%20(22).json",
+              "download_url": "https://raw.githubusercontent.com/karimzynera/make-backup/main/scenarios/blueprint%20(22).json"
+            }
+          ],
+          "headers": [
+            {
+              "name": "x-github-request-id",
+              "value": "D02C:35968D:29DFAE:301ACA:67882A7E"
+            }
+          ],
+          "fileSize": 45865,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "7": {
+          "data": "{\"flow\":[{\"id\":3,\"mapper\":{\"ca\":\"\",\"qs\":[],\"url\":\"https://hook.eu1.make.com/9468mkc4l0qrciimga1qr971...",
+          "headers": [
+            {
+              "name": "source-age",
+              "value": "28"
+            }
+          ],
+          "fileName": "file.txt",
+          "fileSize": 23205,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "8": {
+          "sha": "ec6b22b199aa628b85d0f8ad61e05edc957711b8",
+          "url": "https://api.github.com/repos/karimzynera/make-backup/contents/scenarios/2168135?ref=main",
+          "name": "2168135",
+          "path": "scenarios/2168135",
+          "size": 23205,
+          "type": "file",
+          "_links": {
+            "git": "https://api.github.com/repos/karimzynera/make-backup/git/blobs/ec6b22b199aa628b85d0f8ad61e05edc95771...",
+            "html": "https://github.com/karimzynera/make-backup/blob/main/scenarios/2168135",
+            "self": "https://api.github.com/repos/karimzynera/make-backup/contents/scenarios/2168135?ref=main"
+          },
+          "git_url": "https://api.github.com/repos/karimzynera/make-backup/git/blobs/ec6b22b199aa628b85d0f8ad61e05edc95771...",
+          "html_url": "https://github.com/karimzynera/make-backup/blob/main/scenarios/2168135",
+          "__IMTINDEX__": 1,
+          "download_url": "https://raw.githubusercontent.com/karimzynera/make-backup/main/scenarios/2168135",
+          "__IMTLENGTH__": 56
+        },
+        "9": {
+          "array": [
+            {
+              "i": 29,
+              "data": "{\"flow\":[{\"id\":14,\"mapper\":{\"step\":\"1\",\"start\":\"1\",\"repeats\":\"2\"},\"module\":\"builtin:BasicRepeater\",\"...",
+              "__IMTMATCH__": "fld0SKEO6WPR4AJbq"
+            }
+          ],
+          "__IMTKEY__": "fld0SKEO6WPR4AJbq"
+        },
+        "12": {
+          "i": 1,
+          "__IMTMATCH__": "application"
+        },
+        "13": {
+          "i": 1,
+          "__IMTMATCH__": "tblEoMxVb762MWQfm"
+        },
+        "14": {
+          "i": 1,
+          "__IMTMATCH__": "fld0SKEO6WPR4AJbq"
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
