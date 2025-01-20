@@ -1,1417 +1,2697 @@
 {
   "flow": [
     {
-      "id": 2,
-      "mapper": {},
-      "module": "gateway:CustomMailHook",
+      "id": 1,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "Limit, Test",
+            "value": "{{ignore}}"
+          },
+          {
+            "name": "Slack Channel",
+            "value": "C02M5F1TGCR"
+          },
+          {
+            "name": "Slack Channel, Testing",
+            "value": ""
+          },
+          {
+            "name": "Slack ID, Backup",
+            "value": "U028ZAD8Z"
+          },
+          {
+            "name": "Slack IDs, Notify",
+            "value": "{{emptyarray}}"
+          },
+          {
+            "name": "Testing",
+            "value": ""
+          }
+        ]
+      },
+      "module": "util:SetVariables",
       "version": 1,
       "metadata": {
-        "restore": {
-          "parameters": {
-            "hook": {
-              "data": {
-                "editable": "false"
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
               },
-              "label": "Error Handler"
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
             }
           }
         },
         "designer": {
           "x": 0,
-          "y": 450,
-          "name": "Mailhook"
-        },
-        "parameters": [
-          {
-            "name": "hook",
-            "type": "hook:gateway-mailhook",
-            "label": "Mailhook",
-            "required": true
-          },
-          {
-            "name": "maxResults",
-            "type": "number",
-            "label": "Maximum number of results"
-          }
-        ]
-      },
-      "parameters": {
-        "hook": 1643608,
-        "maxResults": 1
-      }
-    },
-    {
-      "id": 3,
-      "mapper": {
-        "model": "gpt-4o-mini",
-        "select": "chat",
-        "messages": [
-          {
-            "role": "system",
-            "content": "You are an email assistant tasked with processing messages containing warnings, errors, or notifications about stopped executions. Your role is to extract key information from each email and format it as structured JSON data.\n\nFor **warnings** and **errors**, please use the following JSON format:\n\n```json\n{\n  \"scenario\": \"name of the scenario\",\n  \"scenarioUrl\": \"URL of the scenario\",\n  \"execution\": \"execution ID\",\n  \"executionUrl\": \"URL of the execution\",\n  \"details\": \"summary of the warning or error\",\n  \"moreDetailsUrl\": \"URL for more details\",\n  \"logsUrl\": \"URL for logs\"\n}\n```\n\nFor **stopped executions**, please use this JSON format:\n\n```json\n{\n  \"scenario\": \"name of the scenario\",\n  \"scenarioUrl\": \"URL of the scenario\",\n  \"execution\": \"execution ID\",\n  \"reason\": \"reason for stopping\",\n  \"moreDetailsUrl\": \"URL for more details\"\n}\n```\n\nEnsure that each JSON output captures all relevant information accurately and concisely. Use placeholders (e.g., 'N/A') for fields not provided in the email.\""
-          },
-          {
-            "role": "user",
-            "content": "{{2.text}}",
-            "imageDetail": "auto"
-          }
-        ],
-        "max_tokens": "1500",
-        "temperature": "0.65",
-        "response_format": "json_object",
-        "parseJSONResponse": false
-      },
-      "module": "openai-gpt-3:CreateCompletion",
-      "version": 1,
-      "metadata": {
-        "expect": [
-          {
-            "name": "select",
-            "type": "select",
-            "label": "Select Method",
-            "required": true,
-            "validate": {
-              "enum": [
-                "chat",
-                "prompt"
-              ]
-            }
-          },
-          {
-            "name": "temperature",
-            "type": "number",
-            "label": "Temperature",
-            "validate": {
-              "max": 2,
-              "min": 0
-            }
-          },
-          {
-            "name": "top_p",
-            "type": "number",
-            "label": "Top P",
-            "validate": {
-              "max": 1,
-              "min": 0
-            }
-          },
-          {
-            "name": "n_completions",
-            "type": "number",
-            "label": "Number"
-          },
-          {
-            "name": "frequency_penalty",
-            "type": "number",
-            "label": "Frequency Penalty",
-            "validate": {
-              "max": 2,
-              "min": -2
-            }
-          },
-          {
-            "name": "presence_penalty",
-            "type": "number",
-            "label": "Presence Penalty",
-            "validate": {
-              "max": 2,
-              "min": -2
-            }
-          },
-          {
-            "name": "logit_bias",
-            "spec": {
-              "name": "value",
-              "spec": [
-                {
-                  "name": "token",
-                  "type": "text",
-                  "label": "Token ID",
-                  "required": true
-                },
-                {
-                  "name": "probability",
-                  "type": "number",
-                  "label": "Probability",
-                  "required": true,
-                  "validate": {
-                    "max": 100,
-                    "min": -100
-                  }
-                }
-              ],
-              "type": "collection",
-              "label": "Token Probability"
-            },
-            "type": "array",
-            "label": "Token Probability"
-          },
-          {
-            "name": "seed",
-            "type": "integer",
-            "label": "Seed"
-          },
-          {
-            "name": "stop",
-            "spec": {
-              "name": "value",
-              "type": "text",
-              "label": "Stop Sequence"
-            },
-            "type": "array",
-            "label": "Stop Sequences",
-            "validate": {
-              "maxItems": 4
-            }
-          },
-          {
-            "name": "additionalParameters",
-            "spec": {
-              "name": "value",
-              "spec": [
-                {
-                  "name": "key",
-                  "type": "text",
-                  "label": "Parameter Name",
-                  "required": true
-                },
-                {
-                  "name": "type",
-                  "type": "select",
-                  "label": "Input Type",
-                  "options": [
-                    {
-                      "label": "Text",
-                      "value": "text",
-                      "nested": [
-                        {
-                          "name": "value",
-                          "type": "text",
-                          "label": "Parameter Value"
-                        }
-                      ],
-                      "default": true
-                    },
-                    {
-                      "label": "Number",
-                      "value": "number",
-                      "nested": [
-                        {
-                          "name": "value",
-                          "type": "number",
-                          "label": "Parameter Value"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Boolean",
-                      "value": "boolean",
-                      "nested": [
-                        {
-                          "name": "value",
-                          "type": "boolean",
-                          "label": "Parameter Value"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Date",
-                      "value": "date",
-                      "nested": [
-                        {
-                          "name": "value",
-                          "type": "date",
-                          "label": "Parameter Value"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Any",
-                      "value": "any",
-                      "nested": [
-                        {
-                          "name": "value",
-                          "type": "any",
-                          "label": "Parameter Value"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "type": "collection",
-              "label": "Input Parameter"
-            },
-            "type": "array",
-            "label": "Other Input Parameters"
-          },
-          {
-            "name": "model",
-            "type": "select",
-            "label": "Model",
-            "required": true
-          },
-          {
-            "name": "max_tokens",
-            "type": "uinteger",
-            "label": "Max Completion Tokens"
-          },
-          {
-            "name": "messages",
-            "spec": {
-              "name": "value",
-              "spec": [
-                {
-                  "name": "role",
-                  "type": "select",
-                  "label": "Role",
-                  "options": {
-                    "store": [
-                      {
-                        "label": "System",
-                        "value": "system",
-                        "nested": [
-                          {
-                            "help": "Text content of the message on behalf of the selected __Role__.",
-                            "name": "content",
-                            "type": "text",
-                            "label": "Text Content"
-                          }
-                        ]
-                      },
-                      {
-                        "label": "User",
-                        "value": "user",
-                        "nested": [
-                          {
-                            "help": "Text content of the message on behalf of the selected __Role__.",
-                            "name": "content",
-                            "type": "text",
-                            "label": "Text Content"
-                          },
-                          {
-                            "name": "imageInputType",
-                            "type": "select",
-                            "label": "Image Input Type",
-                            "options": [
-                              {
-                                "label": "URL",
-                                "value": "url",
-                                "nested": [
-                                  {
-                                    "help": "Make sure to use a publically accessible URL.\nYou can test if your image is publically accessible by opening the link in an incognito tab.",
-                                    "name": "imageUrl",
-                                    "type": "url",
-                                    "label": "Image URL"
-                                  }
-                                ]
-                              },
-                              {
-                                "label": "Image File",
-                                "value": "file",
-                                "nested": [
-                                  {
-                                    "name": "imageFile",
-                                    "spec": [
-                                      {
-                                        "help": "Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` and `.gif`.",
-                                        "name": "imageFilename",
-                                        "type": "filename",
-                                        "label": "Image Filename",
-                                        "semantic": "file:name",
-                                        "extension": [
-                                          "jpg",
-                                          "jpeg",
-                                          "png",
-                                          "webp",
-                                          "gif"
-                                        ]
-                                      },
-                                      {
-                                        "name": "imageData",
-                                        "type": "buffer",
-                                        "label": "Image Data",
-                                        "semantic": "file:data"
-                                      }
-                                    ],
-                                    "type": "collection",
-                                    "label": "Image"
-                                  }
-                                ]
-                              }
-                            ],
-                            "mappable": false
-                          },
-                          {
-                            "name": "imageDetail",
-                            "type": "select",
-                            "label": "Image Detail",
-                            "options": [
-                              {
-                                "label": "Auto",
-                                "value": "auto",
-                                "default": true
-                              },
-                              {
-                                "label": "High",
-                                "value": "high"
-                              },
-                              {
-                                "label": "Low",
-                                "value": "low"
-                              }
-                            ],
-                            "advanced": true
-                          }
-                        ]
-                      },
-                      {
-                        "label": "Assistant",
-                        "value": "assistant",
-                        "nested": [
-                          {
-                            "help": "Text content of the message on behalf of the selected __Role__.",
-                            "name": "content",
-                            "type": "text",
-                            "label": "Text Content"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "required": true
-                }
-              ],
-              "type": "collection",
-              "label": "Message"
-            },
-            "type": "array",
-            "label": "Messages",
-            "required": true
-          },
-          {
-            "name": "response_format",
-            "type": "select",
-            "label": "Response Format",
-            "validate": {
-              "enum": [
-                "text",
-                "json_object"
-              ]
-            }
-          },
-          {
-            "name": "parseJSONResponse",
-            "type": "boolean",
-            "label": "Parse JSON Response",
-            "required": true
-          }
-        ],
-        "restore": {
-          "expect": {
-            "stop": {
-              "mode": "chose"
-            },
-            "model": {
-              "mode": "chose",
-              "label": "gpt-4o-mini (system)"
-            },
-            "top_p": {
-              "empty": true
-            },
-            "select": {
-              "label": "Create a Chat Completion (GPT and o1 models)"
-            },
-            "messages": {
-              "mode": "chose",
-              "items": [
-                {
-                  "role": {
-                    "mode": "chose",
-                    "label": "System"
-                  }
-                },
-                {
-                  "role": {
-                    "mode": "chose",
-                    "label": "User"
-                  },
-                  "imageDetail": {
-                    "mode": "chose",
-                    "label": "Auto"
-                  },
-                  "imageInputType": {
-                    "mode": "chose",
-                    "label": "Empty"
-                  }
-                }
-              ]
-            },
-            "logit_bias": {
-              "mode": "chose"
-            },
-            "n_completions": {
-              "empty": true
-            },
-            "response_format": {
-              "mode": "chose",
-              "label": "JSON Object"
-            },
-            "parseJSONResponse": {
-              "mode": "chose"
-            },
-            "additionalParameters": {
-              "mode": "chose"
-            }
-          },
-          "parameters": {
-            "__IMTCONN__": {
-              "data": {
-                "scoped": "true",
-                "connection": "openai-gpt-3"
-              },
-              "label": "My OpenAI connection"
-            }
-          }
-        },
-        "advanced": true,
-        "designer": {
-          "x": 300,
-          "y": 450,
-          "name": "Extract Data"
+          "y": 750
         },
         "interface": [
           {
-            "name": "result",
+            "name": "Limit, Test",
             "type": "any",
-            "label": "Result"
+            "label": "Limit, Test"
           },
           {
-            "name": "id",
-            "type": "text",
-            "label": "ID"
+            "name": "Slack Channel",
+            "type": "any",
+            "label": "Slack Channel"
           },
           {
-            "name": "object",
-            "type": "text",
-            "label": "Object"
+            "name": "Slack Channel, Testing",
+            "type": "any",
+            "label": "Slack Channel, Testing"
           },
           {
-            "name": "created",
-            "type": "date",
-            "label": "Created"
+            "name": "Slack ID, Backup",
+            "type": "any",
+            "label": "Slack ID, Backup"
           },
           {
-            "name": "model",
-            "type": "text",
-            "label": "Model"
+            "name": "Slack IDs, Notify",
+            "type": "any",
+            "label": "Slack IDs, Notify"
           },
           {
-            "name": "choices",
-            "spec": {
-              "spec": [
-                {
-                  "name": "text",
-                  "type": "text",
-                  "label": "Text"
-                },
-                {
-                  "name": "index",
-                  "type": "number",
-                  "label": "Index"
-                },
-                {
-                  "name": "logprobs",
-                  "type": "text",
-                  "label": "Log Probs"
-                },
-                {
-                  "name": "finish_reason",
-                  "type": "text",
-                  "label": "Finish Reason"
-                },
-                {
-                  "name": "message",
-                  "spec": [
-                    {
-                      "name": "role",
-                      "type": "text",
-                      "label": "Role"
-                    },
-                    {
-                      "name": "content",
-                      "type": "text",
-                      "label": "Content"
-                    },
-                    {
-                      "name": "refusal",
-                      "type": "text",
-                      "label": "Refusal"
-                    }
-                  ],
-                  "type": "collection",
-                  "label": "Message"
-                }
-              ],
-              "type": "collection"
-            },
-            "type": "array",
-            "label": "Choices"
-          },
-          {
-            "name": "usage",
-            "spec": [
-              {
-                "name": "prompt_tokens",
-                "type": "number",
-                "label": "Prompt Tokens"
-              },
-              {
-                "name": "completion_tokens",
-                "type": "text",
-                "label": "Completion Tokens"
-              },
-              {
-                "name": "total_tokens",
-                "type": "number",
-                "label": "Total Tokens"
-              },
-              {
-                "name": "prompt_tokens_details",
-                "spec": [
-                  {
-                    "name": "cached_tokens",
-                    "type": "uinteger",
-                    "label": "Cached Tokens"
-                  },
-                  {
-                    "name": "text_tokens",
-                    "type": "uinteger",
-                    "label": "Text Tokens"
-                  },
-                  {
-                    "name": "image_tokens",
-                    "type": "uinteger",
-                    "label": "Image Tokens"
-                  },
-                  {
-                    "name": "audio_tokens",
-                    "type": "uinteger",
-                    "label": "Audio Tokens"
-                  }
-                ],
-                "type": "collection",
-                "label": "Prompt Tokens Details"
-              },
-              {
-                "name": "completion_tokens_details",
-                "spec": [
-                  {
-                    "name": "reasoning_tokens",
-                    "type": "uinteger",
-                    "label": "Reasoning Tokens"
-                  },
-                  {
-                    "name": "text_tokens",
-                    "type": "uinteger",
-                    "label": "Text Tokens"
-                  },
-                  {
-                    "name": "audio_tokens",
-                    "type": "uinteger",
-                    "label": "Audio Tokens"
-                  }
-                ],
-                "type": "collection",
-                "label": "Completion Tokens Details"
-              }
-            ],
-            "type": "collection",
-            "label": "Usage"
-          },
-          {
-            "name": "system_fingerprint",
-            "type": "text",
-            "label": "System Fingerprint"
-          }
-        ],
-        "parameters": [
-          {
-            "name": "__IMTCONN__",
-            "type": "account:openai-gpt-3",
-            "label": "Connection",
-            "required": true
-          }
-        ]
-      },
-      "parameters": {
-        "__IMTCONN__": 2579821
-      }
-    },
-    {
-      "id": 4,
-      "mapper": {
-        "json": "{{3.result}}"
-      },
-      "module": "json:ParseJSON",
-      "version": 1,
-      "metadata": {
-        "expect": [
-          {
-            "name": "json",
-            "type": "text",
-            "label": "JSON string",
-            "required": true
-          }
-        ],
-        "restore": {},
-        "designer": {
-          "x": 600,
-          "y": 450,
-          "name": "Parse Result"
-        },
-        "parameters": [
-          {
-            "name": "type",
-            "type": "udt",
-            "label": "Data structure"
+            "name": "Testing",
+            "type": "any",
+            "label": "Testing"
           }
         ]
       },
       "parameters": {}
-    },
-    {
-      "id": 9,
-      "mapper": {
-        "object": "{{4.scenario}}"
-      },
-      "module": "json:TransformToJSON",
-      "version": 1,
-      "metadata": {
-        "expect": [
+    }
+  ],
+  "name": "Error Handler V3 — Make Community",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [
+        [
           {
-            "name": "object",
-            "type": "any",
-            "label": "Object"
-          }
-        ],
-        "restore": {
-          "parameters": {
-            "space": {
-              "label": "Empty"
-            }
-          }
-        },
-        "designer": {
-          "x": 900,
-          "y": 450,
-          "name": "Format Scenario Name"
-        },
-        "parameters": [
-          {
-            "name": "space",
-            "type": "select",
-            "label": "Indentation",
-            "validate": {
-              "enum": [
-                "tab",
-                "2",
-                "4"
+            "id": 2,
+            "mapper": {
+              "qs": [
+                {
+                  "key": "pg[limit]",
+                  "value": "{{if(1.Testing; 1.`Limit, Test`; ignore)}}"
+                }
+              ],
+              "url": "/v2/notifications",
+              "method": "GET",
+              "headers": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
               ]
+            },
+            "module": "make:makeApiCall",
+            "version": 1,
+            "metadata": {
+              "expect": [
+                {
+                  "name": "url",
+                  "type": "text",
+                  "label": "URL",
+                  "required": true
+                },
+                {
+                  "name": "method",
+                  "type": "select",
+                  "label": "Method",
+                  "required": true,
+                  "validate": {
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                {
+                  "name": "headers",
+                  "spec": [
+                    {
+                      "name": "key",
+                      "type": "text",
+                      "label": "Key"
+                    },
+                    {
+                      "name": "value",
+                      "type": "text",
+                      "label": "Value"
+                    }
+                  ],
+                  "type": "array",
+                  "label": "Headers"
+                },
+                {
+                  "name": "qs",
+                  "spec": [
+                    {
+                      "name": "key",
+                      "type": "text",
+                      "label": "Key"
+                    },
+                    {
+                      "name": "value",
+                      "type": "text",
+                      "label": "Value"
+                    }
+                  ],
+                  "type": "array",
+                  "label": "Query String"
+                },
+                {
+                  "name": "body",
+                  "type": "any",
+                  "label": "Body"
+                },
+                {
+                  "name": "url",
+                  "type": "text",
+                  "label": "URL",
+                  "required": true
+                },
+                {
+                  "name": "method",
+                  "type": "select",
+                  "label": "Method",
+                  "required": true,
+                  "validate": {
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                {
+                  "name": "headers",
+                  "spec": [
+                    {
+                      "name": "key",
+                      "type": "text",
+                      "label": "Key"
+                    },
+                    {
+                      "name": "value",
+                      "type": "text",
+                      "label": "Value"
+                    }
+                  ],
+                  "type": "array",
+                  "label": "Headers"
+                },
+                {
+                  "name": "qs",
+                  "spec": [
+                    {
+                      "name": "key",
+                      "type": "text",
+                      "label": "Key"
+                    },
+                    {
+                      "name": "value",
+                      "type": "text",
+                      "label": "Value"
+                    }
+                  ],
+                  "type": "array",
+                  "label": "Query String"
+                },
+                {
+                  "name": "body",
+                  "type": "any",
+                  "label": "Body"
+                }
+              ],
+              "restore": {
+                "expect": {
+                  "qs": {
+                    "mode": "chose",
+                    "items": [
+                      null
+                    ]
+                  },
+                  "method": {
+                    "mode": "chose",
+                    "label": "GET"
+                  },
+                  "headers": {
+                    "mode": "chose",
+                    "items": [
+                      null
+                    ]
+                  }
+                },
+                "parameters": {
+                  "__IMTCONN__": {
+                    "data": {
+                      "scoped": "true",
+                      "connection": "make"
+                    },
+                    "label": "Automation@Make Full Access (automation@axelerant.com)"
+                  }
+                }
+              },
+              "designer": {
+                "x": 300,
+                "y": 750,
+                "name": "Get notifications",
+                "messages": [
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  },
+                  {
+                    "message": "The module is not connected to the data flow.",
+                    "category": "link",
+                    "severity": "warning"
+                  },
+                  {
+                    "message": "Referenced module 'Tools - Set multiple variables' [1] is not accessible.",
+                    "category": "reference",
+                    "severity": "warning"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "name": "__IMTCONN__",
+                  "type": "account:make",
+                  "label": "Connection",
+                  "required": true
+                }
+              ]
+            },
+            "parameters": {
+              "__IMTCONN__": 33344
+            }
+          },
+          {
+            "id": 8,
+            "filter": {
+              "name": "Results",
+              "conditions": [
+                [
+                  {
+                    "a": "{{2.body.notifications}}",
+                    "b": "0",
+                    "o": "array:greater"
+                  },
+                  {
+                    "a": "{{2.body.userUnreadNotifications}}",
+                    "b": "0",
+                    "o": "number:notequal"
+                  }
+                ]
+              ]
+            },
+            "mapper": null,
+            "module": "builtin:BasicRouter",
+            "routes": [
+              {
+                "flow": [
+                  {
+                    "id": 5,
+                    "mapper": {
+                      "array": "{{2.body.notifications}}"
+                    },
+                    "module": "builtin:BasicFeeder",
+                    "version": 1,
+                    "metadata": {
+                      "expect": [
+                        {
+                          "mode": "edit",
+                          "name": "array",
+                          "spec": [],
+                          "type": "array",
+                          "label": "Array"
+                        }
+                      ],
+                      "restore": {
+                        "expect": {
+                          "array": {
+                            "mode": "edit"
+                          }
+                        }
+                      },
+                      "designer": {
+                        "x": 900,
+                        "y": 600
+                      }
+                    },
+                    "parameters": {}
+                  },
+                  {
+                    "id": 31,
+                    "filter": {
+                      "name": "Not Read",
+                      "conditions": [
+                        [
+                          {
+                            "a": "{{5.read}}",
+                            "o": "notexist"
+                          }
+                        ]
+                      ]
+                    },
+                    "mapper": {
+                      "scope": "roundtrip",
+                      "variables": [
+                        {
+                          "name": "Counter, Link",
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    "module": "util:SetVariables",
+                    "version": 1,
+                    "metadata": {
+                      "expect": [
+                        {
+                          "name": "variables",
+                          "spec": [
+                            {
+                              "name": "name",
+                              "type": "text",
+                              "label": "Variable name",
+                              "required": true
+                            },
+                            {
+                              "name": "value",
+                              "type": "any",
+                              "label": "Variable value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Variables"
+                        },
+                        {
+                          "name": "scope",
+                          "type": "select",
+                          "label": "Variable lifetime",
+                          "required": true,
+                          "validate": {
+                            "enum": [
+                              "roundtrip",
+                              "execution"
+                            ]
+                          }
+                        }
+                      ],
+                      "restore": {
+                        "expect": {
+                          "scope": {
+                            "label": "One cycle"
+                          },
+                          "variables": {
+                            "items": [
+                              null
+                            ]
+                          }
+                        }
+                      },
+                      "designer": {
+                        "x": 1200,
+                        "y": 600
+                      },
+                      "interface": [
+                        {
+                          "name": "Counter, Link",
+                          "type": "any",
+                          "label": "Counter, Link"
+                        }
+                      ]
+                    },
+                    "parameters": {}
+                  },
+                  {
+                    "id": 3,
+                    "mapper": {
+                      "url": "/v2/notifications/{{5.id}}",
+                      "method": "GET",
+                      "headers": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ]
+                    },
+                    "module": "make:makeApiCall",
+                    "version": 1,
+                    "metadata": {
+                      "expect": [
+                        {
+                          "name": "url",
+                          "type": "text",
+                          "label": "URL",
+                          "required": true
+                        },
+                        {
+                          "name": "method",
+                          "type": "select",
+                          "label": "Method",
+                          "required": true,
+                          "validate": {
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "PATCH",
+                              "DELETE"
+                            ]
+                          }
+                        },
+                        {
+                          "name": "headers",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Headers"
+                        },
+                        {
+                          "name": "qs",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Query String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "any",
+                          "label": "Body"
+                        }
+                      ],
+                      "restore": {
+                        "expect": {
+                          "qs": {
+                            "mode": "chose"
+                          },
+                          "method": {
+                            "mode": "chose",
+                            "label": "GET"
+                          },
+                          "headers": {
+                            "mode": "chose",
+                            "items": [
+                              null
+                            ]
+                          }
+                        },
+                        "parameters": {
+                          "__IMTCONN__": {
+                            "data": {
+                              "scoped": "true",
+                              "connection": "make"
+                            },
+                            "label": "Automation@Make Full Access (automation@axelerant.com)"
+                          }
+                        }
+                      },
+                      "designer": {
+                        "x": 1500,
+                        "y": 600,
+                        "name": "Get notification",
+                        "messages": [
+                          {
+                            "message": "Value must not be empty.",
+                            "category": "setup",
+                            "severity": "error"
+                          }
+                        ]
+                      },
+                      "parameters": [
+                        {
+                          "name": "__IMTCONN__",
+                          "type": "account:make",
+                          "label": "Connection",
+                          "required": true
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "__IMTCONN__": 33344
+                    }
+                  },
+                  {
+                    "id": 15,
+                    "mapper": null,
+                    "module": "builtin:BasicRouter",
+                    "routes": [
+                      {
+                        "flow": [
+                          {
+                            "id": 14,
+                            "mapper": {
+                              "html": "{{3.body.notification.body}}",
+                              "elementType": "a"
+                            },
+                            "module": "regexp:HTMLParser",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "elementType",
+                                  "type": "select",
+                                  "label": "Element type",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "img",
+                                      "a",
+                                      "iframe"
+                                    ]
+                                  }
+                                },
+                                {
+                                  "name": "html",
+                                  "type": "text",
+                                  "label": "HTML"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "elementType": {
+                                    "label": "Link (a)"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2100,
+                                "y": 300
+                              },
+                              "interface": [
+                                {
+                                  "name": "element",
+                                  "type": "text",
+                                  "label": "Element"
+                                },
+                                {
+                                  "name": "innerContent",
+                                  "type": "text",
+                                  "label": "Inner content"
+                                },
+                                {
+                                  "name": "attrs",
+                                  "spec": [
+                                    {
+                                      "name": "href",
+                                      "type": "text",
+                                      "label": "href"
+                                    },
+                                    {
+                                      "name": "rel",
+                                      "type": "text",
+                                      "label": "rel"
+                                    },
+                                    {
+                                      "name": "target",
+                                      "type": "text",
+                                      "label": "target"
+                                    }
+                                  ],
+                                  "type": "collection",
+                                  "label": "Attributes"
+                                }
+                              ],
+                              "parameters": [
+                                {
+                                  "name": "continueWhenNoRes",
+                                  "type": "boolean",
+                                  "label": "Continue the execution of the route even if the module finds no matches",
+                                  "required": true
+                                }
+                              ]
+                            },
+                            "parameters": {
+                              "continueWhenNoRes": true
+                            }
+                          },
+                          {
+                            "id": 32,
+                            "mapper": {
+                              "variables": [
+                                "Counter, Link"
+                              ]
+                            },
+                            "module": "util:GetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": {
+                                    "name": "value",
+                                    "type": "text",
+                                    "label": "Variable name",
+                                    "required": true
+                                  },
+                                  "type": "array",
+                                  "label": "Variables"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "variables": {
+                                    "items": [
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2400,
+                                "y": 300
+                              },
+                              "interface": [
+                                {
+                                  "name": "Counter, Link",
+                                  "type": "any",
+                                  "label": "Counter, Link"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 28,
+                            "filter": {
+                              "name": "First Entry",
+                              "conditions": [
+                                [
+                                  {
+                                    "a": "{{32.`Counter, Link`}}",
+                                    "b": "1",
+                                    "o": "number:equal"
+                                  }
+                                ]
+                              ]
+                            },
+                            "mapper": {
+                              "scope": "roundtrip",
+                              "variables": [
+                                {
+                                  "name": "Counter, Link",
+                                  "value": "{{sum(32.`Counter, Link`; 1)}}"
+                                },
+                                {
+                                  "name": "Scenario ID",
+                                  "value": "{{get(split(14.attrs.href; \"/\"); 5)}}"
+                                }
+                              ]
+                            },
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": [
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Variable name",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "any",
+                                      "label": "Variable value"
+                                    }
+                                  ],
+                                  "type": "array",
+                                  "label": "Variables"
+                                },
+                                {
+                                  "name": "scope",
+                                  "type": "select",
+                                  "label": "Variable lifetime",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "roundtrip",
+                                      "execution"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "scope": {
+                                    "label": "One cycle"
+                                  },
+                                  "variables": {
+                                    "items": [
+                                      null,
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2700,
+                                "y": 300
+                              },
+                              "interface": [
+                                {
+                                  "name": "Counter, Link",
+                                  "type": "any",
+                                  "label": "Counter, Link"
+                                },
+                                {
+                                  "name": "Scenario ID",
+                                  "type": "any",
+                                  "label": "Scenario ID"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 19,
+                            "filter": {
+                              "name": "Scenario ID",
+                              "conditions": [
+                                [
+                                  {
+                                    "a": "{{28.`Scenario ID`}}",
+                                    "b": "{{emptystring}}",
+                                    "o": "text:notequal"
+                                  }
+                                ]
+                              ]
+                            },
+                            "mapper": {
+                              "scenario": "{{28.`Scenario ID`}}"
+                            },
+                            "module": "make:getAScenario",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "scenario",
+                                  "type": "text",
+                                  "label": "Scenario ID",
+                                  "required": true
+                                }
+                              ],
+                              "restore": {
+                                "parameters": {
+                                  "__IMTCONN__": {
+                                    "data": {
+                                      "scoped": "true",
+                                      "connection": "make"
+                                    },
+                                    "label": "Automation@Make Full Access (automation@axelerant.com)"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3000,
+                                "y": 300
+                              },
+                              "parameters": [
+                                {
+                                  "name": "__IMTCONN__",
+                                  "type": "account:make",
+                                  "label": "Connection",
+                                  "required": true
+                                }
+                              ]
+                            },
+                            "parameters": {
+                              "__IMTCONN__": 33344
+                            }
+                          },
+                          {
+                            "id": 20,
+                            "mapper": {
+                              "scope": "roundtrip",
+                              "variables": [
+                                {
+                                  "name": "Creator Email",
+                                  "value": "{{19.createdByUser.email}}"
+                                },
+                                {
+                                  "name": "Updater Email",
+                                  "value": "{{19.updatedByUser.email}}"
+                                }
+                              ]
+                            },
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": [
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Variable name",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "any",
+                                      "label": "Variable value"
+                                    }
+                                  ],
+                                  "type": "array",
+                                  "label": "Variables"
+                                },
+                                {
+                                  "name": "scope",
+                                  "type": "select",
+                                  "label": "Variable lifetime",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "roundtrip",
+                                      "execution"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "scope": {
+                                    "label": "One cycle"
+                                  },
+                                  "variables": {
+                                    "items": [
+                                      null,
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3300,
+                                "y": 300
+                              },
+                              "interface": [
+                                {
+                                  "name": "Creator Email",
+                                  "type": "any",
+                                  "label": "Creator Email"
+                                },
+                                {
+                                  "name": "Updater Email",
+                                  "type": "any",
+                                  "label": "Updater Email"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 21,
+                            "mapper": {
+                              "email": "{{20.`Creator Email`}}"
+                            },
+                            "module": "slack:SearchUser",
+                            "onerror": [
+                              {
+                                "id": 22,
+                                "mapper": {
+                                  "id": "{{1.`Slack ID, Backup`}}",
+                                  "tz": "",
+                                  "name": "",
+                                  "color": "",
+                                  "profile": {
+                                    "team": "",
+                                    "email": "",
+                                    "phone": "",
+                                    "skype": "",
+                                    "title": "",
+                                    "fields": "",
+                                    "image_24": "",
+                                    "image_32": "",
+                                    "image_48": "",
+                                    "image_72": "",
+                                    "image_192": "",
+                                    "image_512": "",
+                                    "last_name": "",
+                                    "real_name": "",
+                                    "first_name": "",
+                                    "avatar_hash": "",
+                                    "status_text": "",
+                                    "display_name": "",
+                                    "status_emoji": "",
+                                    "status_expiration": "",
+                                    "real_name_normalized": "",
+                                    "status_text_canonical": "",
+                                    "display_name_normalized": ""
+                                  },
+                                  "team_id": "",
+                                  "updated": "",
+                                  "tz_label": "",
+                                  "real_name": "",
+                                  "tz_offset": "",
+                                  "__IMTINDEX__": "",
+                                  "__IMTLENGTH__": ""
+                                },
+                                "module": "builtin:Resume",
+                                "version": 1,
+                                "metadata": {
+                                  "expect": [
+                                    {
+                                      "name": "__IMTLENGTH__",
+                                      "type": "uinteger",
+                                      "label": "Total number of bundles"
+                                    },
+                                    {
+                                      "name": "__IMTINDEX__",
+                                      "type": "uinteger",
+                                      "label": "Bundle order position"
+                                    },
+                                    {
+                                      "name": "id",
+                                      "type": "text",
+                                      "label": "User ID"
+                                    },
+                                    {
+                                      "name": "team_id",
+                                      "type": "text",
+                                      "label": "Team ID"
+                                    },
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Name"
+                                    },
+                                    {
+                                      "name": "deleted",
+                                      "type": "boolean",
+                                      "label": "Deleted"
+                                    },
+                                    {
+                                      "name": "color",
+                                      "type": "text",
+                                      "label": "Color"
+                                    },
+                                    {
+                                      "name": "real_name",
+                                      "type": "text",
+                                      "label": "Real name"
+                                    },
+                                    {
+                                      "name": "tz",
+                                      "type": "text",
+                                      "label": "Tz"
+                                    },
+                                    {
+                                      "name": "tz_label",
+                                      "type": "text",
+                                      "label": "Tz label"
+                                    },
+                                    {
+                                      "name": "tz_offset",
+                                      "type": "number",
+                                      "label": "Tz offset"
+                                    },
+                                    {
+                                      "name": "profile",
+                                      "spec": [
+                                        {
+                                          "name": "title",
+                                          "type": "text",
+                                          "label": "Title"
+                                        },
+                                        {
+                                          "name": "phone",
+                                          "type": "text",
+                                          "label": "Phone"
+                                        },
+                                        {
+                                          "name": "skype",
+                                          "type": "text",
+                                          "label": "Skype"
+                                        },
+                                        {
+                                          "name": "email",
+                                          "type": "email",
+                                          "label": "Email"
+                                        },
+                                        {
+                                          "name": "real_name",
+                                          "type": "text",
+                                          "label": "Real name"
+                                        },
+                                        {
+                                          "name": "real_name_normalized",
+                                          "type": "text",
+                                          "label": "Real name normalized"
+                                        },
+                                        {
+                                          "name": "display_name",
+                                          "type": "text",
+                                          "label": "Display name"
+                                        },
+                                        {
+                                          "name": "display_name_normalized",
+                                          "type": "text",
+                                          "label": "Display name normalized"
+                                        },
+                                        {
+                                          "name": "fields",
+                                          "type": "text",
+                                          "label": "Fields"
+                                        },
+                                        {
+                                          "name": "status_text",
+                                          "type": "text",
+                                          "label": "Status text"
+                                        },
+                                        {
+                                          "name": "status_emoji",
+                                          "type": "text",
+                                          "label": "Status emoji"
+                                        },
+                                        {
+                                          "name": "status_expiration",
+                                          "type": "number",
+                                          "label": "Status expiration"
+                                        },
+                                        {
+                                          "name": "avatar_hash",
+                                          "type": "text",
+                                          "label": "Avatar hash"
+                                        },
+                                        {
+                                          "name": "always_active",
+                                          "type": "boolean",
+                                          "label": "Always active"
+                                        },
+                                        {
+                                          "name": "first_name",
+                                          "type": "text",
+                                          "label": "First name"
+                                        },
+                                        {
+                                          "name": "last_name",
+                                          "type": "text",
+                                          "label": "Last name"
+                                        },
+                                        {
+                                          "name": "image_24",
+                                          "type": "text",
+                                          "label": "Image 24"
+                                        },
+                                        {
+                                          "name": "image_32",
+                                          "type": "text",
+                                          "label": "Image 32"
+                                        },
+                                        {
+                                          "name": "image_48",
+                                          "type": "text",
+                                          "label": "Image 48"
+                                        },
+                                        {
+                                          "name": "image_72",
+                                          "type": "text",
+                                          "label": "Image 72"
+                                        },
+                                        {
+                                          "name": "image_192",
+                                          "type": "text",
+                                          "label": "Image 192"
+                                        },
+                                        {
+                                          "name": "image_512",
+                                          "type": "text",
+                                          "label": "Image 512"
+                                        },
+                                        {
+                                          "name": "status_text_canonical",
+                                          "type": "text",
+                                          "label": "Status text canonical"
+                                        },
+                                        {
+                                          "name": "team",
+                                          "type": "text",
+                                          "label": "Team"
+                                        }
+                                      ],
+                                      "type": "collection",
+                                      "label": "Profile"
+                                    },
+                                    {
+                                      "name": "is_admin",
+                                      "type": "boolean",
+                                      "label": "Is admin"
+                                    },
+                                    {
+                                      "name": "is_owner",
+                                      "type": "boolean",
+                                      "label": "Is owner"
+                                    },
+                                    {
+                                      "name": "is_primary_owner",
+                                      "type": "boolean",
+                                      "label": "Is primary owner"
+                                    },
+                                    {
+                                      "name": "is_restricted",
+                                      "type": "boolean",
+                                      "label": "Is restricted"
+                                    },
+                                    {
+                                      "name": "is_ultra_restricted",
+                                      "type": "boolean",
+                                      "label": "Is ultra restricted"
+                                    },
+                                    {
+                                      "name": "is_bot",
+                                      "type": "boolean",
+                                      "label": "Is bot"
+                                    },
+                                    {
+                                      "name": "is_app_user",
+                                      "type": "boolean",
+                                      "label": "Is app user"
+                                    },
+                                    {
+                                      "name": "updated",
+                                      "type": "date",
+                                      "label": "Updated"
+                                    },
+                                    {
+                                      "name": "has_2fa",
+                                      "type": "boolean",
+                                      "label": "Has 2 FA"
+                                    }
+                                  ],
+                                  "restore": {},
+                                  "designer": {
+                                    "x": 3900,
+                                    "y": 600
+                                  }
+                                },
+                                "parameters": {}
+                              }
+                            ],
+                            "version": 4,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "email",
+                                  "type": "email",
+                                  "label": "Email",
+                                  "required": true
+                                }
+                              ],
+                              "restore": {
+                                "parameters": {
+                                  "__IMTCONN__": {
+                                    "data": {
+                                      "scoped": "true",
+                                      "connection": "slack2"
+                                    },
+                                    "label": "Automation@Slack Axelerant v5 (automation)"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3600,
+                                "y": 300,
+                                "messages": [
+                                  {
+                                    "message": "Value must not be empty.",
+                                    "category": "setup",
+                                    "severity": "error"
+                                  }
+                                ]
+                              },
+                              "parameters": [
+                                {
+                                  "name": "__IMTCONN__",
+                                  "type": "account:slack2",
+                                  "label": "Connection",
+                                  "required": true
+                                }
+                              ]
+                            },
+                            "parameters": {
+                              "__IMTCONN__": 31067
+                            }
+                          },
+                          {
+                            "id": 23,
+                            "mapper": {
+                              "email": "{{20.`Updater Email`}}"
+                            },
+                            "module": "slack:SearchUser",
+                            "onerror": [
+                              {
+                                "id": 24,
+                                "mapper": {
+                                  "id": "{{1.`Slack ID, Backup`}}",
+                                  "tz": "",
+                                  "name": "",
+                                  "color": "",
+                                  "profile": {
+                                    "team": "",
+                                    "email": "",
+                                    "phone": "",
+                                    "skype": "",
+                                    "title": "",
+                                    "fields": "",
+                                    "image_24": "",
+                                    "image_32": "",
+                                    "image_48": "",
+                                    "image_72": "",
+                                    "image_192": "",
+                                    "image_512": "",
+                                    "last_name": "",
+                                    "real_name": "",
+                                    "first_name": "",
+                                    "avatar_hash": "",
+                                    "status_text": "",
+                                    "display_name": "",
+                                    "status_emoji": "",
+                                    "status_expiration": "",
+                                    "real_name_normalized": "",
+                                    "status_text_canonical": "",
+                                    "display_name_normalized": ""
+                                  },
+                                  "team_id": "",
+                                  "updated": "",
+                                  "tz_label": "",
+                                  "real_name": "",
+                                  "tz_offset": "",
+                                  "__IMTINDEX__": "",
+                                  "__IMTLENGTH__": ""
+                                },
+                                "module": "builtin:Resume",
+                                "version": 1,
+                                "metadata": {
+                                  "expect": [
+                                    {
+                                      "name": "__IMTLENGTH__",
+                                      "type": "uinteger",
+                                      "label": "Total number of bundles"
+                                    },
+                                    {
+                                      "name": "__IMTINDEX__",
+                                      "type": "uinteger",
+                                      "label": "Bundle order position"
+                                    },
+                                    {
+                                      "name": "id",
+                                      "type": "text",
+                                      "label": "User ID"
+                                    },
+                                    {
+                                      "name": "team_id",
+                                      "type": "text",
+                                      "label": "Team ID"
+                                    },
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Name"
+                                    },
+                                    {
+                                      "name": "deleted",
+                                      "type": "boolean",
+                                      "label": "Deleted"
+                                    },
+                                    {
+                                      "name": "color",
+                                      "type": "text",
+                                      "label": "Color"
+                                    },
+                                    {
+                                      "name": "real_name",
+                                      "type": "text",
+                                      "label": "Real name"
+                                    },
+                                    {
+                                      "name": "tz",
+                                      "type": "text",
+                                      "label": "Tz"
+                                    },
+                                    {
+                                      "name": "tz_label",
+                                      "type": "text",
+                                      "label": "Tz label"
+                                    },
+                                    {
+                                      "name": "tz_offset",
+                                      "type": "number",
+                                      "label": "Tz offset"
+                                    },
+                                    {
+                                      "name": "profile",
+                                      "spec": [
+                                        {
+                                          "name": "title",
+                                          "type": "text",
+                                          "label": "Title"
+                                        },
+                                        {
+                                          "name": "phone",
+                                          "type": "text",
+                                          "label": "Phone"
+                                        },
+                                        {
+                                          "name": "skype",
+                                          "type": "text",
+                                          "label": "Skype"
+                                        },
+                                        {
+                                          "name": "email",
+                                          "type": "email",
+                                          "label": "Email"
+                                        },
+                                        {
+                                          "name": "real_name",
+                                          "type": "text",
+                                          "label": "Real name"
+                                        },
+                                        {
+                                          "name": "real_name_normalized",
+                                          "type": "text",
+                                          "label": "Real name normalized"
+                                        },
+                                        {
+                                          "name": "display_name",
+                                          "type": "text",
+                                          "label": "Display name"
+                                        },
+                                        {
+                                          "name": "display_name_normalized",
+                                          "type": "text",
+                                          "label": "Display name normalized"
+                                        },
+                                        {
+                                          "name": "fields",
+                                          "type": "text",
+                                          "label": "Fields"
+                                        },
+                                        {
+                                          "name": "status_text",
+                                          "type": "text",
+                                          "label": "Status text"
+                                        },
+                                        {
+                                          "name": "status_emoji",
+                                          "type": "text",
+                                          "label": "Status emoji"
+                                        },
+                                        {
+                                          "name": "status_expiration",
+                                          "type": "number",
+                                          "label": "Status expiration"
+                                        },
+                                        {
+                                          "name": "avatar_hash",
+                                          "type": "text",
+                                          "label": "Avatar hash"
+                                        },
+                                        {
+                                          "name": "always_active",
+                                          "type": "boolean",
+                                          "label": "Always active"
+                                        },
+                                        {
+                                          "name": "first_name",
+                                          "type": "text",
+                                          "label": "First name"
+                                        },
+                                        {
+                                          "name": "last_name",
+                                          "type": "text",
+                                          "label": "Last name"
+                                        },
+                                        {
+                                          "name": "image_24",
+                                          "type": "text",
+                                          "label": "Image 24"
+                                        },
+                                        {
+                                          "name": "image_32",
+                                          "type": "text",
+                                          "label": "Image 32"
+                                        },
+                                        {
+                                          "name": "image_48",
+                                          "type": "text",
+                                          "label": "Image 48"
+                                        },
+                                        {
+                                          "name": "image_72",
+                                          "type": "text",
+                                          "label": "Image 72"
+                                        },
+                                        {
+                                          "name": "image_192",
+                                          "type": "text",
+                                          "label": "Image 192"
+                                        },
+                                        {
+                                          "name": "image_512",
+                                          "type": "text",
+                                          "label": "Image 512"
+                                        },
+                                        {
+                                          "name": "status_text_canonical",
+                                          "type": "text",
+                                          "label": "Status text canonical"
+                                        },
+                                        {
+                                          "name": "team",
+                                          "type": "text",
+                                          "label": "Team"
+                                        }
+                                      ],
+                                      "type": "collection",
+                                      "label": "Profile"
+                                    },
+                                    {
+                                      "name": "is_admin",
+                                      "type": "boolean",
+                                      "label": "Is admin"
+                                    },
+                                    {
+                                      "name": "is_owner",
+                                      "type": "boolean",
+                                      "label": "Is owner"
+                                    },
+                                    {
+                                      "name": "is_primary_owner",
+                                      "type": "boolean",
+                                      "label": "Is primary owner"
+                                    },
+                                    {
+                                      "name": "is_restricted",
+                                      "type": "boolean",
+                                      "label": "Is restricted"
+                                    },
+                                    {
+                                      "name": "is_ultra_restricted",
+                                      "type": "boolean",
+                                      "label": "Is ultra restricted"
+                                    },
+                                    {
+                                      "name": "is_bot",
+                                      "type": "boolean",
+                                      "label": "Is bot"
+                                    },
+                                    {
+                                      "name": "is_app_user",
+                                      "type": "boolean",
+                                      "label": "Is app user"
+                                    },
+                                    {
+                                      "name": "updated",
+                                      "type": "date",
+                                      "label": "Updated"
+                                    },
+                                    {
+                                      "name": "has_2fa",
+                                      "type": "boolean",
+                                      "label": "Has 2 FA"
+                                    }
+                                  ],
+                                  "restore": {},
+                                  "designer": {
+                                    "x": 4200,
+                                    "y": 300
+                                  }
+                                },
+                                "parameters": {}
+                              }
+                            ],
+                            "version": 4,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "email",
+                                  "type": "email",
+                                  "label": "Email",
+                                  "required": true
+                                }
+                              ],
+                              "restore": {
+                                "parameters": {
+                                  "__IMTCONN__": {
+                                    "data": {
+                                      "scoped": "true",
+                                      "connection": "slack2"
+                                    },
+                                    "label": "Automation@Slack Axelerant v5 (automation)"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3900,
+                                "y": 150,
+                                "messages": [
+                                  {
+                                    "message": "Value must not be empty.",
+                                    "category": "setup",
+                                    "severity": "error"
+                                  }
+                                ]
+                              },
+                              "parameters": [
+                                {
+                                  "name": "__IMTCONN__",
+                                  "type": "account:slack2",
+                                  "label": "Connection",
+                                  "required": true
+                                }
+                              ]
+                            },
+                            "parameters": {
+                              "__IMTCONN__": 31067
+                            }
+                          },
+                          {
+                            "id": 25,
+                            "mapper": {
+                              "scope": "roundtrip",
+                              "variables": [
+                                {
+                                  "name": "Slack IDs, Notify",
+                                  "value": "{{add(1.`Slack IDs, Notify`; 21.id; 23.id)}}"
+                                }
+                              ]
+                            },
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": [
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Variable name",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "any",
+                                      "label": "Variable value"
+                                    }
+                                  ],
+                                  "type": "array",
+                                  "label": "Variables"
+                                },
+                                {
+                                  "name": "scope",
+                                  "type": "select",
+                                  "label": "Variable lifetime",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "roundtrip",
+                                      "execution"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "scope": {
+                                    "label": "One cycle"
+                                  },
+                                  "variables": {
+                                    "items": [
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 4200,
+                                "y": 0,
+                                "messages": [
+                                  {
+                                    "message": "Referenced module 'Tools - Set multiple variables' [1] is not accessible.",
+                                    "category": "reference",
+                                    "severity": "warning"
+                                  }
+                                ]
+                              },
+                              "interface": [
+                                {
+                                  "name": "Slack IDs, Notify",
+                                  "type": "any",
+                                  "label": "Slack IDs, Notify"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          }
+                        ]
+                      },
+                      {
+                        "flow": [
+                          {
+                            "id": 9,
+                            "mapper": {
+                              "gfm": true,
+                              "data": "{{3.body.notification.body}}"
+                            },
+                            "module": "markdown:Decompile",
+                            "version": 2,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "data",
+                                  "type": "text",
+                                  "label": "HTML"
+                                },
+                                {
+                                  "name": "gfm",
+                                  "type": "boolean",
+                                  "label": "GitHub Flavored Markdown",
+                                  "required": true
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "gfm": {
+                                    "mode": "chose"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2100,
+                                "y": 900
+                              }
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 36,
+                            "mapper": {
+                              "text": "{{9.data}}",
+                              "value": "the",
+                              "global": true,
+                              "pattern": "^Your",
+                              "multiline": true,
+                              "sensitive": false,
+                              "singleline": false
+                            },
+                            "module": "regexp:Replace",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "pattern",
+                                  "type": "text",
+                                  "label": "Pattern",
+                                  "required": true
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "text",
+                                  "label": "New value"
+                                },
+                                {
+                                  "name": "global",
+                                  "type": "boolean",
+                                  "label": "Global match",
+                                  "required": true
+                                },
+                                {
+                                  "name": "sensitive",
+                                  "type": "boolean",
+                                  "label": "Case sensitive",
+                                  "required": true
+                                },
+                                {
+                                  "name": "multiline",
+                                  "type": "boolean",
+                                  "label": "Multiline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "singleline",
+                                  "type": "boolean",
+                                  "label": "Singleline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "text",
+                                  "label": "Text"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "global": {
+                                    "mode": "chose"
+                                  },
+                                  "multiline": {
+                                    "mode": "chose"
+                                  },
+                                  "sensitive": {
+                                    "mode": "chose"
+                                  },
+                                  "singleline": {
+                                    "mode": "chose"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2400,
+                                "y": 900,
+                                "name": "Your"
+                              }
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 12,
+                            "mapper": {
+                              "text": "{{36.text}}",
+                              "value": "<$2|$1>",
+                              "global": true,
+                              "pattern": "\\[(.+)\\]\\(([^ ]+)\\)",
+                              "multiline": true,
+                              "sensitive": false,
+                              "singleline": false
+                            },
+                            "module": "regexp:Replace",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "pattern",
+                                  "type": "text",
+                                  "label": "Pattern",
+                                  "required": true
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "text",
+                                  "label": "New value"
+                                },
+                                {
+                                  "name": "global",
+                                  "type": "boolean",
+                                  "label": "Global match",
+                                  "required": true
+                                },
+                                {
+                                  "name": "sensitive",
+                                  "type": "boolean",
+                                  "label": "Case sensitive",
+                                  "required": true
+                                },
+                                {
+                                  "name": "multiline",
+                                  "type": "boolean",
+                                  "label": "Multiline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "singleline",
+                                  "type": "boolean",
+                                  "label": "Singleline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "text",
+                                  "label": "Text"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "global": {
+                                    "mode": "chose"
+                                  },
+                                  "multiline": {
+                                    "mode": "chose"
+                                  },
+                                  "sensitive": {
+                                    "mode": "chose"
+                                  },
+                                  "singleline": {
+                                    "mode": "chose"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2700,
+                                "y": 900,
+                                "name": "Links"
+                              }
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 33,
+                            "mapper": {
+                              "text": "{{12.text}}",
+                              "value": "{{space}}",
+                              "global": true,
+                              "pattern": "{{space}}{2,}",
+                              "multiline": true,
+                              "sensitive": false,
+                              "singleline": false
+                            },
+                            "module": "regexp:Replace",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "pattern",
+                                  "type": "text",
+                                  "label": "Pattern",
+                                  "required": true
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "text",
+                                  "label": "New value"
+                                },
+                                {
+                                  "name": "global",
+                                  "type": "boolean",
+                                  "label": "Global match",
+                                  "required": true
+                                },
+                                {
+                                  "name": "sensitive",
+                                  "type": "boolean",
+                                  "label": "Case sensitive",
+                                  "required": true
+                                },
+                                {
+                                  "name": "multiline",
+                                  "type": "boolean",
+                                  "label": "Multiline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "singleline",
+                                  "type": "boolean",
+                                  "label": "Singleline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "text",
+                                  "label": "Text"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "global": {
+                                    "mode": "chose"
+                                  },
+                                  "multiline": {
+                                    "mode": "chose"
+                                  },
+                                  "sensitive": {
+                                    "mode": "chose"
+                                  },
+                                  "singleline": {
+                                    "mode": "chose"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3000,
+                                "y": 900,
+                                "name": "Spaces"
+                              }
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 13,
+                            "mapper": {
+                              "text": "{{33.text}}",
+                              "value": "*",
+                              "global": true,
+                              "pattern": "\\*\\*",
+                              "multiline": true,
+                              "sensitive": false,
+                              "singleline": false
+                            },
+                            "module": "regexp:Replace",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "pattern",
+                                  "type": "text",
+                                  "label": "Pattern",
+                                  "required": true
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "text",
+                                  "label": "New value"
+                                },
+                                {
+                                  "name": "global",
+                                  "type": "boolean",
+                                  "label": "Global match",
+                                  "required": true
+                                },
+                                {
+                                  "name": "sensitive",
+                                  "type": "boolean",
+                                  "label": "Case sensitive",
+                                  "required": true
+                                },
+                                {
+                                  "name": "multiline",
+                                  "type": "boolean",
+                                  "label": "Multiline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "singleline",
+                                  "type": "boolean",
+                                  "label": "Singleline",
+                                  "required": true
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "text",
+                                  "label": "Text"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "global": {
+                                    "mode": "chose"
+                                  },
+                                  "multiline": {
+                                    "mode": "chose"
+                                  },
+                                  "sensitive": {
+                                    "mode": "chose"
+                                  },
+                                  "singleline": {
+                                    "mode": "chose"
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3300,
+                                "y": 900,
+                                "name": "Bold"
+                              }
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 17,
+                            "mapper": {
+                              "scope": "roundtrip",
+                              "variables": [
+                                {
+                                  "name": "Content",
+                                  "value": "{{13.text}}"
+                                }
+                              ]
+                            },
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": [
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Variable name",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "any",
+                                      "label": "Variable value"
+                                    }
+                                  ],
+                                  "type": "array",
+                                  "label": "Variables"
+                                },
+                                {
+                                  "name": "scope",
+                                  "type": "select",
+                                  "label": "Variable lifetime",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "roundtrip",
+                                      "execution"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "scope": {
+                                    "label": "One cycle"
+                                  },
+                                  "variables": {
+                                    "items": [
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 3600,
+                                "y": 900
+                              },
+                              "interface": [
+                                {
+                                  "name": "Content",
+                                  "type": "any",
+                                  "label": "Content"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          }
+                        ]
+                      },
+                      {
+                        "flow": [
+                          {
+                            "id": 16,
+                            "mapper": {
+                              "variables": [
+                                "Content",
+                                "Slack IDs, Notify"
+                              ]
+                            },
+                            "module": "util:GetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": {
+                                    "name": "value",
+                                    "type": "text",
+                                    "label": "Variable name",
+                                    "required": true
+                                  },
+                                  "type": "array",
+                                  "label": "Variables"
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "variables": {
+                                    "items": [
+                                      null,
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2100,
+                                "y": 1200
+                              },
+                              "interface": [
+                                {
+                                  "name": "Content",
+                                  "type": "any",
+                                  "label": "Content"
+                                },
+                                {
+                                  "name": "Slack IDs, Notify",
+                                  "type": "any",
+                                  "label": "Slack IDs, Notify"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 26,
+                            "mapper": {
+                              "scope": "roundtrip",
+                              "variables": [
+                                {
+                                  "name": "Slack IDs, Notify",
+                                  "value": "<@{{join(remove(deduplicate(16.`Slack IDs, Notify`); emptystring; null); \"><@\")}}>"
+                                }
+                              ]
+                            },
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "variables",
+                                  "spec": [
+                                    {
+                                      "name": "name",
+                                      "type": "text",
+                                      "label": "Variable name",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "any",
+                                      "label": "Variable value"
+                                    }
+                                  ],
+                                  "type": "array",
+                                  "label": "Variables"
+                                },
+                                {
+                                  "name": "scope",
+                                  "type": "select",
+                                  "label": "Variable lifetime",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "roundtrip",
+                                      "execution"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "scope": {
+                                    "label": "One cycle"
+                                  },
+                                  "variables": {
+                                    "items": [
+                                      null
+                                    ]
+                                  }
+                                }
+                              },
+                              "designer": {
+                                "x": 2400,
+                                "y": 1200
+                              },
+                              "interface": [
+                                {
+                                  "name": "Slack IDs, Notify",
+                                  "type": "any",
+                                  "label": "Slack IDs, Notify"
+                                }
+                              ]
+                            },
+                            "parameters": {}
+                          },
+                          {
+                            "id": 6,
+                            "mapper": {
+                              "text": "{{26.`Slack IDs, Notify`}}; at {{formatDate(3.body.notification.created; \"MMMM D, YYYY HH:mm\")}}, {{16.Content}}",
+                              "parse": false,
+                              "channel": "{{if(1.Testing; 1.`Slack Channel, Testing`; 1.`Slack Channel`)}}",
+                              "channelWType": "manualy",
+                              "unfurl_media": false
+                            },
+                            "module": "slack:CreateMessage",
+                            "version": 4,
+                            "metadata": {
+                              "expect": [
+                                {
+                                  "name": "channelWType",
+                                  "type": "select",
+                                  "label": "Enter a channel ID or name",
+                                  "required": true,
+                                  "validate": {
+                                    "enum": [
+                                      "manualy",
+                                      "list"
+                                    ]
+                                  }
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "text",
+                                  "label": "Text"
+                                },
+                                {
+                                  "name": "blocks",
+                                  "type": "text",
+                                  "label": "Blocks"
+                                },
+                                {
+                                  "name": "thread_ts",
+                                  "type": "text",
+                                  "label": "Thread message ID (time stamp)"
+                                },
+                                {
+                                  "name": "reply_broadcast",
+                                  "type": "boolean",
+                                  "label": "Reply broadcast"
+                                },
+                                {
+                                  "name": "link_names",
+                                  "type": "boolean",
+                                  "label": "Link names"
+                                },
+                                {
+                                  "name": "parse",
+                                  "type": "boolean",
+                                  "label": "Parse message text"
+                                },
+                                {
+                                  "name": "mrkdwn",
+                                  "type": "boolean",
+                                  "label": "Use markdown"
+                                },
+                                {
+                                  "name": "unfurl_links",
+                                  "type": "boolean",
+                                  "label": "Unfurl primarily text-based content"
+                                },
+                                {
+                                  "name": "unfurl_media",
+                                  "type": "boolean",
+                                  "label": "Unfurl media content"
+                                },
+                                {
+                                  "name": "icon_emoji",
+                                  "type": "text",
+                                  "label": "Icon emoji"
+                                },
+                                {
+                                  "name": "icon_url",
+                                  "type": "url",
+                                  "label": "Icon url"
+                                },
+                                {
+                                  "name": "username",
+                                  "type": "text",
+                                  "label": "User name"
+                                },
+                                {
+                                  "name": "channel",
+                                  "type": "text",
+                                  "label": "Channel ID or name",
+                                  "required": true
+                                }
+                              ],
+                              "restore": {
+                                "expect": {
+                                  "parse": {
+                                    "mode": "chose"
+                                  },
+                                  "mrkdwn": {
+                                    "mode": "chose",
+                                    "empty": true
+                                  },
+                                  "link_names": {
+                                    "mode": "chose"
+                                  },
+                                  "channelWType": {
+                                    "label": "Enter manually"
+                                  },
+                                  "unfurl_links": {
+                                    "mode": "chose"
+                                  },
+                                  "unfurl_media": {
+                                    "mode": "chose"
+                                  },
+                                  "reply_broadcast": {
+                                    "mode": "chose"
+                                  }
+                                },
+                                "parameters": {
+                                  "__IMTCONN__": {
+                                    "data": {
+                                      "scoped": "true",
+                                      "connection": "slack2"
+                                    },
+                                    "label": "Automation@Slack Axelerant v5 (automation)"
+                                  }
+                                }
+                              },
+                              "advanced": true,
+                              "designer": {
+                                "x": 2700,
+                                "y": 1200,
+                                "messages": [
+                                  {
+                                    "message": "Value must not be empty.",
+                                    "category": "setup",
+                                    "severity": "error"
+                                  },
+                                  {
+                                    "message": "Referenced module 'Tools - Set multiple variables' [1] is not accessible.",
+                                    "category": "reference",
+                                    "severity": "warning"
+                                  }
+                                ]
+                              },
+                              "parameters": [
+                                {
+                                  "name": "__IMTCONN__",
+                                  "type": "account:slack2,slack3",
+                                  "label": "Connection",
+                                  "required": true
+                                }
+                              ]
+                            },
+                            "parameters": {
+                              "__IMTCONN__": 31067
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "version": 1,
+                    "metadata": {
+                      "designer": {
+                        "x": 1800,
+                        "y": 600
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "flow": [
+                  {
+                    "id": 35,
+                    "mapper": {
+                      "array": "{{2.body.userZoneNotifications}}"
+                    },
+                    "module": "builtin:BasicFeeder",
+                    "version": 1,
+                    "metadata": {
+                      "expect": [
+                        {
+                          "mode": "edit",
+                          "name": "array",
+                          "spec": [],
+                          "type": "array",
+                          "label": "Array"
+                        }
+                      ],
+                      "restore": {
+                        "expect": {
+                          "array": {
+                            "mode": "edit"
+                          }
+                        }
+                      },
+                      "designer": {
+                        "x": 900,
+                        "y": 1500
+                      }
+                    },
+                    "parameters": {}
+                  },
+                  {
+                    "id": 7,
+                    "mapper": {
+                      "qs": [
+                        {
+                          "key": "ids",
+                          "value": "all"
+                        },
+                        {
+                          "key": "imtZoneId",
+                          "value": "{{35.imtZoneId}}"
+                        }
+                      ],
+                      "url": "/v2/notifications/mark-as-read",
+                      "method": "POST",
+                      "headers": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ]
+                    },
+                    "module": "make:makeApiCall",
+                    "version": 1,
+                    "metadata": {
+                      "expect": [
+                        {
+                          "name": "url",
+                          "type": "text",
+                          "label": "URL",
+                          "required": true
+                        },
+                        {
+                          "name": "method",
+                          "type": "select",
+                          "label": "Method",
+                          "required": true,
+                          "validate": {
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "PATCH",
+                              "DELETE"
+                            ]
+                          }
+                        },
+                        {
+                          "name": "headers",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Headers"
+                        },
+                        {
+                          "name": "qs",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Query String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "any",
+                          "label": "Body"
+                        },
+                        {
+                          "name": "url",
+                          "type": "text",
+                          "label": "URL",
+                          "required": true
+                        },
+                        {
+                          "name": "method",
+                          "type": "select",
+                          "label": "Method",
+                          "required": true,
+                          "validate": {
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "PATCH",
+                              "DELETE"
+                            ]
+                          }
+                        },
+                        {
+                          "name": "headers",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Headers"
+                        },
+                        {
+                          "name": "qs",
+                          "spec": [
+                            {
+                              "name": "key",
+                              "type": "text",
+                              "label": "Key"
+                            },
+                            {
+                              "name": "value",
+                              "type": "text",
+                              "label": "Value"
+                            }
+                          ],
+                          "type": "array",
+                          "label": "Query String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "any",
+                          "label": "Body"
+                        }
+                      ],
+                      "restore": {
+                        "expect": {
+                          "qs": {
+                            "mode": "chose",
+                            "items": [
+                              null,
+                              null
+                            ]
+                          },
+                          "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                          },
+                          "headers": {
+                            "mode": "chose",
+                            "items": [
+                              null
+                            ]
+                          }
+                        },
+                        "parameters": {
+                          "__IMTCONN__": {
+                            "data": {
+                              "scoped": "true",
+                              "connection": "make"
+                            },
+                            "label": "Automation@Make Full Access (automation@axelerant.com)"
+                          }
+                        }
+                      },
+                      "designer": {
+                        "x": 1200,
+                        "y": 1500,
+                        "name": "Mark notifications as read"
+                      },
+                      "parameters": [
+                        {
+                          "name": "__IMTCONN__",
+                          "type": "account:make",
+                          "label": "Connection",
+                          "required": true
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "__IMTCONN__": 33344
+                    }
+                  }
+                ]
+              }
+            ],
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 600,
+                "y": 750
+              }
             }
           }
         ]
-      },
-      "parameters": {
-        "space": ""
-      }
-    },
-    {
-      "id": 5,
-      "mapper": null,
-      "module": "builtin:BasicRouter",
-      "routes": [
-        {
-          "flow": [
-            {
-              "id": 6,
-              "filter": {
-                "name": "Warning ⚠️",
-                "conditions": [
-                  [
-                    {
-                      "a": "{{2.subject}}",
-                      "b": "warning",
-                      "o": "text:contain:ci"
-                    }
-                  ]
-                ]
-              },
-              "mapper": {
-                "text": "{{2.subject}}",
-                "parse": false,
-                "blocks": "{\n  \"blocks\": [\n    {\n      \"type\": \"header\",\n      \"text\": {\n        \"type\": \"plain_text\",\n        \"text\": \":warning: Warning in scenario\",\n        \"emoji\": true\n      }\n    },\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"{{2.subject}}\"\n      }\n    },\n    {\n      \"type\": \"section\",\n      \"fields\": [\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Execution:*\\n<{{4.executionUrl}}|{{4.execution}}>\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Scenario:*\\n<{{4.scenarioUrl}}|{{4.scenario}}>\"\n        }\n      ]\n    },\n    {\n      \"type\": \"divider\"\n    },\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"We recommend that you pay attention to these warnings.\"\n      }\n    },\n    {\n      \"type\": \"actions\",\n      \"elements\": [\n        {\n          \"type\": \"button\",\n          \"text\": {\n            \"type\": \"plain_text\",\n            \"text\": \"See More Details\",\n            \"emoji\": true\n          },\n          \"value\": \"view_details\",\n          \"action_id\": \"view_scenario_details\",\n          \"url\": \"{{4.moreDetailsUrl}}\"\n        }\n      ]\n    }\n  ]\n}",
-                "mrkdwn": true,
-                "channel": "C07VAUAGKUG",
-                "channelType": "public",
-                "channelWType": "list"
-              },
-              "module": "slack:CreateMessage",
-              "version": 4,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "channelWType",
-                    "type": "select",
-                    "label": "Enter a channel ID or name",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "manualy",
-                        "list"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "text",
-                    "type": "text",
-                    "label": "Text"
-                  },
-                  {
-                    "name": "blocks",
-                    "type": "text",
-                    "label": "Blocks"
-                  },
-                  {
-                    "name": "thread_ts",
-                    "type": "text",
-                    "label": "Thread message ID (time stamp)"
-                  },
-                  {
-                    "name": "reply_broadcast",
-                    "type": "boolean",
-                    "label": "Reply broadcast"
-                  },
-                  {
-                    "name": "link_names",
-                    "type": "boolean",
-                    "label": "Link names"
-                  },
-                  {
-                    "name": "parse",
-                    "type": "boolean",
-                    "label": "Parse message text"
-                  },
-                  {
-                    "name": "mrkdwn",
-                    "type": "boolean",
-                    "label": "Use markdown"
-                  },
-                  {
-                    "name": "unfurl_links",
-                    "type": "boolean",
-                    "label": "Unfurl primarily text-based content"
-                  },
-                  {
-                    "name": "unfurl_media",
-                    "type": "boolean",
-                    "label": "Unfurl media content"
-                  },
-                  {
-                    "name": "icon_emoji",
-                    "type": "text",
-                    "label": "Icon emoji"
-                  },
-                  {
-                    "name": "icon_url",
-                    "type": "url",
-                    "label": "Icon url"
-                  },
-                  {
-                    "name": "username",
-                    "type": "text",
-                    "label": "User name"
-                  },
-                  {
-                    "name": "channelType",
-                    "type": "select",
-                    "label": "Channel type",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "public",
-                        "private",
-                        "im",
-                        "mpim"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "channel",
-                    "type": "select",
-                    "label": "Public channel",
-                    "required": true
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "parse": {
-                      "mode": "chose"
-                    },
-                    "mrkdwn": {
-                      "mode": "chose"
-                    },
-                    "channel": {
-                      "mode": "chose",
-                      "label": "alerts"
-                    },
-                    "link_names": {
-                      "mode": "chose"
-                    },
-                    "channelType": {
-                      "label": "Public channel"
-                    },
-                    "channelWType": {
-                      "label": "Select from the list"
-                    },
-                    "unfurl_links": {
-                      "mode": "chose"
-                    },
-                    "unfurl_media": {
-                      "mode": "chose"
-                    },
-                    "reply_broadcast": {
-                      "mode": "chose"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "slack3"
-                      },
-                      "label": "My Slack (bot) connection (zarvis)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1500,
-                  "y": 0,
-                  "name": "Ping Alerts"
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:slack2,slack3",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2736305
-              }
-            }
-          ]
-        },
-        {
-          "flow": [
-            {
-              "id": 10,
-              "filter": {
-                "name": "Error 🛑",
-                "conditions": [
-                  [
-                    {
-                      "a": "{{2.subject}}",
-                      "b": "error",
-                      "o": "text:contain:ci"
-                    }
-                  ]
-                ]
-              },
-              "mapper": {
-                "text": "{{2.subject}}",
-                "parse": false,
-                "blocks": "{\n   \"blocks\":[\n      {\n         \"type\":\"header\",\n         \"text\":{\n            \"type\":\"plain_text\",\n            \"text\":\":octagonal_sign: Error in scenario\",\n            \"emoji\":true\n         }\n      },\n      {\n         \"type\":\"section\",\n         \"text\":{\n            \"type\":\"mrkdwn\",\n            \"text\":\"{{2.subject}}\"\n         }\n      },\n      {\n         \"type\":\"section\",\n         \"fields\":[\n            {\n               \"type\":\"mrkdwn\",\n               \"text\":\"*Execution:*\\n<{{4.executionUrl}}|{{4.execution}}>\"\n            },\n            {\n               \"type\":\"mrkdwn\",\n               \"text\":\"*Scenario:*\\n<{{4.scenarioUrl}}|{{4.scenario}}>\"\n            }\n         ]\n      },\n      {\n         \"type\":\"divider\"\n      },\n      {\n         \"type\":\"section\",\n         \"text\":{\n            \"type\":\"mrkdwn\",\n            \"text\":\"@here The scenario has not been paused and continues to run according to your settings. Nevertheless, you should pay attention to the issue.\"\n         }\n      },\n      {\n         \"type\":\"actions\",\n         \"elements\":[\n            {\n               \"type\":\"button\",\n               \"text\":{\n                  \"type\":\"plain_text\",\n                  \"text\":\"See More Details\",\n                  \"emoji\":true\n               },\n               \"value\":\"view_details\",\n               \"action_id\":\"view_scenario_details\",\n               \"url\":\"{{4.moreDetailsUrl}}\"\n            }\n         ]\n      }\n   ]\n}",
-                "mrkdwn": true,
-                "channel": "C07VAUAGKUG",
-                "channelType": "public",
-                "channelWType": "list"
-              },
-              "module": "slack:CreateMessage",
-              "version": 4,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "channelWType",
-                    "type": "select",
-                    "label": "Enter a channel ID or name",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "manualy",
-                        "list"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "text",
-                    "type": "text",
-                    "label": "Text"
-                  },
-                  {
-                    "name": "blocks",
-                    "type": "text",
-                    "label": "Blocks"
-                  },
-                  {
-                    "name": "thread_ts",
-                    "type": "text",
-                    "label": "Thread message ID (time stamp)"
-                  },
-                  {
-                    "name": "reply_broadcast",
-                    "type": "boolean",
-                    "label": "Reply broadcast"
-                  },
-                  {
-                    "name": "link_names",
-                    "type": "boolean",
-                    "label": "Link names"
-                  },
-                  {
-                    "name": "parse",
-                    "type": "boolean",
-                    "label": "Parse message text"
-                  },
-                  {
-                    "name": "mrkdwn",
-                    "type": "boolean",
-                    "label": "Use markdown"
-                  },
-                  {
-                    "name": "unfurl_links",
-                    "type": "boolean",
-                    "label": "Unfurl primarily text-based content"
-                  },
-                  {
-                    "name": "unfurl_media",
-                    "type": "boolean",
-                    "label": "Unfurl media content"
-                  },
-                  {
-                    "name": "icon_emoji",
-                    "type": "text",
-                    "label": "Icon emoji"
-                  },
-                  {
-                    "name": "icon_url",
-                    "type": "url",
-                    "label": "Icon url"
-                  },
-                  {
-                    "name": "username",
-                    "type": "text",
-                    "label": "User name"
-                  },
-                  {
-                    "name": "channelType",
-                    "type": "select",
-                    "label": "Channel type",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "public",
-                        "private",
-                        "im",
-                        "mpim"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "channel",
-                    "type": "select",
-                    "label": "Public channel",
-                    "required": true
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "parse": {
-                      "mode": "chose"
-                    },
-                    "mrkdwn": {
-                      "mode": "chose"
-                    },
-                    "channel": {
-                      "mode": "chose",
-                      "label": "alerts"
-                    },
-                    "link_names": {
-                      "mode": "chose"
-                    },
-                    "channelType": {
-                      "label": "Public channel"
-                    },
-                    "channelWType": {
-                      "label": "Select from the list"
-                    },
-                    "unfurl_links": {
-                      "mode": "chose"
-                    },
-                    "unfurl_media": {
-                      "mode": "chose"
-                    },
-                    "reply_broadcast": {
-                      "mode": "chose"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "slack3"
-                      },
-                      "label": "My Slack (bot) connection (zarvis)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1500,
-                  "y": 300,
-                  "name": "Ping Alerts"
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:slack2,slack3",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2736305
-              }
-            }
-          ]
-        },
-        {
-          "flow": [
-            {
-              "id": 11,
-              "filter": {
-                "name": "Stopped 🚨",
-                "conditions": [
-                  [
-                    {
-                      "a": "{{2.subject}}",
-                      "b": "stopped",
-                      "o": "text:equal"
-                    }
-                  ]
-                ]
-              },
-              "mapper": {
-                "text": "{{2.subject}}",
-                "parse": false,
-                "blocks": "{\n   \"blocks\":[\n      {\n         \"type\":\"header\",\n         \"text\":{\n            \"type\":\"plain_text\",\n            \"text\":\":rotating_light: Critical issue in scenario\",\n            \"emoji\":true\n         }\n      },\n      {\n         \"type\":\"section\",\n         \"text\":{\n            \"type\":\"mrkdwn\",\n            \"text\":\"{{2.subject}}\"\n         }\n      },\n      {\n         \"type\":\"section\",\n         \"fields\":[\n            {\n               \"type\":\"mrkdwn\",\n               \"text\":\"*Reason:*\\n{{4.reason}}\"\n            },\n            {\n               \"type\":\"mrkdwn\",\n               \"text\":\"*Scenario:*\\n<{{4.scenarioUrl}}|{{4.scenario}}>\"\n            }\n         ]\n      },\n      {\n         \"type\":\"divider\"\n      },\n      {\n         \"type\":\"section\",\n         \"text\":{\n            \"type\":\"mrkdwn\",\n            \"text\":\"@here The error requires your intervention. The scenario will remain stopped until you fix the issue.\"\n         }\n      },\n      {\n         \"type\":\"actions\",\n         \"elements\":[\n            {\n               \"type\":\"button\",\n               \"text\":{\n                  \"type\":\"plain_text\",\n                  \"text\":\"See More Details\",\n                  \"emoji\":true\n               },\n               \"value\":\"view_details\",\n               \"action_id\":\"view_scenario_details\",\n               \"url\":\"{{4.moreDetailsUrl}}\"\n            }\n         ]\n      }\n   ]\n}",
-                "mrkdwn": true,
-                "channel": "C07VAUAGKUG",
-                "channelType": "public",
-                "channelWType": "list"
-              },
-              "module": "slack:CreateMessage",
-              "version": 4,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "channelWType",
-                    "type": "select",
-                    "label": "Enter a channel ID or name",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "manualy",
-                        "list"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "text",
-                    "type": "text",
-                    "label": "Text"
-                  },
-                  {
-                    "name": "blocks",
-                    "type": "text",
-                    "label": "Blocks"
-                  },
-                  {
-                    "name": "thread_ts",
-                    "type": "text",
-                    "label": "Thread message ID (time stamp)"
-                  },
-                  {
-                    "name": "reply_broadcast",
-                    "type": "boolean",
-                    "label": "Reply broadcast"
-                  },
-                  {
-                    "name": "link_names",
-                    "type": "boolean",
-                    "label": "Link names"
-                  },
-                  {
-                    "name": "parse",
-                    "type": "boolean",
-                    "label": "Parse message text"
-                  },
-                  {
-                    "name": "mrkdwn",
-                    "type": "boolean",
-                    "label": "Use markdown"
-                  },
-                  {
-                    "name": "unfurl_links",
-                    "type": "boolean",
-                    "label": "Unfurl primarily text-based content"
-                  },
-                  {
-                    "name": "unfurl_media",
-                    "type": "boolean",
-                    "label": "Unfurl media content"
-                  },
-                  {
-                    "name": "icon_emoji",
-                    "type": "text",
-                    "label": "Icon emoji"
-                  },
-                  {
-                    "name": "icon_url",
-                    "type": "url",
-                    "label": "Icon url"
-                  },
-                  {
-                    "name": "username",
-                    "type": "text",
-                    "label": "User name"
-                  },
-                  {
-                    "name": "channelType",
-                    "type": "select",
-                    "label": "Channel type",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "public",
-                        "private",
-                        "im",
-                        "mpim"
-                      ]
-                    }
-                  },
-                  {
-                    "name": "channel",
-                    "type": "select",
-                    "label": "Public channel",
-                    "required": true
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "parse": {
-                      "mode": "chose"
-                    },
-                    "mrkdwn": {
-                      "mode": "chose"
-                    },
-                    "channel": {
-                      "mode": "chose",
-                      "label": "alerts"
-                    },
-                    "link_names": {
-                      "mode": "chose"
-                    },
-                    "channelType": {
-                      "label": "Public channel"
-                    },
-                    "channelWType": {
-                      "label": "Select from the list"
-                    },
-                    "unfurl_links": {
-                      "mode": "chose"
-                    },
-                    "unfurl_media": {
-                      "mode": "chose"
-                    },
-                    "reply_broadcast": {
-                      "mode": "chose"
-                    }
-                  },
-                  "parameters": {
-                    "__IMTCONN__": {
-                      "data": {
-                        "scoped": "true",
-                        "connection": "slack3"
-                      },
-                      "label": "My Slack (bot) connection (zarvis)"
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1500,
-                  "y": 600,
-                  "name": "Ping Alerts"
-                },
-                "parameters": [
-                  {
-                    "name": "__IMTCONN__",
-                    "type": "account:slack2,slack3",
-                    "label": "Connection",
-                    "required": true
-                  }
-                ]
-              },
-              "parameters": {
-                "__IMTCONN__": 2736305
-              }
-            }
-          ]
-        },
-        {
-          "flow": [
-            {
-              "id": 12,
-              "mapper": {
-                "scope": "roundtrip",
-                "variables": [
-                  {
-                    "name": "Notes",
-                    "value": "Add regex to get org id and look it up in the airtable client base to retrieve the correct client error channel"
-                  }
-                ]
-              },
-              "module": "util:SetVariables",
-              "version": 1,
-              "metadata": {
-                "expect": [
-                  {
-                    "name": "variables",
-                    "spec": [
-                      {
-                        "name": "name",
-                        "type": "text",
-                        "label": "Variable name",
-                        "required": true
-                      },
-                      {
-                        "name": "value",
-                        "type": "any",
-                        "label": "Variable value"
-                      }
-                    ],
-                    "type": "array",
-                    "label": "Variables"
-                  },
-                  {
-                    "name": "scope",
-                    "type": "select",
-                    "label": "Variable lifetime",
-                    "required": true,
-                    "validate": {
-                      "enum": [
-                        "roundtrip",
-                        "execution"
-                      ]
-                    }
-                  }
-                ],
-                "restore": {
-                  "expect": {
-                    "scope": {
-                      "label": "One cycle"
-                    },
-                    "variables": {
-                      "items": [
-                        null
-                      ]
-                    }
-                  }
-                },
-                "designer": {
-                  "x": 1500,
-                  "y": 900,
-                  "name": "Notes"
-                },
-                "interface": [
-                  {
-                    "name": "Notes",
-                    "type": "any",
-                    "label": "Notes"
-                  }
-                ]
-              },
-              "parameters": {}
-            }
-          ],
-          "disabled": true
-        }
-      ],
-      "version": 1,
-      "metadata": {
-        "designer": {
-          "x": 1200,
-          "y": 450
-        }
-      }
-    }
-  ],
-  "name": "Error Handler | Make > Slack @karime",
-  "metadata": {
-    "instant": true,
-    "version": 1,
-    "designer": {
-      "orphans": [],
-      "samples": {
-        "2": {
-          "cc": [],
-          "to": [
-            {
-              "name": "",
-              "address": "u0dbv2ewtljf6k1yi9oojcdpakkhfdt1@hook.eu1.make.com"
-            }
-          ],
-          "bcc": [],
-          "date": "2024-11-03T12:32:14.909Z",
-          "from": {
-            "name": "Zynera-Team",
-            "address": "forwarding-noreply@google.com"
-          },
-          "html": null,
-          "text": "karim@zynera.ai hat die automatische Weiterleitung von E‑Mails an Ihre\nE‑Mail-Adresse u0dbv2ewtljf6k...",
-          "headers": {
-            "to": "<u0dbv2ewtljf6k1yi9oojcdpakkhfdt1@hook.eu1.make.com>",
-            "date": "Sun, 03 Nov 2024 12:32:13 GMT",
-            "from": "<forwarding-noreply@google.com>",
-            "subject": "Zynera: Bestätigen der Weiterleitung – E‑Mail-Empfang von karim@zynera.ai",
-            "received": "by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e8063533b5so28626787b3.1 for <u0dbv2ewtljf6k...",
-            "message-id": "<CAB0P_Uh3PemPf6kviYVu6F2vUG6M=+DcdkpLu4aW5OGqiUVs6g@mail.gmail.com>",
-            "x-received": "by 2002:a05:690c:6287:b0:6ea:4b85:7a13 with SMTP id 00721157ae682-6ea64a9f4a6mr88617547b3.3.17306371...",
-            "content-type": "text/plain; charset=UTF-8",
-            "mime-version": "1.0",
-            "dkim-signature": "v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20230601; t=1730637133; x=1731241933; darn=hoo...",
-            "x-gm-message-state": "AOJu0Yy8GO8NsIx4PZGV54bo598bIxv99jdgHZ7yQL92oQugNbfZvJsk wwxaJSpqDRuBSJDreXTruf+uVHc+gH4xkFKIGled7wE...",
-            "x-google-smtp-source": "AGHT+IGWGZcrRMJoBguh05ynyWY34Np9OTcltmyo3CWLE4W1delZKjQ5AjAD7dEZJp8C0ox5dcQQyJ8GbgdfS4XcwCjHQAE8S03D...",
-            "x-google-dkim-signature": "v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20230601; t=1730637133; x=1731241933; h=content...",
-            "content-transfer-encoding": "quoted-printable",
-            "x-google-address-confirmation": "_LMHxyl62V9O9ztGtZPh3lSdkVg"
-          },
-          "subject": "Zynera: Bestätigen der Weiterleitung – E‑Mail-Empfang von karim@zynera.ai",
-          "attachments": []
-        }
-      }
+      ]
     },
     "scenario": {
       "dlq": false,
