@@ -1,0 +1,514 @@
+{
+  "flow": [
+    {
+      "id": 7,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "-",
+            "value": "{{substring(uuid; 0; 8)}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "-",
+            "type": "any",
+            "label": "-"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "name": {
+          "givenName": "{{emptystring}}",
+          "familyName": "{{emptystring}}"
+        },
+        "domain": "zynera.ai",
+        "password": "{{substring(uuid; 0; 8)}}",
+        "primaryEmail": "{{emptystring}}",
+        "changePasswordAtNextLogin": true
+      },
+      "module": "google-g-suite:createUser",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "name",
+            "spec": [
+              {
+                "name": "givenName",
+                "type": "text",
+                "label": "First Name",
+                "required": true
+              },
+              {
+                "name": "familyName",
+                "type": "text",
+                "label": "Last Name",
+                "required": true
+              }
+            ],
+            "type": "collection",
+            "label": "Name"
+          },
+          {
+            "name": "password",
+            "type": "text",
+            "label": "Password",
+            "required": true,
+            "validate": {
+              "max": 100,
+              "min": 8
+            }
+          },
+          {
+            "name": "domain",
+            "type": "select",
+            "label": "Your Domain",
+            "required": true
+          },
+          {
+            "name": "phones",
+            "spec": [
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Phone Number",
+                "required": true
+              },
+              {
+                "name": "type",
+                "type": "select",
+                "label": "Type",
+                "options": [
+                  {
+                    "label": "Assistant",
+                    "value": "assistant"
+                  },
+                  {
+                    "label": "Callback",
+                    "value": "callback"
+                  },
+                  {
+                    "label": "Car",
+                    "value": "car"
+                  },
+                  {
+                    "label": "Company Main",
+                    "value": "company_main"
+                  },
+                  {
+                    "label": "Custom",
+                    "value": "custom"
+                  },
+                  {
+                    "label": "Grand Central",
+                    "value": "grand_central"
+                  },
+                  {
+                    "label": "Home",
+                    "value": "home"
+                  },
+                  {
+                    "label": "Home Fax",
+                    "value": "home_fax"
+                  },
+                  {
+                    "label": "Isdn",
+                    "value": "isdn"
+                  },
+                  {
+                    "label": "Main",
+                    "value": "main"
+                  },
+                  {
+                    "label": "Mobile",
+                    "value": "mobile"
+                  },
+                  {
+                    "label": "Other",
+                    "value": "other"
+                  },
+                  {
+                    "label": "Other Fax",
+                    "value": "other_fax"
+                  },
+                  {
+                    "label": "Pager",
+                    "value": "pager"
+                  },
+                  {
+                    "label": "Radio",
+                    "value": "radio"
+                  },
+                  {
+                    "label": "Telex",
+                    "value": "telex"
+                  },
+                  {
+                    "label": "Tty Tdd",
+                    "value": "tty_tdd"
+                  },
+                  {
+                    "label": "Work",
+                    "value": "work"
+                  },
+                  {
+                    "label": "Work Fax",
+                    "value": "work_fax"
+                  },
+                  {
+                    "label": "Work Mobile",
+                    "value": "work_mobile"
+                  },
+                  {
+                    "label": "Work Pager",
+                    "value": "work_pager"
+                  }
+                ]
+              },
+              {
+                "name": "primary",
+                "type": "boolean",
+                "label": "Primary"
+              }
+            ],
+            "type": "array",
+            "label": "Phones"
+          },
+          {
+            "name": "emails",
+            "spec": [
+              {
+                "name": "address",
+                "type": "email",
+                "label": "Email Address",
+                "required": true
+              },
+              {
+                "name": "type",
+                "type": "select",
+                "label": "Type",
+                "options": [
+                  {
+                    "label": "Home",
+                    "value": "home"
+                  },
+                  {
+                    "label": "Work",
+                    "value": "work"
+                  },
+                  {
+                    "label": "Other",
+                    "value": "other"
+                  }
+                ]
+              },
+              {
+                "name": "primary",
+                "type": "hidden",
+                "label": "Primary"
+              }
+            ],
+            "type": "array",
+            "label": "Secondary Emails"
+          },
+          {
+            "name": "changePasswordAtNextLogin",
+            "type": "boolean",
+            "label": "Change Password at Next Login",
+            "required": true
+          },
+          {
+            "name": "primaryEmail",
+            "type": "text",
+            "label": "Primary Email Name",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "domain": {
+              "mode": "chose",
+              "label": "zynera.ai"
+            },
+            "emails": {
+              "mode": "chose"
+            },
+            "phones": {
+              "mode": "chose"
+            },
+            "changePasswordAtNextLogin": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "google"
+              },
+              "label": "Karim's Zynera Google connection (karim@zynera.ai)"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:google",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2907000
+      }
+    },
+    {
+      "id": 3,
+      "module": "slack:MakeAPICall",
+      "version": 4,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "url": "enterpriseSolution",
+        "method": "POST",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "module": "airtable:makeApiCall",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "text",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "body",
+            "type": "any",
+            "label": "Body"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose"
+            },
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
+    },
+    {
+      "id": 5,
+      "module": "airtable:ActionUpdateRecords",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "google-email:ActionSendEmail",
+      "version": 2,
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Field must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "name": "Employee Onboarding",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "7": {
+          "-": "f6a2d43f-"
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
