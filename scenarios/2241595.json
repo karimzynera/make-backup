@@ -1,0 +1,1751 @@
+{
+  "flow": [
+    {
+      "id": 14,
+      "mapper": {
+        "step": "1",
+        "start": "1",
+        "repeats": "2"
+      },
+      "module": "builtin:BasicRepeater",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "start",
+            "type": "number",
+            "label": "Initial value",
+            "required": true
+          },
+          {
+            "name": "repeats",
+            "type": "number",
+            "label": "Repeats",
+            "required": true,
+            "validate": {
+              "max": 10000,
+              "min": 0
+            }
+          },
+          {
+            "name": "step",
+            "type": "number",
+            "label": "Step",
+            "required": true
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "qs": [
+          {
+            "key": "unreadOnly",
+            "value": "{{true}}"
+          },
+          {
+            "key": "imtZoneId",
+            "value": "{{14.i}}"
+          }
+        ],
+        "url": "v2/notifications",
+        "method": "GET",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "module": "make:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "text",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "body",
+            "type": "any",
+            "label": "Body"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "make"
+              },
+              "label": "My Make connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Get Errors"
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:make",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2417656
+      }
+    },
+    {
+      "id": 20,
+      "mapper": {
+        "array": "{{2.body.notifications}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Notify"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 19,
+      "mapper": {
+        "i": "{{14.i}}",
+        "id": "{{20.id}}",
+        "body": "{{2.body}}",
+        "read": "{{20.read}}",
+        "type": "{{20.type}}",
+        "created": "{{20.created}}",
+        "headers": "{{2.headers}}",
+        "subject": "{{20.subject}}",
+        "statusCode": "{{2.statusCode}}",
+        "__IMTINDEX__": "{{20.`__IMTINDEX__`}}",
+        "__IMTLENGTH__": "{{20.`__IMTLENGTH__`}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Repeater [14]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "feeder": 14
+      }
+    },
+    {
+      "id": 4,
+      "filter": {
+        "name": "Unread?",
+        "conditions": [
+          [
+            {
+              "a": "{{19.`__IMTAGGLENGTH__`}}",
+              "b": "0",
+              "o": "number:greater"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "array": "{{19.array}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Combined Notify"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 3,
+      "mapper": {
+        "qs": [
+          {
+            "key": "imtZoneId",
+            "value": "{{4.i}}"
+          }
+        ],
+        "url": "v2/notifications/{{4.id}}",
+        "method": "GET",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "module": "make:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "text",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "body",
+            "type": "any",
+            "label": "Body"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "make"
+              },
+              "label": "My Make connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "name": "Get Details"
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:make",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2417656
+      }
+    },
+    {
+      "id": 10,
+      "mapper": {
+        "text": "{{3.body.notification.body}}"
+      },
+      "module": "regexp:Parser",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Text"
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 1800,
+          "y": 0,
+          "name": "Get Variables"
+        },
+        "interface": [
+          {
+            "name": "reason",
+            "type": "text",
+            "label": "reason"
+          },
+          {
+            "name": "scenario_url",
+            "type": "text",
+            "label": "scenario_url"
+          },
+          {
+            "name": "scenario_name",
+            "type": "text",
+            "label": "scenario_name"
+          },
+          {
+            "name": "organization_url",
+            "type": "text",
+            "label": "organization_url"
+          },
+          {
+            "name": "organization_name",
+            "type": "text",
+            "label": "organization_name"
+          },
+          {
+            "name": "team_url",
+            "type": "text",
+            "label": "team_url"
+          },
+          {
+            "name": "team_name",
+            "type": "text",
+            "label": "team_name"
+          },
+          {
+            "name": "details_url",
+            "type": "text",
+            "label": "details_url"
+          },
+          {
+            "name": "i",
+            "type": "uinteger",
+            "label": "i"
+          },
+          {
+            "name": "__IMTMATCH__",
+            "type": "any",
+            "label": "Fallback Match"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pattern",
+            "type": "text",
+            "label": "Pattern",
+            "required": true
+          },
+          {
+            "name": "global",
+            "type": "boolean",
+            "label": "Global match",
+            "required": true
+          },
+          {
+            "name": "sensitive",
+            "type": "boolean",
+            "label": "Case sensitive",
+            "required": true
+          },
+          {
+            "name": "multiline",
+            "type": "boolean",
+            "label": "Multiline",
+            "required": true
+          },
+          {
+            "name": "singleline",
+            "type": "boolean",
+            "label": "Singleline",
+            "required": true
+          },
+          {
+            "name": "continueWhenNoRes",
+            "type": "boolean",
+            "label": "Continue the execution of the route even if the module finds no matches",
+            "required": true
+          },
+          {
+            "name": "ignoreInfiniteLoopsWhenGlobal",
+            "type": "boolean",
+            "label": "Ignore errors when there is an infinite search loop",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "global": true,
+        "pattern": "Reason: <strong>(?<reason>.*?)<\\/strong>|Scenario: <a href=\"(?<scenario_url>.*?)\">(?<scenario_name>.*?)<\\/a>|Organization: <a href=\"(?<organization_url>.*?)\">(?<organization_name>.*?)<\\/a>|Team: <a href=\"(?<team_url>.*?)\">(?<team_name>.*?)<\\/a>|click <a href=\"(?<details_url>.*?)\">",
+        "multiline": false,
+        "sensitive": true,
+        "singleline": false,
+        "continueWhenNoRes": false,
+        "ignoreInfiniteLoopsWhenGlobal": false
+      }
+    },
+    {
+      "id": 11,
+      "mapper": {
+        "reason": "{{10.reason}}",
+        "team_url": "{{10.team_url}}",
+        "team_name": "{{10.team_name}}",
+        "details_url": "{{10.details_url}}",
+        "scenario_url": "{{10.scenario_url}}",
+        "scenario_name": "{{10.scenario_name}}",
+        "organization_url": "{{10.organization_url}}",
+        "organization_name": "{{10.organization_name}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Text parser - Match pattern [10]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "feeder": 10
+      }
+    },
+    {
+      "id": 12,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "reason",
+            "value": "{{first(remove(map(11.array; \"reason\"); null; emptystring))}}"
+          },
+          {
+            "name": "scenario_url",
+            "value": "{{first(remove(map(11.array; \"scenario_url\"); null; emptystring))}}"
+          },
+          {
+            "name": "scenario_name",
+            "value": "{{first(remove(map(11.array; \"scenario_name\"); null; emptystring))}}"
+          },
+          {
+            "name": "organization_url",
+            "value": "{{first(remove(map(11.array; \"organization_url\"); null; emptystring))}}"
+          },
+          {
+            "name": "organization_name",
+            "value": "{{first(remove(map(11.array; \"organization_name\"); null; emptystring))}}"
+          },
+          {
+            "name": "team_url",
+            "value": "{{first(remove(map(11.array; \"team_url\"); null; emptystring))}}"
+          },
+          {
+            "name": "team_name",
+            "value": "{{first(remove(map(11.array; \"team_name\"); null; emptystring))}}"
+          },
+          {
+            "name": "details_url",
+            "value": "{{first(remove(map(11.array; \"details_url\"); null; emptystring))}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "default": "roundtrip",
+            "options": [
+              {
+                "label": "One cycle",
+                "value": "roundtrip"
+              },
+              {
+                "label": "One execution",
+                "value": "execution"
+              }
+            ],
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 2400,
+          "y": 0,
+          "name": "Declare Variables"
+        },
+        "interface": [
+          {
+            "name": "reason",
+            "type": "any",
+            "label": "reason"
+          },
+          {
+            "name": "scenario_url",
+            "type": "any",
+            "label": "scenario_url"
+          },
+          {
+            "name": "scenario_name",
+            "type": "any",
+            "label": "scenario_name"
+          },
+          {
+            "name": "organization_url",
+            "type": "any",
+            "label": "organization_url"
+          },
+          {
+            "name": "organization_name",
+            "type": "any",
+            "label": "organization_name"
+          },
+          {
+            "name": "team_url",
+            "type": "any",
+            "label": "team_url"
+          },
+          {
+            "name": "team_name",
+            "type": "any",
+            "label": "team_name"
+          },
+          {
+            "name": "details_url",
+            "type": "any",
+            "label": "details_url"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 13,
+      "mapper": {
+        "base": "appnsGoJOaRTMDNy0",
+        "table": "tblEoMxVb762MWQfm",
+        "record": {
+          "fld0SKEO6WPR4AJbq": "{{now}}",
+          "fldErZm6i4nTyvbb6": "{{12.team_url}}",
+          "fldGxm17CVsBxM0L9": "{{12.organization_url}}",
+          "fldVKerbEHnXyOECT": "{{12.scenario_name}}",
+          "fldX7NY41nXdhpo0K": "{{12.reason}}",
+          "fldbMcOiPN8HCHcF5": "{{12.organization_name}}",
+          "fldgEbvXuvvFIwlXS": "{{12.team_name}}",
+          "fldmeELtGV6ZtzaiE": "{{12.scenario_url}}",
+          "fldnG7G1QIBsxI3di": "{{12.details_url}}",
+          "fldsBg6TzRKmQgyhf": {}
+        },
+        "typecast": false,
+        "useColumnId": false
+      },
+      "module": "airtable:ActionCreateRecord",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "typecast",
+            "type": "boolean",
+            "label": "Smart links",
+            "required": true
+          },
+          {
+            "name": "useColumnId",
+            "type": "boolean",
+            "label": "Use Column ID",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "record",
+            "spec": [
+              {
+                "name": "fldbMcOiPN8HCHcF5",
+                "type": "text",
+                "label": "OrganizationName"
+              },
+              {
+                "name": "fldGxm17CVsBxM0L9",
+                "type": "text",
+                "label": "OrganizationURL"
+              },
+              {
+                "name": "fldgEbvXuvvFIwlXS",
+                "type": "text",
+                "label": "TeamName"
+              },
+              {
+                "name": "fldErZm6i4nTyvbb6",
+                "type": "text",
+                "label": "TeamURL"
+              },
+              {
+                "name": "fldVKerbEHnXyOECT",
+                "type": "text",
+                "label": "ScenarioName"
+              },
+              {
+                "name": "fldmeELtGV6ZtzaiE",
+                "type": "text",
+                "label": "ScenarioURL"
+              },
+              {
+                "name": "fldX7NY41nXdhpo0K",
+                "type": "text",
+                "label": "Reason"
+              },
+              {
+                "name": "fldnG7G1QIBsxI3di",
+                "type": "text",
+                "label": "DetailsURL"
+              },
+              {
+                "name": "fld0SKEO6WPR4AJbq",
+                "time": true,
+                "type": "date",
+                "label": "Date"
+              },
+              {
+                "name": "fldsBg6TzRKmQgyhf",
+                "spec": [
+                  {
+                    "name": "id",
+                    "type": "text",
+                    "label": "ID"
+                  },
+                  {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email"
+                  },
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name"
+                  }
+                ],
+                "type": "collection",
+                "label": "Assignee"
+              }
+            ],
+            "type": "collection",
+            "label": "Record"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "base": {
+              "label": "Error Logs"
+            },
+            "table": {
+              "label": "Error",
+              "nested": [
+                {
+                  "name": "record",
+                  "spec": [
+                    {
+                      "name": "fldbMcOiPN8HCHcF5",
+                      "type": "text",
+                      "label": "OrganizationName"
+                    },
+                    {
+                      "name": "fldGxm17CVsBxM0L9",
+                      "type": "text",
+                      "label": "OrganizationURL"
+                    },
+                    {
+                      "name": "fldgEbvXuvvFIwlXS",
+                      "type": "text",
+                      "label": "TeamName"
+                    },
+                    {
+                      "name": "fldErZm6i4nTyvbb6",
+                      "type": "text",
+                      "label": "TeamURL"
+                    },
+                    {
+                      "name": "fldVKerbEHnXyOECT",
+                      "type": "text",
+                      "label": "ScenarioName"
+                    },
+                    {
+                      "name": "fldmeELtGV6ZtzaiE",
+                      "type": "text",
+                      "label": "ScenarioURL"
+                    },
+                    {
+                      "name": "fldX7NY41nXdhpo0K",
+                      "type": "text",
+                      "label": "Reason",
+                      "multiline": true
+                    },
+                    {
+                      "name": "fldnG7G1QIBsxI3di",
+                      "type": "text",
+                      "label": "DetailsURL"
+                    },
+                    {
+                      "name": "fld0SKEO6WPR4AJbq",
+                      "time": true,
+                      "type": "date",
+                      "label": "Date"
+                    },
+                    {
+                      "name": "fldsBg6TzRKmQgyhf",
+                      "spec": [
+                        {
+                          "help": "Unique user id",
+                          "name": "id",
+                          "type": "text",
+                          "label": "ID"
+                        },
+                        {
+                          "help": "User's email address",
+                          "name": "email",
+                          "type": "email",
+                          "label": "Email"
+                        },
+                        {
+                          "help": "User's display name (may be empty if the user hasn't created an account)",
+                          "name": "name",
+                          "type": "text",
+                          "label": "Name"
+                        }
+                      ],
+                      "type": "collection",
+                      "label": "Assignee"
+                    }
+                  ],
+                  "type": "collection",
+                  "label": "Record"
+                }
+              ]
+            },
+            "typecast": {
+              "mode": "chose"
+            },
+            "useColumnId": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "My Airtable OAuth connection (User ID: usryWvTaoddQVF23q)"
+            }
+          }
+        },
+        "designer": {
+          "x": 2700,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "id",
+            "type": "text",
+            "label": "ID"
+          },
+          {
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "Summary",
+            "type": "text",
+            "label": "Summary"
+          },
+          {
+            "name": "OrganizationName",
+            "type": "text",
+            "label": "OrganizationName"
+          },
+          {
+            "name": "TeamName",
+            "type": "text",
+            "label": "TeamName"
+          },
+          {
+            "name": "ScenarioName",
+            "type": "text",
+            "label": "ScenarioName"
+          },
+          {
+            "name": "Reason",
+            "type": "text",
+            "label": "Reason",
+            "multiline": true
+          },
+          {
+            "name": "Details",
+            "spec": [
+              {
+                "name": "label",
+                "type": "text",
+                "label": "Label"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              }
+            ],
+            "type": "collection",
+            "label": "Details"
+          },
+          {
+            "name": "ErrorDate",
+            "time": true,
+            "type": "date",
+            "label": "ErrorDate"
+          },
+          {
+            "name": "Assignee",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              }
+            ],
+            "type": "collection",
+            "label": "Assignee"
+          },
+          {
+            "name": "Notes",
+            "type": "text",
+            "label": "Notes",
+            "multiline": true
+          },
+          {
+            "name": "Status",
+            "type": "text",
+            "label": "Status"
+          },
+          {
+            "name": "SolvedDate",
+            "type": "date",
+            "label": "SolvedDate"
+          },
+          {
+            "name": "SolvingTime",
+            "type": "text",
+            "label": "SolvingTime"
+          },
+          {
+            "name": "OrganizationURL",
+            "type": "text",
+            "label": "OrganizationURL"
+          },
+          {
+            "name": "TeamURL",
+            "type": "text",
+            "label": "TeamURL"
+          },
+          {
+            "name": "ScenarioURL",
+            "type": "text",
+            "label": "ScenarioURL"
+          },
+          {
+            "name": "DetailsURL",
+            "type": "text",
+            "label": "DetailsURL"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
+    },
+    {
+      "id": 22,
+      "filter": {
+        "name": "Only One Time",
+        "conditions": [
+          [
+            {
+              "a": "{{4.`__IMTINDEX__`}}",
+              "b": "1",
+              "o": "number:equal"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "step": "1",
+        "start": "1",
+        "repeats": "2"
+      },
+      "module": "builtin:BasicRepeater",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "start",
+            "type": "number",
+            "label": "Initial value",
+            "required": true
+          },
+          {
+            "name": "repeats",
+            "type": "number",
+            "label": "Repeats",
+            "required": true,
+            "validate": {
+              "max": 10000,
+              "min": 0
+            }
+          },
+          {
+            "name": "step",
+            "type": "number",
+            "label": "Step",
+            "required": true
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 3000,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 5,
+      "mapper": {
+        "qs": [
+          {
+            "key": "ids",
+            "value": "all"
+          },
+          {
+            "key": "imtZoneId",
+            "value": "{{22.i}}"
+          }
+        ],
+        "url": "v2/notifications/mark-as-read",
+        "method": "POST",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "module": "make:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "text",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "body",
+            "type": "any",
+            "label": "Body"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "make"
+              },
+              "label": "My Make connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 3300,
+          "y": 0,
+          "name": "Mark As Read"
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:make",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2417656
+      }
+    },
+    {
+      "id": 17,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 16,
+              "mapper": {
+                "url": "v2/enums/imt-zones",
+                "method": "GET",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              },
+              "module": "make:makeApiCall",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "URL",
+                    "required": true
+                  },
+                  {
+                    "name": "method",
+                    "type": "select",
+                    "label": "Method",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "PATCH",
+                        "DELETE"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "headers",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key"
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Headers"
+                  },
+                  {
+                    "name": "qs",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key"
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Query String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "any",
+                    "label": "Body"
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "qs": {
+                      "mode": "chose"
+                    },
+                    "method": {
+                      "mode": "chose",
+                      "label": "GET"
+                    },
+                    "headers": {
+                      "mode": "chose",
+                      "items": [
+                        null
+                      ]
+                    }
+                  },
+                  "parameters": {
+                    "__IMTCONN__": {
+                      "data": {
+                        "scoped": "true",
+                        "connection": "make"
+                      },
+                      "label": "My Make connection (karim@el-kassas.com)"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 3900,
+                  "y": 0,
+                  "name": "Get Zone IDs"
+                },
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:make",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": 2417656
+              }
+            }
+          ],
+          "disabled": true
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 3600,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "name": "Error Handler V2 — @karime",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "2": {
+          "body": {
+            "pg": {
+              "limit": 10000,
+              "offset": 0,
+              "sortBy": "id...",
+              "sortDir": "desc...",
+              "returnTotalCount": false
+            },
+            "notifications": [
+              {
+                "id": "21493652...",
+                "read": "2024-02-06T12:13:41.301Z",
+                "type": 6,
+                "created": "2024-02-06T11:45:39.283Z",
+                "subject": "The scenario 32. ✅ Discord - Monitor has been stopped...."
+              }
+            ],
+            "userZoneNotifications": [
+              {
+                "imtZoneId": 2,
+                "unreadNotifications": 0
+              }
+            ],
+            "userUnreadNotifications": 0
+          },
+          "headers": {
+            "date": "Sat, 10 Feb 2024 17:38:21 GMT...",
+            "cf-ray": "853620157a0a5702-DUB...",
+            "server": "cloudflare...",
+            "authtype": "token...",
+            "connection": "close...",
+            "api-version": "4.27.0...",
+            "content-type": "application/json; charset=utf-8...",
+            "cf-cache-status": "DYNAMIC...",
+            "transfer-encoding": "chunked...",
+            "x-ratelimit-limit": "10000...",
+            "x-ratelimit-reset": "1707586735...",
+            "x-ratelimit-remaining": "9998..."
+          },
+          "statusCode": 200
+        },
+        "3": {
+          "body": {
+            "notification": {
+              "id": "21493652...",
+              "body": "<p>Your scenario <strong>32. ✅ Discord &#45; Monitor</strong> has been stopped due to an error.</p>\n...",
+              "read": "2024-02-06T12:13:41.301Z",
+              "type": 6,
+              "created": "2024-02-06T11:45:39.283Z",
+              "subject": "The scenario 32. ✅ Discord - Monitor has been stopped...."
+            }
+          },
+          "headers": {
+            "date": "Sat, 10 Feb 2024 17:38:21 GMT...",
+            "cf-ray": "85362016b97b955b-DUB...",
+            "server": "cloudflare...",
+            "authtype": "token...",
+            "connection": "close...",
+            "api-version": "4.27.0...",
+            "content-type": "application/json; charset=utf-8...",
+            "cf-cache-status": "DYNAMIC...",
+            "transfer-encoding": "chunked...",
+            "x-ratelimit-limit": "10000...",
+            "x-ratelimit-reset": "1707586735...",
+            "x-ratelimit-remaining": "9996..."
+          },
+          "statusCode": 200
+        },
+        "4": {
+          "i": 1,
+          "id": "21493652...",
+          "body": {
+            "pg": {
+              "limit": 10000,
+              "offset": 0,
+              "sortBy": "id...",
+              "sortDir": "desc...",
+              "returnTotalCount": false
+            },
+            "notifications": [
+              {
+                "id": "21493652...",
+                "read": "2024-02-06T12:13:41.301Z",
+                "type": 6,
+                "created": "2024-02-06T11:45:39.283Z",
+                "subject": "The scenario 32. ✅ Discord - Monitor has been stopped...."
+              }
+            ],
+            "userZoneNotifications": [
+              {
+                "imtZoneId": 2,
+                "unreadNotifications": 0
+              }
+            ],
+            "userUnreadNotifications": 0
+          },
+          "read": "2024-02-06T12:13:41.301Z",
+          "type": 6,
+          "created": "2024-02-06T11:45:39.283Z",
+          "headers": {
+            "date": "Sat, 10 Feb 2024 17:38:21 GMT...",
+            "cf-ray": "853620157a0a5702-DUB...",
+            "server": "cloudflare...",
+            "authtype": "token...",
+            "connection": "close...",
+            "api-version": "4.27.0...",
+            "content-type": "application/json; charset=utf-8...",
+            "cf-cache-status": "DYNAMIC...",
+            "transfer-encoding": "chunked...",
+            "x-ratelimit-limit": "10000...",
+            "x-ratelimit-reset": "1707586735...",
+            "x-ratelimit-remaining": "9998..."
+          },
+          "subject": "The scenario 32. ✅ Discord - Monitor has been stopped....",
+          "statusCode": 200,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 5
+        },
+        "5": {
+          "body": {
+            "notifications": []
+          },
+          "headers": {
+            "date": "Sat, 10 Feb 2024 17:38:22 GMT...",
+            "cf-ray": "85362019c8da1b79-DUB...",
+            "server": "cloudflare...",
+            "authtype": "token...",
+            "connection": "close...",
+            "api-version": "4.27.0...",
+            "content-type": "application/json; charset=utf-8...",
+            "cf-cache-status": "DYNAMIC...",
+            "transfer-encoding": "chunked...",
+            "x-ratelimit-limit": "10000...",
+            "x-ratelimit-reset": "1707586735...",
+            "x-ratelimit-remaining": "9995..."
+          },
+          "statusCode": 200
+        },
+        "10": {
+          "i": 1,
+          "reason": "Scenario has been deactivated because of an error....",
+          "team_url": null,
+          "team_name": null,
+          "details_url": null,
+          "scenario_url": null,
+          "scenario_name": null,
+          "organization_url": null,
+          "organization_name": null
+        },
+        "11": {
+          "array": [
+            {
+              "reason": null,
+              "team_url": null,
+              "team_name": null,
+              "details_url": "https://eu1.make.com/195547/scenarios/2171613/edit...",
+              "scenario_url": null,
+              "scenario_name": null,
+              "organization_url": null,
+              "organization_name": null
+            }
+          ],
+          "__IMTAGGLENGTH__": 5
+        },
+        "12": {
+          "reason": "Scenario has been deactivated because of an error....",
+          "team_url": "https://eu1.make.com/195547/team...",
+          "team_name": "Valued...",
+          "details_url": "https://eu1.make.com/195547/scenarios/2171613/edit...",
+          "scenario_url": "https://eu1.make.com/195547/scenarios/2171613/logs...",
+          "scenario_name": "32. ✅ Discord &#45; Monitor...",
+          "organization_url": "https://eu1.make.com/organization/317142...",
+          "organization_name": "Valued..."
+        },
+        "13": {
+          "id": "rectOB3vxByeqMcrV...",
+          "Reason": "Scenario has been deactivated because of an error....",
+          "Status": "Todo...",
+          "Details": {
+            "url": "https://eu1.make.com/195547/scenarios/2171613/edit...",
+            "label": "Open..."
+          },
+          "Summary": "ORG: Valued @ 2024-02-10...",
+          "TeamURL": "https://eu1.make.com/195547/team...",
+          "TeamName": "Valued...",
+          "ErrorDate": "2024-02-10T17:38:21.924Z",
+          "DetailsURL": "https://eu1.make.com/195547/scenarios/2171613/edit...",
+          "SolvedDate": "2024-02-10T17:38:22.000Z",
+          "ScenarioURL": "https://eu1.make.com/195547/scenarios/2171613/logs...",
+          "SolvingTime": 0,
+          "createdTime": "2024-02-10T17:38:22.000Z",
+          "ScenarioName": "32. ✅ Discord &#45; Monitor...",
+          "OrganizationURL": "https://eu1.make.com/organization/317142...",
+          "OrganizationName": "Valued..."
+        },
+        "14": {
+          "i": 1
+        },
+        "16": {
+          "body": {
+            "imtZones": [
+              {
+                "id": 2,
+                "name": "Zone US1...",
+                "domain": "us1.make.com..."
+              }
+            ]
+          },
+          "headers": {
+            "date": "Sat, 10 Feb 2024 17:11:47 GMT...",
+            "cf-ray": "8535f929ecd934e3-DUB...",
+            "server": "cloudflare...",
+            "authtype": "session...",
+            "connection": "close...",
+            "imt-cached": "1...",
+            "api-version": "4.27.0...",
+            "content-type": "application/json; charset=utf-8...",
+            "cache-control": "max-age=3600...",
+            "cf-cache-status": "DYNAMIC...",
+            "transfer-encoding": "chunked...",
+            "x-ratelimit-limit": "10000...",
+            "x-ratelimit-reset": "1707585168...",
+            "x-ratelimit-remaining": "9999..."
+          },
+          "statusCode": 200
+        },
+        "19": {
+          "array": [
+            {
+              "i": 2,
+              "id": "15892301...",
+              "body": {
+                "pg": {
+                  "limit": 10000,
+                  "offset": 0,
+                  "sortBy": "id...",
+                  "sortDir": "desc...",
+                  "returnTotalCount": false
+                },
+                "notifications": [
+                  {
+                    "id": "15892301...",
+                    "read": "2024-02-07T03:48:11.308Z",
+                    "type": 6,
+                    "created": "2024-02-06T21:30:42.485Z",
+                    "subject": "The scenario Add New Affiliate to  GS has been stopped...."
+                  }
+                ],
+                "userZoneNotifications": [
+                  {
+                    "imtZoneId": 2,
+                    "unreadNotifications": 0
+                  }
+                ],
+                "userUnreadNotifications": 0
+              },
+              "read": "2024-02-07T03:48:11.308Z",
+              "type": 6,
+              "created": "2024-02-06T21:30:42.485Z",
+              "headers": {
+                "date": "Sat, 10 Feb 2024 17:38:21 GMT...",
+                "cf-ray": "85362015ed541b96-DUB...",
+                "server": "cloudflare...",
+                "authtype": "token...",
+                "connection": "close...",
+                "api-version": "4.27.0...",
+                "content-type": "application/json; charset=utf-8...",
+                "cf-cache-status": "DYNAMIC...",
+                "transfer-encoding": "chunked...",
+                "x-ratelimit-limit": "10000...",
+                "x-ratelimit-reset": "1707586735...",
+                "x-ratelimit-remaining": "9997..."
+              },
+              "subject": "The scenario Add New Affiliate to  GS has been stopped....",
+              "statusCode": 200,
+              "__IMTINDEX__": 4,
+              "__IMTLENGTH__": 4
+            }
+          ],
+          "__IMTAGGLENGTH__": 5
+        },
+        "20": {
+          "id": "21493652...",
+          "read": "2024-02-06T12:13:41.301Z",
+          "type": 6,
+          "created": "2024-02-06T11:45:39.283Z",
+          "subject": "The scenario 32. ✅ Discord - Monitor has been stopped....",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 1
+        },
+        "22": {
+          "i": 1
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
