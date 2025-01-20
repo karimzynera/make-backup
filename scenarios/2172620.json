@@ -1,0 +1,1641 @@
+{
+  "flow": [
+    {
+      "id": 2,
+      "filter": {
+        "name": "Challenge",
+        "conditions": []
+      },
+      "mapper": {
+        "ca": "",
+        "qs": [
+          {
+            "name": "username",
+            "value": "karim@el-kassas.com"
+          },
+          {
+            "name": "pw",
+            "value": "{{sha512(\"make\")}}"
+          }
+        ],
+        "url": "https://hook.eu1.make.com/e51to7o9324bv7b1nc9153mr94si6ceu",
+        "gzip": true,
+        "method": "get",
+        "headers": [],
+        "timeout": "",
+        "useMtls": false,
+        "authPass": "",
+        "authUser": "",
+        "bodyType": "",
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      },
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": [
+                "raw",
+                "x_www_form_urlencoded",
+                "multipart_form_data"
+              ]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Empty"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Hack Database"
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      }
+    },
+    {
+      "id": 51,
+      "filter": {
+        "name": "Step 1",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.additional_student_metadata}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Additional All"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 54,
+      "mapper": {
+        "array": "{{keys(get(2.data.additional_student_metadata; 51.`__IMTINDEX__`))}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Get Keys"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 56,
+      "flags": {
+        "groupBy": "{{51.`__IMTINDEX__`}}"
+      },
+      "filter": {
+        "name": "Correct Key",
+        "conditions": [
+          [
+            {
+              "a": "{{54.value}}",
+              "b": "interest_",
+              "o": "text:startwith"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "value": "{{get(2.data.additional_student_metadata; 51.`__IMTINDEX__` + \".\" + 54.value)}}"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text",
+            "multiline": true
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "2.additional_metadata [51]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "Other"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Combine Interests"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "otherRowSeparator",
+            "type": "text",
+            "label": "Separator"
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 51,
+        "rowSeparator": "other",
+        "otherRowSeparator": ","
+      }
+    },
+    {
+      "id": 106,
+      "mapper": {
+        "text": "{{56.text}}",
+        "__IMTKEY__": "{{56.`__IMTKEY__`}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Combine Interests - Text aggregator [56]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Additional Interests"
+        }
+      },
+      "parameters": {
+        "feeder": 56
+      }
+    },
+    {
+      "id": 109,
+      "filter": {
+        "name": "Step 2",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.additional_student_metadata}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "name": "Additional All"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 110,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "student_id",
+            "value": "{{109.student_id}}"
+          },
+          {
+            "name": "last_name",
+            "value": "{{109.last_name}}"
+          },
+          {
+            "name": "interests",
+            "value": "{{first(map(106.array; \"text\"; \"__IMTKEY__\"; 109.`__IMTINDEX__`))}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 1800,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "student_id",
+            "type": "any",
+            "label": "student_id"
+          },
+          {
+            "name": "last_name",
+            "type": "any",
+            "label": "last_name"
+          },
+          {
+            "name": "interests",
+            "type": "any",
+            "label": "interests"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 111,
+      "mapper": {
+        "interests": "{{110.interests}}",
+        "last_name": "{{110.last_name}}",
+        "student_id": "{{110.student_id}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [146]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 2100,
+          "y": 0,
+          "name": "Addtional All"
+        }
+      },
+      "parameters": {
+        "feeder": 109
+      }
+    },
+    {
+      "id": 48,
+      "filter": {
+        "name": "Step 3",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{sort(flatten(map(2.data.school_classes; \"members\")); \"student_id\")}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 2400,
+          "y": 0,
+          "name": "Sort Members"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 49,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "student_id",
+            "value": "{{48.student_id}}"
+          },
+          {
+            "name": "first_name",
+            "value": "{{48.name}}"
+          },
+          {
+            "name": "last_name",
+            "value": "{{first(map(111.array; \"last_name\"; \"student_id\"; 48.student_id))}}"
+          },
+          {
+            "name": "email",
+            "value": "{{48.email}}"
+          },
+          {
+            "name": "date_of_birth",
+            "value": "{{48.date_of_birth}}"
+          },
+          {
+            "name": "correct_age",
+            "value": "{{floor((parseDate(\"2023-05-03\") - parseDate(48.date_of_birth)) / 1000 / 60 / 60 / 24 / 365)}}"
+          },
+          {
+            "name": "interests",
+            "value": "{{ifempty(join(48.interests; \",\"); first(map(111.array; \"interests\"; \"student_id\"; 48.student_id)))}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 2700,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "student_id",
+            "type": "any",
+            "label": "student_id"
+          },
+          {
+            "name": "first_name",
+            "type": "any",
+            "label": "first_name"
+          },
+          {
+            "name": "last_name",
+            "type": "any",
+            "label": "last_name"
+          },
+          {
+            "name": "email",
+            "type": "any",
+            "label": "email"
+          },
+          {
+            "name": "date_of_birth",
+            "type": "any",
+            "label": "date_of_birth"
+          },
+          {
+            "name": "correct_age",
+            "type": "any",
+            "label": "correct_age"
+          },
+          {
+            "name": "interests",
+            "type": "any",
+            "label": "interests"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 47,
+      "mapper": {
+        "email": "{{49.email}}",
+        "interests": "{{49.interests}}",
+        "last_name": "{{49.last_name}}",
+        "first_name": "{{49.first_name}}",
+        "student_id": "{{49.student_id}}",
+        "correct_age": "{{49.correct_age}}",
+        "date_of_birth": "{{49.date_of_birth}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Sort Members [48]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 3000,
+          "y": 0,
+          "name": "Existing Students"
+        }
+      },
+      "parameters": {
+        "feeder": 48
+      }
+    },
+    {
+      "id": 58,
+      "filter": {
+        "name": "Step 4",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{2.data.unassigned_students}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 3300,
+          "y": 0,
+          "name": "New Students"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 107,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "student_id",
+            "value": "{{last(map(47.array; \"student_id\")) + 58.`__IMTINDEX__`}}"
+          },
+          {
+            "name": "first_name",
+            "value": "{{58.name}}"
+          },
+          {
+            "name": "last_name",
+            "value": "{{ifempty(58.last_name; 58.lasttttt_name)}}"
+          },
+          {
+            "name": "email",
+            "value": "{{58.email}}"
+          },
+          {
+            "name": "date_of_birth",
+            "value": "{{58.date_of_birth}}"
+          },
+          {
+            "name": "correct_age",
+            "value": "{{floor((parseDate(\"2023-05-03\") - parseDate(58.date_of_birth)) / 1000 / 60 / 60 / 24 / 365)}}"
+          },
+          {
+            "name": "interests",
+            "value": "{{join(58.interests; \",\")}}"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "default": "roundtrip",
+            "options": [
+              {
+                "label": "One cycle",
+                "value": "roundtrip"
+              },
+              {
+                "label": "One execution",
+                "value": "execution"
+              }
+            ],
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 3600,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "student_id",
+            "type": "any",
+            "label": "student_id"
+          },
+          {
+            "name": "first_name",
+            "type": "any",
+            "label": "first_name"
+          },
+          {
+            "name": "last_name",
+            "type": "any",
+            "label": "last_name"
+          },
+          {
+            "name": "email",
+            "type": "any",
+            "label": "email"
+          },
+          {
+            "name": "date_of_birth",
+            "type": "any",
+            "label": "date_of_birth"
+          },
+          {
+            "name": "correct_age",
+            "type": "any",
+            "label": "correct_age"
+          },
+          {
+            "name": "interests",
+            "type": "any",
+            "label": "interests"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 108,
+      "mapper": {
+        "email": "{{107.email}}",
+        "interests": "{{107.interests}}",
+        "last_name": "{{107.last_name}}",
+        "first_name": "{{107.first_name}}",
+        "student_id": "{{107.student_id}}",
+        "correct_age": "{{107.correct_age}}",
+        "date_of_birth": "{{107.date_of_birth}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "New Students [58]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 3900,
+          "y": 0,
+          "name": "New Students"
+        }
+      },
+      "parameters": {
+        "feeder": 58
+      }
+    },
+    {
+      "id": 100,
+      "filter": {
+        "name": "Step 5",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{merge(47.array; 108.array)}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 4200,
+          "y": 0,
+          "name": "Merge Students"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 30,
+      "mapper": {
+        "value": "<tr>\n        <td>{{emptystring}}</td>\n        <td>{{100.student_id}}</td>\n        <td>{{100.first_name}}</td>\n        <td>{{100.last_name}}</td>\n        <td>{{100.email}}</td>\n        <td>{{100.date_of_birth}}</td>\n        <td>{{100.correct_age}}</td>\n        <td>{{100.interests}}</td>\n      </tr>"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Merge Students [100]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 4500,
+          "y": 0,
+          "name": "Table 1"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 100,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 75,
+      "filter": {
+        "name": "Step 6",
+        "conditions": []
+      },
+      "mapper": {
+        "array": "{{shuffle(merge(47.array; 108.array))}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 4800,
+          "y": 0,
+          "name": "Shuffle Students"
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 103,
+      "mapper": {
+        "value": "<tr>\n        <td>{{if(75.`__IMTINDEX__` < 6; \"Alpha\"; \"Beta\")}}</td>\n        <td>{{75.student_id}}</td>\n        <td>{{75.first_name}}</td>\n        <td>{{75.last_name}}</td>\n        <td>{{75.email}}</td>\n        <td>{{75.date_of_birth}}</td>\n        <td>{{75.correct_age}}</td>\n        <td>{{75.interests}}</td>\n      </tr>"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Shuffle Students [75]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 5100,
+          "y": 0,
+          "name": "Table 2"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 75,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 33,
+      "filter": {
+        "name": "Step 7",
+        "conditions": []
+      },
+      "mapper": {
+        "cc": [],
+        "to": [
+          "karim@el-kassas.com",
+          "partner-certification-tests-level5@make.com"
+        ],
+        "bcc": [],
+        "from": "",
+        "html": "### {{var.scenario.url}} ###\n<br>\n<br>\nSorting method: student_id\n<table style=\"border: 1px solid black;\">\n  <thead>\n    <tr>\n      <th>class</th>\n      <th>student_id</th>\n      <th>first_name</th>\n      <th>last_name</th>\n      <th>email</th>\n      <th>date_of_birth</th>\n      <th>correct_age</th>\n      <th>interests</th>\n    </tr>\n  </thead>\n  <tbody>\n    {{30.text}}\n  </tbody>\n</table>\n<br>\nSorting method: random\n<table style=\"border: 1px solid black;\">\n  <thead>\n    <tr>\n      <th>Class</th>\n      <th>Student ID</th>\n      <th>First Name</th>\n      <th>Last Name</th>\n      <th>Email</th>\n      <th>Date of Birth</th>\n      <th>Correct Age</th>\n      <th>Interests</th>\n    </tr>\n  </thead>\n  <tbody>\n    {{103.text}}\n  </tbody>\n</table>",
+        "sender": "",
+        "headers": [],
+        "replyTo": "",
+        "subject": "Certification Level 5 | Practical Challenge | karim@el-kassas.com | {{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+        "priority": "normal",
+        "inReplyTo": "",
+        "references": [],
+        "attachments": [],
+        "contentType": "html"
+      },
+      "module": "email:ActionSendEmail",
+      "version": 7,
+      "metadata": {
+        "expect": [
+          {
+            "name": "to",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address",
+              "required": true
+            },
+            "type": "array",
+            "label": "To",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "html",
+                "text"
+              ]
+            }
+          },
+          {
+            "name": "attachments",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "required": true,
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "required": true,
+                "semantic": "file:data"
+              },
+              {
+                "name": "cid",
+                "type": "text",
+                "label": "Content-ID"
+              }
+            ],
+            "type": "array",
+            "label": "Attachments"
+          },
+          {
+            "name": "cc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Copy recipient"
+          },
+          {
+            "name": "bcc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Blind copy recipient"
+          },
+          {
+            "name": "from",
+            "type": "text",
+            "label": "From"
+          },
+          {
+            "name": "sender",
+            "type": "text",
+            "label": "Sender"
+          },
+          {
+            "name": "replyTo",
+            "type": "text",
+            "label": "Reply-To"
+          },
+          {
+            "name": "inReplyTo",
+            "type": "text",
+            "label": "In-Reply-To"
+          },
+          {
+            "name": "references",
+            "spec": {
+              "name": "value",
+              "type": "text",
+              "label": "Reference",
+              "required": true
+            },
+            "type": "array",
+            "label": "References"
+          },
+          {
+            "name": "priority",
+            "type": "select",
+            "label": "Priority",
+            "validate": {
+              "enum": [
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value",
+                "required": true
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "html",
+            "type": "text",
+            "label": "Content"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cc": {
+              "mode": "chose"
+            },
+            "to": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "bcc": {
+              "mode": "chose"
+            },
+            "priority": {
+              "label": "Normal"
+            },
+            "references": {
+              "mode": "chose"
+            },
+            "attachments": {
+              "mode": "chose"
+            },
+            "contentType": {
+              "label": "HTML"
+            }
+          },
+          "parameters": {
+            "account": {
+              "data": {
+                "scoped": "true",
+                "connection": "smtp"
+              },
+              "label": "karim@el-kassas.com (SMTP karim@el-kassas.com)"
+            },
+            "saveAfterSent": {
+              "label": "No"
+            }
+          }
+        },
+        "designer": {
+          "x": 5400,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "account",
+            "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "saveAfterSent",
+            "type": "select",
+            "label": "Save message after sending",
+            "required": true,
+            "validate": {
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "account": 2357943,
+        "saveAfterSent": false
+      }
+    }
+  ],
+  "name": "2 - Level 5 - Practical Challenge",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "2": {
+          "data": {
+            "message": "What a hacker you are!...",
+            "school_classes": [
+              {
+                "members": [
+                  {
+                    "age": "27...",
+                    "name": "Olivia...",
+                    "email": "jane@novak.com...",
+                    "interests": "a text string which is not an array, random id: ca1dc4b1-0a5a-4c56-b09e-537011a36fd4...",
+                    "student_id": 12,
+                    "date_of_birth": "2000-06-15..."
+                  }
+                ],
+                "class_ids": {
+                  "external_id": "4544582339...",
+                  "internal_id": 12
+                },
+                "class_name": "Class B...",
+                "class_description": "This is a sample Class B..."
+              }
+            ],
+            "current_datetime": "2024-02-21 19:27:16...",
+            "json_description": "Good luck with Level 5 challenge!...",
+            "last_json_update": "2022-12-28T10:41:32+0100...",
+            "unassigned_students": [
+              {
+                "age": 0,
+                "name": "Mark...",
+                "email": "mark@clark.com...",
+                "interests": [
+                  "snowboarding..."
+                ],
+                "last_name": "Clark...",
+                "date_of_birth": "1999-12-03...",
+                "lasttttt_name": "Wilson..."
+              }
+            ],
+            "additional_student_metadata": [
+              {
+                "ecb1d": "This is a really odd key name, which changes every time you request data....",
+                "last_name": "Rodriguez...",
+                "interest_1": "running...",
+                "interest_2": "hiking...",
+                "interest_3": "baseball...",
+                "student_id": 12,
+                "interest_6d8ab": "rugby..."
+              }
+            ]
+          },
+          "headers": [
+            {
+              "name": "cf-ray...",
+              "value": "85910add7d42956f-DUB..."
+            }
+          ],
+          "fileSize": 2978,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "30": {
+          "text": "<tr>\n        <td></td>\n        <td>1</td>\n        <td>Joe</td>\n        <td>Doe</td>\n        <td>joe@..."
+        },
+        "33": {
+          "messageId": "<340e9cb2-ccca-e1d2-2c8b-f6d4ec7827fe@el-kassas.com>..."
+        },
+        "47": {
+          "array": [
+            {
+              "email": null,
+              "interests": "running,hiking,baseball...",
+              "last_name": "Rodriguez...",
+              "first_name": "Olivia...",
+              "student_id": 12,
+              "correct_age": 22,
+              "date_of_birth": "2000-06-15..."
+            }
+          ],
+          "__IMTAGGLENGTH__": 7
+        },
+        "48": {
+          "age": "15...",
+          "name": "Joe...",
+          "email": "joe@doe.com...",
+          "interests": [
+            "skiing..."
+          ],
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "date_of_birth": "2000-01-01..."
+        },
+        "49": {
+          "email": "joe@doe.com...",
+          "interests": "skiing,cycling...",
+          "last_name": "Doe...",
+          "first_name": "Joe...",
+          "student_id": 1,
+          "correct_age": 23,
+          "date_of_birth": "2000-01-01..."
+        },
+        "51": {
+          "ecb1d": null,
+          "last_name": "Doe...",
+          "interest_1": null,
+          "interest_2": null,
+          "interest_3": null,
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "interest_6d8ab": null
+        },
+        "54": {
+          "value": "student_id...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 2
+        },
+        "56": {
+          "text": "rugby...",
+          "__IMTKEY__": 3
+        },
+        "58": {
+          "age": 12,
+          "name": "Maria...",
+          "email": "maria@hernandez.com...",
+          "interests": [],
+          "last_name": "Hernandez...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 3,
+          "date_of_birth": "1999-12-01...",
+          "lasttttt_name": null
+        },
+        "75": {
+          "email": "maria@hernandez.com...",
+          "interests": null,
+          "last_name": "Hernandez...",
+          "first_name": "Maria...",
+          "student_id": 13,
+          "correct_age": 23,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 10,
+          "date_of_birth": "1999-12-01..."
+        },
+        "100": {
+          "email": "joe@doe.com...",
+          "interests": "skiing,cycling...",
+          "last_name": "Doe...",
+          "first_name": "Joe...",
+          "student_id": 1,
+          "correct_age": 23,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 10,
+          "date_of_birth": "2000-01-01..."
+        },
+        "103": {
+          "text": "<tr>\n        <td>Alpha</td>\n        <td>13</td>\n        <td>Maria</td>\n        <td>Hernandez</td>\n  ..."
+        },
+        "106": {
+          "array": [
+            {
+              "text": "running,hiking,baseball...",
+              "__IMTKEY__": 7
+            }
+          ],
+          "__IMTAGGLENGTH__": 2
+        },
+        "107": {
+          "email": "maria@hernandez.com...",
+          "interests": null,
+          "last_name": "Hernandez...",
+          "first_name": "Maria...",
+          "student_id": 13,
+          "correct_age": 23,
+          "date_of_birth": "1999-12-01..."
+        },
+        "108": {
+          "array": [
+            {
+              "email": "mark@clark.com...",
+              "interests": "snowboarding,skiing...",
+              "last_name": "Clark...",
+              "first_name": "Mark...",
+              "student_id": 15,
+              "correct_age": 23,
+              "date_of_birth": "1999-12-03..."
+            }
+          ],
+          "__IMTAGGLENGTH__": 3
+        },
+        "109": {
+          "ecb1d": null,
+          "last_name": "Doe...",
+          "interest_1": null,
+          "interest_2": null,
+          "interest_3": null,
+          "student_id": 1,
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 7,
+          "interest_6d8ab": null
+        },
+        "110": {
+          "interests": null,
+          "last_name": "Doe...",
+          "student_id": 1
+        },
+        "111": {
+          "array": [
+            {
+              "interests": "running,hiking,baseball...",
+              "last_name": "Rodriguez...",
+              "student_id": 12
+            }
+          ],
+          "__IMTAGGLENGTH__": 7
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
