@@ -1,0 +1,1799 @@
+{
+  "flow": [
+    {
+      "id": 3,
+      "mapper": {
+        "ca": "",
+        "qs": [],
+        "url": "https://hook.eu1.make.com/9468mkc4l0qrciimga1qr971tgev7lsm?requested_sheet=weather_stats&email=karim@el-kassas.com",
+        "gzip": true,
+        "method": "get",
+        "headers": [],
+        "timeout": "",
+        "useMtls": false,
+        "authPass": "",
+        "authUser": "",
+        "bodyType": "",
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      },
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String"
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": [
+                "raw",
+                "x_www_form_urlencoded",
+                "multipart_form_data"
+              ]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose"
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Empty"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 0,
+          "y": 150,
+          "name": "Weather Stats"
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      }
+    },
+    {
+      "id": 34,
+      "mapper": {
+        "array": "{{sort(3.data; \"sky\")}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 150
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 35,
+      "flags": {
+        "groupBy": "{{34.sky}}"
+      },
+      "mapper": {},
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [34]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 600,
+          "y": 150
+        }
+      },
+      "parameters": {
+        "feeder": 34
+      }
+    },
+    {
+      "id": 18,
+      "mapper": {
+        "value": "{{startcase(35.`__IMTKEY__`)}}: {{length(35.array)}}"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text",
+            "multiline": true
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Array aggregator [35]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 900,
+          "y": 150,
+          "name": "Overview"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 35,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 22,
+      "mapper": {
+        "array": "{{3.data}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 150
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 36,
+      "filter": {
+        "name": "Times Of Rain Showers",
+        "conditions": [
+          [
+            {
+              "a": "{{22.times_of_rain_showers}}",
+              "o": "exist"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "array": "{{split(22.times_of_rain_showers; \",\")}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 150
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 23,
+      "mapper": {
+        "value": "{{22.date}}: {{36.value}}"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text",
+            "multiline": true
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [22]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 1800,
+          "y": 150,
+          "name": "Rain Showers"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 22,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "ca": "",
+        "qs": [],
+        "url": "https://hook.eu1.make.com/9468mkc4l0qrciimga1qr971tgev7lsm?requested_sheet=public_holidays&email=karim@el-kassas.com",
+        "gzip": true,
+        "method": "get",
+        "headers": [],
+        "timeout": "",
+        "useMtls": false,
+        "authPass": "",
+        "authUser": "",
+        "bodyType": "",
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      },
+      "module": "http:ActionSendData",
+      "onerror": [
+        {
+          "id": 7,
+          "mapper": {
+            "duration": "10"
+          },
+          "module": "util:FunctionSleep",
+          "version": 1,
+          "metadata": {
+            "expect": [
+              {
+                "name": "duration",
+                "type": "uinteger",
+                "label": "Delay",
+                "required": true,
+                "validate": {
+                  "max": 300,
+                  "min": 1
+                }
+              }
+            ],
+            "restore": {},
+            "designer": {
+              "x": 2400,
+              "y": 300
+            }
+          },
+          "parameters": {}
+        },
+        {
+          "id": 9,
+          "mapper": {
+            "ca": "",
+            "qs": [],
+            "url": "https://hook.eu1.make.com/9468mkc4l0qrciimga1qr971tgev7lsm?requested_sheet=public_holidays&email=karim@el-kassas.com",
+            "gzip": true,
+            "method": "get",
+            "headers": [],
+            "timeout": "",
+            "useMtls": false,
+            "authPass": "",
+            "authUser": "",
+            "bodyType": "",
+            "serializeUrl": false,
+            "shareCookies": false,
+            "parseResponse": true,
+            "followRedirect": true,
+            "useQuerystring": false,
+            "followAllRedirects": false,
+            "rejectUnauthorized": true
+          },
+          "module": "http:ActionSendData",
+          "version": 3,
+          "metadata": {
+            "expect": [
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL",
+                "required": true
+              },
+              {
+                "name": "serializeUrl",
+                "type": "boolean",
+                "label": "Serialize URL",
+                "required": true
+              },
+              {
+                "name": "method",
+                "type": "select",
+                "label": "Method",
+                "required": true,
+                "validate": {
+                  "enum": [
+                    "get",
+                    "head",
+                    "post",
+                    "put",
+                    "patch",
+                    "delete",
+                    "options"
+                  ]
+                }
+              },
+              {
+                "name": "headers",
+                "spec": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name",
+                    "required": true
+                  },
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Value"
+                  }
+                ],
+                "type": "array",
+                "label": "Headers"
+              },
+              {
+                "name": "qs",
+                "spec": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name",
+                    "required": true
+                  },
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Value"
+                  }
+                ],
+                "type": "array",
+                "label": "Query String"
+              },
+              {
+                "name": "bodyType",
+                "type": "select",
+                "label": "Body type",
+                "validate": {
+                  "enum": [
+                    "raw",
+                    "x_www_form_urlencoded",
+                    "multipart_form_data"
+                  ]
+                }
+              },
+              {
+                "name": "parseResponse",
+                "type": "boolean",
+                "label": "Parse response",
+                "required": true
+              },
+              {
+                "name": "authUser",
+                "type": "text",
+                "label": "User name"
+              },
+              {
+                "name": "authPass",
+                "type": "password",
+                "label": "Password"
+              },
+              {
+                "name": "timeout",
+                "type": "uinteger",
+                "label": "Timeout",
+                "validate": {
+                  "max": 300,
+                  "min": 1
+                }
+              },
+              {
+                "name": "shareCookies",
+                "type": "boolean",
+                "label": "Share cookies with other HTTP modules",
+                "required": true
+              },
+              {
+                "name": "ca",
+                "type": "cert",
+                "label": "Self-signed certificate"
+              },
+              {
+                "name": "rejectUnauthorized",
+                "type": "boolean",
+                "label": "Reject connections that are using unverified (self-signed) certificates",
+                "required": true
+              },
+              {
+                "name": "followRedirect",
+                "type": "boolean",
+                "label": "Follow redirect",
+                "required": true
+              },
+              {
+                "name": "useQuerystring",
+                "type": "boolean",
+                "label": "Disable serialization of multiple same query string keys as arrays",
+                "required": true
+              },
+              {
+                "name": "gzip",
+                "type": "boolean",
+                "label": "Request compressed content",
+                "required": true
+              },
+              {
+                "name": "useMtls",
+                "type": "boolean",
+                "label": "Use Mutual TLS",
+                "required": true
+              },
+              {
+                "name": "followAllRedirects",
+                "type": "boolean",
+                "label": "Follow all redirect",
+                "required": true
+              }
+            ],
+            "restore": {
+              "expect": {
+                "qs": {
+                  "mode": "chose"
+                },
+                "method": {
+                  "mode": "chose",
+                  "label": "GET"
+                },
+                "headers": {
+                  "mode": "chose"
+                },
+                "bodyType": {
+                  "label": "Empty"
+                }
+              }
+            },
+            "advanced": true,
+            "designer": {
+              "x": 2700,
+              "y": 300,
+              "name": "Public Holidays V2"
+            },
+            "parameters": [
+              {
+                "name": "handleErrors",
+                "type": "boolean",
+                "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                "required": true
+              },
+              {
+                "name": "useNewZLibDeCompress",
+                "type": "hidden"
+              }
+            ]
+          },
+          "parameters": {
+            "handleErrors": true,
+            "useNewZLibDeCompress": true
+          }
+        },
+        {
+          "id": 10,
+          "mapper": {
+            "data": "{{9.data}}",
+            "headers": [],
+            "statusCode": "{{9.statusCode}}",
+            "cookieHeaders": []
+          },
+          "module": "builtin:Resume",
+          "version": 1,
+          "metadata": {
+            "expect": [
+              {
+                "name": "headers",
+                "spec": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name"
+                  },
+                  {
+                    "name": "value",
+                    "type": "text",
+                    "label": "Value"
+                  }
+                ],
+                "type": "array",
+                "label": "Headers"
+              },
+              {
+                "name": "cookieHeaders",
+                "spec": {
+                  "name": "value",
+                  "type": "text"
+                },
+                "type": "array",
+                "label": "Cookie headers"
+              },
+              {
+                "name": "statusCode",
+                "type": "number",
+                "label": "Status code"
+              },
+              {
+                "name": "data",
+                "type": "any",
+                "label": "Data"
+              }
+            ],
+            "restore": {},
+            "designer": {
+              "x": 3000,
+              "y": 300
+            }
+          },
+          "parameters": {}
+        }
+      ],
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "help": "Serializes URL and escapes special characters.",
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "default": false,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "default": "get",
+            "options": [
+              {
+                "label": "GET",
+                "value": "get"
+              },
+              {
+                "label": "HEAD",
+                "value": "head"
+              },
+              {
+                "label": "POST",
+                "value": "post"
+              },
+              {
+                "label": "PUT",
+                "value": "put"
+              },
+              {
+                "label": "PATCH",
+                "value": "patch"
+              },
+              {
+                "label": "DELETE",
+                "value": "delete"
+              },
+              {
+                "label": "OPTIONS",
+                "value": "options"
+              }
+            ],
+            "editable": true,
+            "required": true
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers",
+            "labels": {
+              "add": "Add a header",
+              "edit": "Edit a header"
+            },
+            "editable": true,
+            "required": false
+          },
+          {
+            "name": "qs",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Query String",
+            "labels": {
+              "add": "Add parameter",
+              "edit": "Edit parameter"
+            },
+            "editable": true,
+            "required": false
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "options": [
+              {
+                "label": "Raw",
+                "value": "raw",
+                "nested": [
+                  {
+                    "help": "Sets the `Content-Type` request header.",
+                    "name": "contentType",
+                    "type": "select",
+                    "label": "Content type",
+                    "options": [
+                      {
+                        "label": "Text (text/plain)",
+                        "value": "text/plain"
+                      },
+                      {
+                        "label": "JSON (application/json)",
+                        "value": "application/json"
+                      },
+                      {
+                        "label": "XML (application/xml)",
+                        "value": "application/xml"
+                      },
+                      {
+                        "label": "XML (text/xml)",
+                        "value": "text/xml"
+                      },
+                      {
+                        "label": "HTML (text/html)",
+                        "value": "text/html"
+                      },
+                      {
+                        "label": "Custom",
+                        "value": "custom",
+                        "nested": [
+                          {
+                            "name": "customContentType",
+                            "type": "text",
+                            "label": "Value",
+                            "required": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "data",
+                    "type": "buffer",
+                    "label": "Request content"
+                  }
+                ]
+              },
+              {
+                "label": "Application/x-www-form-urlencoded",
+                "value": "x_www_form_urlencoded",
+                "nested": [
+                  {
+                    "name": "formFields",
+                    "spec": [
+                      {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Fields",
+                    "editable": true
+                  }
+                ]
+              },
+              {
+                "label": "Multipart/form-data",
+                "value": "multipart_form_data",
+                "nested": [
+                  {
+                    "name": "formDataFields",
+                    "spec": [
+                      {
+                        "name": "fieldType",
+                        "type": "select",
+                        "label": "Field type",
+                        "options": [
+                          {
+                            "label": "Text",
+                            "value": "text",
+                            "nested": [
+                              {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true
+                              },
+                              {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                              }
+                            ]
+                          },
+                          {
+                            "label": "File",
+                            "value": "file",
+                            "nested": [
+                              {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key",
+                                "required": true
+                              },
+                              {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "semantic": "file:data"
+                              },
+                              {
+                                "help": "File name, including the suffix, e.g. invoice, xml",
+                                "name": "fileName",
+                                "type": "filename",
+                                "label": "File name",
+                                "semantic": "file:name"
+                              }
+                            ]
+                          }
+                        ],
+                        "required": true
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Fields",
+                    "editable": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "help": "Automatically parses responses and converts JSON and XML responses so you don't need to use JSON or XML parser. Before you can use parsed JSON or XML content, run the module once manually so that the module can recognize the response content and allows you to map it in subsequent modules.",
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "help": "User name for Basic Auth",
+            "name": "authUser",
+            "type": "text",
+            "label": "User name",
+            "advanced": true
+          },
+          {
+            "help": "Password for Basic Auth",
+            "name": "authPass",
+            "type": "password",
+            "label": "Password",
+            "advanced": true
+          },
+          {
+            "help": "In seconds. Default: 300 seconds. This value controls two timeouts: Read timeout and Connection timeout. Read timeout is a time to wait for a server to send response headers (and start the response body) before aborting the request. Connection timeout sets the socket to timeout after timeout milliseconds of inactivity.",
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "advanced": true,
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "default": false,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "help": "Upload your certificate if you want to use TLS using your self-signed certificate.",
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate",
+            "advanced": true
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "default": true,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "nested": [
+              {
+                "help": "Follows also non-GET HTTP 3xx responses as redirects.",
+                "name": "followAllRedirects",
+                "type": "boolean",
+                "label": "Follow all redirect",
+                "advanced": true,
+                "required": true
+              }
+            ],
+            "default": true,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "help": "By default, Make handles multiple values for the same url query string parameter key as arrays (e.g. `www.test.com?foo=bar&foo=baz`will be converted to `www.test.com?foo[0]=bar&foo[1]=baz`). To disable this feature, activate this option.",
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "default": false,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "help": "Adds an `Accept-Encoding` header to request compressed content.",
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "default": true,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "default": false,
+            "advanced": true,
+            "required": true
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "qs": {
+              "mode": "chose"
+            },
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Empty"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 2100,
+          "y": 150,
+          "name": "Public Holidays"
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      }
+    },
+    {
+      "id": 39,
+      "mapper": {
+        "array": "{{map(4.data; \"date\"; \"is_public_holiday\"; \"yes\")}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 38,
+      "mapper": {
+        "value": "{{39.value[]}}: {{first(map(3.data; \"sky\"; \"date\"; 39.value[]))}}"
+      },
+      "module": "util:TextAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "value",
+            "type": "text",
+            "label": "Text",
+            "multiline": true
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [39]"
+            }
+          },
+          "parameters": {
+            "rowSeparator": {
+              "label": "New row"
+            }
+          }
+        },
+        "advanced": true,
+        "designer": {
+          "x": 2700,
+          "y": 0,
+          "name": "Sky During Holidays"
+        },
+        "parameters": [
+          {
+            "name": "rowSeparator",
+            "type": "select",
+            "label": "Row separator",
+            "validate": {
+              "enum": [
+                "\n",
+                "\t",
+                "other"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "feeder": 39,
+        "rowSeparator": "\n"
+      }
+    },
+    {
+      "id": 43,
+      "mapper": {
+        "array": "{{4.data}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array",
+            "editable": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 3000,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 46,
+      "filter": {
+        "name": "WS = PB",
+        "conditions": []
+      },
+      "mapper": {
+        "sky": "{{first(map(3.data; \"sky\"; \"date\"; 43.date))}}",
+        "city": "{{first(map(3.data; \"city\"; \"date\"; 43.date))}}",
+        "date": "{{first(map(3.data; \"date\"; \"date\"; 43.date))}}",
+        "degrees": "{{first(map(3.data; \"degrees_in_celsius\"; \"date\"; 43.date))}}",
+        "is_public_holiday": "{{43.is_public_holiday}}",
+        "times_of_rain_showers": "{{split(first(map(3.data; \"times_of_rain_showers\"; \"date\"; 43.date)); \",\")}}"
+      },
+      "module": "json:AggregateToJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "sky",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "city",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "date",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "degrees",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "is_public_holiday",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "times_of_rain_showers",
+            "spec": {
+              "name": "value",
+              "type": "text"
+            },
+            "type": "array",
+            "label": null
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [43]"
+            }
+          },
+          "expect": {
+            "times_of_rain_showers": {
+              "mode": "edit"
+            }
+          },
+          "parameters": {
+            "type": {
+              "label": "Make: Level 4"
+            },
+            "space": {
+              "label": "Empty"
+            }
+          }
+        },
+        "designer": {
+          "x": 3300,
+          "y": 0,
+          "name": "Create JSON"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "space",
+            "type": "select",
+            "label": "Indentation",
+            "validate": {
+              "enum": [
+                "tab",
+                "2",
+                "4"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "type": 143877,
+        "space": "",
+        "feeder": 43
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "cc": [],
+        "to": [
+          "karim@el-kassas.com",
+          "partner-certification-tests-level4@make.com"
+        ],
+        "bcc": [],
+        "from": "",
+        "text": "### scenario URL: {{var.scenario.url}} ###\n\nHi,\nhere are your San Francisco weather stats for 2022-11:\nThe max temperature was: {{max(map(3.data; \"degrees_in_celsius\"))}}\nThe avg temperature was: {{average(map(3.data; \"degrees_in_celsius\"))}}\nThe min temperature was: {{min(map(3.data; \"degrees_in_celsius\"))}}\n\nOverview of unique \"sky\" values and their counts:\n{{18.text}}\n\nRain showers:\n{{23.text}}\n\n\"Sky\" statuses during holidays:\n{{38.text}}\n\nHave a nice day!",
+        "sender": "",
+        "headers": [],
+        "replyTo": "",
+        "subject": "Certification Level 4 | Practical Challenge | karim@el-kassas.com | {{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+        "priority": "normal",
+        "inReplyTo": "",
+        "references": [],
+        "attachments": [
+          {
+            "cid": "",
+            "data": "{{toBinary(46.json)}}",
+            "fileName": "weather_stats.json"
+          }
+        ],
+        "contentType": "text"
+      },
+      "module": "email:ActionSendEmail",
+      "version": 7,
+      "metadata": {
+        "expect": [
+          {
+            "name": "to",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address",
+              "required": true
+            },
+            "type": "array",
+            "label": "To",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "html",
+                "text"
+              ]
+            }
+          },
+          {
+            "name": "attachments",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "required": true,
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "required": true,
+                "semantic": "file:data"
+              },
+              {
+                "name": "cid",
+                "type": "text",
+                "label": "Content-ID"
+              }
+            ],
+            "type": "array",
+            "label": "Attachments"
+          },
+          {
+            "name": "cc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Copy recipient"
+          },
+          {
+            "name": "bcc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Blind copy recipient"
+          },
+          {
+            "name": "from",
+            "type": "text",
+            "label": "From"
+          },
+          {
+            "name": "sender",
+            "type": "text",
+            "label": "Sender"
+          },
+          {
+            "name": "replyTo",
+            "type": "text",
+            "label": "Reply-To"
+          },
+          {
+            "name": "inReplyTo",
+            "type": "text",
+            "label": "In-Reply-To"
+          },
+          {
+            "name": "references",
+            "spec": {
+              "name": "value",
+              "type": "text",
+              "label": "Reference",
+              "required": true
+            },
+            "type": "array",
+            "label": "References"
+          },
+          {
+            "name": "priority",
+            "type": "select",
+            "label": "Priority",
+            "validate": {
+              "enum": [
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value",
+                "required": true
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Content"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cc": {
+              "mode": "chose"
+            },
+            "to": {
+              "mode": "chose",
+              "items": [
+                null,
+                null
+              ]
+            },
+            "bcc": {
+              "mode": "chose"
+            },
+            "subject": {
+              "collapsed": true
+            },
+            "priority": {
+              "label": "Normal"
+            },
+            "references": {
+              "mode": "chose"
+            },
+            "attachments": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            },
+            "contentType": {
+              "label": "Plaintext",
+              "collapsed": true
+            }
+          },
+          "parameters": {
+            "account": {
+              "data": {
+                "scoped": "true",
+                "connection": "smtp"
+              },
+              "label": "karim@el-kassas.com (SMTP karim@el-kassas.com)",
+              "collapsed": true
+            },
+            "saveAfterSent": {
+              "label": "No",
+              "collapsed": true
+            }
+          }
+        },
+        "designer": {
+          "x": 3600,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "account",
+            "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "saveAfterSent",
+            "type": "select",
+            "label": "Save message after sending",
+            "required": true,
+            "validate": {
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "account": 2357943,
+        "saveAfterSent": false
+      }
+    }
+  ],
+  "name": "1 - Level 4 - Practical Challenge",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "notes": [
+        {
+          "id": 21,
+          "text": "",
+          "filter": true
+        }
+      ],
+      "orphans": [],
+      "samples": {
+        "2": {
+          "messageId": "<8c6736ef-af3f-0a01-d505-f984459c0da5@el-kassas.com>..."
+        },
+        "3": {
+          "data": [
+            {
+              "sky": "sunny...",
+              "city": "San Francisco...",
+              "date": "2022-11-30...",
+              "degrees_in_celsius": 2,
+              "times_of_rain_showers": null
+            }
+          ],
+          "headers": [
+            {
+              "name": "cf-ray...",
+              "value": "842e76f8881d79df-DUB..."
+            }
+          ],
+          "fileSize": 3455,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "4": {
+          "data": [
+            {
+              "date": "2022-11-30...",
+              "is_public_holiday": "no..."
+            }
+          ],
+          "headers": [
+            {
+              "name": "cf-ray...",
+              "value": "842e770198f456de-DUB..."
+            }
+          ],
+          "fileSize": 1417,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "9": {
+          "data": "[{\"date\":\"2022-11-01\",\"is_public_holiday\":\"yes\"},{\"date\":\"2022-11-02\",\"is_public_holiday\":\"no\"},{\"da...",
+          "headers": [
+            {
+              "name": "cf-ray...",
+              "value": "842e6f859e8b79e2-DUB..."
+            }
+          ],
+          "fileSize": 1417,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "18": {
+          "text": "Cloudy: 9\nFoggy: 3\nRainy: 4\nSunny: 8\nVery Cloudy: 6..."
+        },
+        "22": {
+          "sky": "rainy...",
+          "city": "San Francisco...",
+          "date": "2022-11-01...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 30,
+          "degrees_in_celsius": 10,
+          "times_of_rain_showers": "08:12, 17:58..."
+        },
+        "23": {
+          "text": "2022-11-01: 08:12\n2022-11-01: 17:58\n2022-11-09: 10:00\n2022-11-26: 02:00\n2022-11-26: 11:00\n2022-11-26..."
+        },
+        "34": {
+          "sky": "cloudy...",
+          "city": "San Francisco...",
+          "date": "2022-11-10...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 30,
+          "degrees_in_celsius": 4,
+          "times_of_rain_showers": null
+        },
+        "35": {
+          "array": [
+            {}
+          ],
+          "__IMTKEY__": "cloudy..."
+        },
+        "36": {
+          "value": "08:12...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 2
+        },
+        "38": {
+          "text": "2022-11-01: rainy\n2022-11-17: cloudy\n2022-11-18: cloudy\n2022-11-27: very cloudy\n2022-11-28: rainy\n20..."
+        },
+        "39": {
+          "value": "2022-11-01...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 6
+        },
+        "43": {
+          "date": "2022-11-01...",
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 30,
+          "is_public_holiday": "yes..."
+        },
+        "46": {
+          "json": "[{\"sky\":\"rainy\",\"city\":\"San Francisco\",\"date\":\"2022-11-01\",\"degrees\":\"10\",\"is_public_holiday\":\"yes\",..."
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
