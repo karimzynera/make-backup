@@ -1,0 +1,673 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {
+        "file": "/1lAB8mKciAMMej8TaTHP9wMsoGoMX2QOw1l1nrCSJibw",
+        "role": "reader",
+        "type": "anyone",
+        "select": "file",
+        "destination": "drive",
+        "allowFileDiscovery": false
+      },
+      "module": "google-drive:shareAFileFolder",
+      "version": 4,
+      "metadata": {
+        "expect": [
+          {
+            "type": "hidden"
+          },
+          {
+            "name": "destination",
+            "type": "select",
+            "label": "Choose a Drive",
+            "required": true,
+            "validate": {
+              "enum": [
+                "drive",
+                "share",
+                "team"
+              ]
+            }
+          },
+          {
+            "name": "select",
+            "type": "select",
+            "label": "Select",
+            "required": true,
+            "validate": {
+              "enum": [
+                "file",
+                "folder"
+              ]
+            }
+          },
+          {
+            "name": "role",
+            "type": "select",
+            "label": "Role",
+            "required": true,
+            "validate": {
+              "enum": [
+                "owner",
+                "writer",
+                "commenter",
+                "reader"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "type": "select",
+            "label": "Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "user",
+                "group",
+                "domain",
+                "anyone"
+              ]
+            }
+          },
+          {
+            "mode": "edit",
+            "name": "file",
+            "type": "file",
+            "label": "File ID",
+            "required": true
+          },
+          {
+            "name": "allowFileDiscovery",
+            "type": "boolean",
+            "label": "Allow File Discovery",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "file": {
+              "mode": "chose",
+              "path": [
+                "Zynera-Rechnung"
+              ]
+            },
+            "role": {
+              "mode": "chose",
+              "label": "Reader"
+            },
+            "type": {
+              "mode": "chose",
+              "label": "Anyone"
+            },
+            "select": {
+              "label": "File"
+            },
+            "destination": {
+              "label": "My Drive"
+            },
+            "allowFileDiscovery": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "google-restricted"
+              },
+              "label": "My Google Restricted connection (karim@el-kassas.com)"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "fileId",
+            "type": "text",
+            "label": "File ID"
+          },
+          {
+            "name": "kind",
+            "type": "text",
+            "label": "Kind"
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "label": "Permission ID"
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "label": "Type"
+          },
+          {
+            "name": "shareLink",
+            "type": "url",
+            "label": "Share Link"
+          },
+          {
+            "name": "emailAddress",
+            "type": "text",
+            "label": "Email Address"
+          },
+          {
+            "name": "domain",
+            "type": "text",
+            "label": "Domain"
+          },
+          {
+            "name": "role",
+            "type": "text",
+            "label": "Role"
+          },
+          {
+            "name": "allowFileDiscovery",
+            "type": "boolean",
+            "label": "Allow File Discovery"
+          },
+          {
+            "name": "displayName",
+            "type": "text",
+            "label": "Display Name"
+          },
+          {
+            "name": "photoLink",
+            "type": "text",
+            "label": "Photo Link"
+          },
+          {
+            "name": "expirationTime",
+            "type": "date",
+            "label": "Expiration Time"
+          },
+          {
+            "name": "teamDrivePermissionDetails",
+            "spec": {
+              "spec": [
+                {
+                  "name": "teamDrivePermissionType",
+                  "type": "text",
+                  "label": "Team Drive Permission Type"
+                },
+                {
+                  "name": "role",
+                  "type": "text",
+                  "label": "Role"
+                },
+                {
+                  "name": "inheritedFrom",
+                  "type": "text",
+                  "label": "Inherited From"
+                },
+                {
+                  "name": "inherited",
+                  "type": "boolean",
+                  "label": "Inherited"
+                }
+              ],
+              "type": "collection"
+            },
+            "type": "array",
+            "label": "Team Drive Permission Details"
+          },
+          {
+            "name": "permissionDetails",
+            "spec": {
+              "spec": [
+                {
+                  "name": "permissionType",
+                  "type": "text",
+                  "label": "Permission Type"
+                },
+                {
+                  "name": "role",
+                  "type": "text",
+                  "label": "Role"
+                },
+                {
+                  "name": "inheritedFrom",
+                  "type": "text",
+                  "label": "Inherited From"
+                },
+                {
+                  "name": "inherited",
+                  "type": "boolean",
+                  "label": "Inherited"
+                }
+              ],
+              "type": "collection"
+            },
+            "type": "array",
+            "label": "Permission Details"
+          },
+          {
+            "name": "deleted",
+            "type": "boolean",
+            "label": "Deleted"
+          },
+          {
+            "name": "pendingOwner",
+            "type": "boolean",
+            "label": "Pending Owner"
+          },
+          {
+            "name": "webContentLink",
+            "type": "url",
+            "label": "Web Content Link"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:google-restricted",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2510299
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "url": "https://docs.google.com/spreadsheets/d/{{1.fileId}}/export?format=pdf",
+        "method": "get",
+        "serializeUrl": false,
+        "shareCookies": false
+      },
+      "module": "http:ActionGetFile",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "hidden",
+            "label": "Method"
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "handleErrors": false
+      }
+    },
+    {
+      "id": 3,
+      "mapper": {
+        "cc": [],
+        "to": [
+          "karim@zynera.ai"
+        ],
+        "bcc": [],
+        "from": "",
+        "html": "",
+        "sender": "",
+        "headers": [],
+        "replyTo": "",
+        "subject": "",
+        "priority": "normal",
+        "inReplyTo": "",
+        "references": [],
+        "attachments": [
+          {
+            "cid": "",
+            "data": "{{2.data}}",
+            "fileName": "{{2.fileName}}"
+          }
+        ],
+        "contentType": "html"
+      },
+      "module": "email:ActionSendEmail",
+      "version": 7,
+      "metadata": {
+        "expect": [
+          {
+            "name": "to",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address",
+              "required": true
+            },
+            "type": "array",
+            "label": "To",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "html",
+                "text"
+              ]
+            }
+          },
+          {
+            "name": "attachments",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "required": true,
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "required": true,
+                "semantic": "file:data"
+              },
+              {
+                "name": "cid",
+                "type": "text",
+                "label": "Content-ID"
+              }
+            ],
+            "type": "array",
+            "label": "Attachments"
+          },
+          {
+            "name": "cc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Copy recipient"
+          },
+          {
+            "name": "bcc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Blind copy recipient"
+          },
+          {
+            "name": "from",
+            "type": "text",
+            "label": "From"
+          },
+          {
+            "name": "sender",
+            "type": "text",
+            "label": "Sender"
+          },
+          {
+            "name": "replyTo",
+            "type": "text",
+            "label": "Reply-To"
+          },
+          {
+            "name": "inReplyTo",
+            "type": "text",
+            "label": "In-Reply-To"
+          },
+          {
+            "name": "references",
+            "spec": {
+              "name": "value",
+              "type": "text",
+              "label": "Reference",
+              "required": true
+            },
+            "type": "array",
+            "label": "References"
+          },
+          {
+            "name": "priority",
+            "type": "select",
+            "label": "Priority",
+            "validate": {
+              "enum": [
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value",
+                "required": true
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "html",
+            "type": "text",
+            "label": "Content"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cc": {
+              "mode": "chose"
+            },
+            "to": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            },
+            "bcc": {
+              "mode": "chose"
+            },
+            "priority": {
+              "label": "Normal"
+            },
+            "references": {
+              "mode": "chose"
+            },
+            "attachments": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            },
+            "contentType": {
+              "label": "HTML"
+            }
+          },
+          "parameters": {
+            "account": {
+              "data": {
+                "scoped": "true",
+                "connection": "smtp"
+              },
+              "label": "My Email connection (SMTP karim@el-kassas.com)"
+            },
+            "saveAfterSent": {
+              "label": "No"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "account",
+            "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "saveAfterSent",
+            "type": "select",
+            "label": "Save message after sending",
+            "required": true,
+            "validate": {
+              "enum": [
+                true,
+                false
+              ]
+            }
+          },
+          {
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "account": 2357943,
+        "saveAfterSent": false
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "Scenario",
+            "value": "https://community.make.com/t/how-do-i-send-large-files-as-gmail-attachments/47629/5"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "Scenario",
+            "type": "any",
+            "label": "Scenario"
+          }
+        ]
+      },
+      "parameters": {}
+    }
+  ],
+  "name": "Showcase: Download Large Drive Files",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
