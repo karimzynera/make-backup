@@ -1,0 +1,1655 @@
+{
+  "flow": [
+    {
+      "id": 2,
+      "mapper": {},
+      "module": "stripe:watchEvents",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "parameters": {
+            "__IMTHOOK__": {
+              "data": {
+                "editable": "false"
+              },
+              "label": "Payment Intent succeeded"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "created",
+            "type": "date",
+            "label": "Created"
+          },
+          {
+            "name": "event_type",
+            "type": "text",
+            "label": "Event Type"
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "label": "Event ID"
+          },
+          {
+            "name": "object",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "Payment Intent ID"
+              },
+              {
+                "name": "object",
+                "type": "text",
+                "label": "Object"
+              },
+              {
+                "name": "amount",
+                "type": "number",
+                "label": "Amount"
+              },
+              {
+                "name": "amount_capturable",
+                "type": "number",
+                "label": "Amount Capturable"
+              },
+              {
+                "name": "amount_received",
+                "type": "number",
+                "label": "Amount Received"
+              },
+              {
+                "name": "application",
+                "type": "text",
+                "label": "Application"
+              },
+              {
+                "name": "application_fee_amount",
+                "type": "number",
+                "label": "Application Fee Amount"
+              },
+              {
+                "name": "canceled_at",
+                "type": "date",
+                "label": "Canceled At"
+              },
+              {
+                "name": "cancellation_reason",
+                "type": "text",
+                "label": "Cancellation Reason"
+              },
+              {
+                "name": "capture_method",
+                "type": "text",
+                "label": "Capture Method"
+              },
+              {
+                "name": "charges",
+                "spec": [
+                  {
+                    "name": "object",
+                    "type": "text",
+                    "label": "Object"
+                  },
+                  {
+                    "name": "data",
+                    "type": "array",
+                    "label": "Data"
+                  },
+                  {
+                    "name": "has_more",
+                    "type": "boolean",
+                    "label": "Has More"
+                  },
+                  {
+                    "name": "total_count",
+                    "type": "number",
+                    "label": "Total Count"
+                  },
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "URL"
+                  }
+                ],
+                "type": "collection",
+                "label": "Charges"
+              },
+              {
+                "name": "client_secret",
+                "type": "text",
+                "label": "Client Secret"
+              },
+              {
+                "name": "confirmation_method",
+                "type": "text",
+                "label": "Confirmation Method"
+              },
+              {
+                "name": "created",
+                "type": "date",
+                "label": "Created"
+              },
+              {
+                "name": "currency",
+                "type": "text",
+                "label": "Currency"
+              },
+              {
+                "name": "customer",
+                "type": "text",
+                "label": "Customer"
+              },
+              {
+                "name": "description",
+                "type": "text",
+                "label": "Description"
+              },
+              {
+                "name": "invoice",
+                "type": "text",
+                "label": "Invoice"
+              },
+              {
+                "name": "last_payment_error",
+                "type": "text",
+                "label": "Last Payment Error"
+              },
+              {
+                "name": "livemode",
+                "type": "boolean",
+                "label": "Livemode"
+              },
+              {
+                "name": "metadata",
+                "type": "any",
+                "label": "Metadata"
+              },
+              {
+                "name": "next_action",
+                "type": "text",
+                "label": "Next Action"
+              },
+              {
+                "name": "on_behalf_of",
+                "type": "text",
+                "label": "On Behalf Of"
+              },
+              {
+                "name": "payment_method",
+                "type": "text",
+                "label": "Payment Method"
+              },
+              {
+                "name": "payment_method_options",
+                "type": "any",
+                "label": "Payment Method Options"
+              },
+              {
+                "name": "payment_method_types",
+                "spec": {
+                  "type": "text"
+                },
+                "type": "array",
+                "label": "Payment Method Types"
+              },
+              {
+                "name": "receipt_email",
+                "type": "text",
+                "label": "Receipt Email"
+              },
+              {
+                "name": "review",
+                "type": "text",
+                "label": "Review"
+              },
+              {
+                "name": "setup_future_usage",
+                "type": "text",
+                "label": "Setup Future Usage"
+              },
+              {
+                "name": "shipping",
+                "spec": [
+                  {
+                    "name": "address",
+                    "spec": [
+                      {
+                        "name": "city",
+                        "type": "text",
+                        "label": "City"
+                      },
+                      {
+                        "name": "country",
+                        "type": "text",
+                        "label": "Country"
+                      },
+                      {
+                        "name": "line1",
+                        "type": "text",
+                        "label": "Line 1"
+                      },
+                      {
+                        "name": "line2",
+                        "type": "text",
+                        "label": "Line 2"
+                      },
+                      {
+                        "name": "postal_code",
+                        "type": "text",
+                        "label": "Postal Code"
+                      },
+                      {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Address"
+                  },
+                  {
+                    "name": "carrier",
+                    "type": "text",
+                    "label": "Carrier"
+                  },
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name"
+                  },
+                  {
+                    "name": "phone",
+                    "type": "text",
+                    "label": "Phone"
+                  },
+                  {
+                    "name": "tracking_number",
+                    "type": "text",
+                    "label": "Tracking Number"
+                  }
+                ],
+                "type": "collection",
+                "label": "Shipping"
+              },
+              {
+                "name": "source",
+                "type": "text",
+                "label": "Source"
+              },
+              {
+                "name": "statement_descriptor",
+                "type": "text",
+                "label": "Statement Descriptor"
+              },
+              {
+                "name": "statement_descriptor_suffix",
+                "type": "text",
+                "label": "Statement Descriptor Suffix"
+              },
+              {
+                "name": "status",
+                "type": "text",
+                "label": "Status"
+              },
+              {
+                "name": "transfer_data",
+                "spec": [
+                  {
+                    "name": "destination",
+                    "type": "text",
+                    "label": "Destination"
+                  },
+                  {
+                    "name": "amount",
+                    "type": "text",
+                    "label": "Amount"
+                  }
+                ],
+                "type": "collection",
+                "label": "Transfer Data"
+              },
+              {
+                "name": "transfer_group",
+                "type": "text",
+                "label": "Transfer Group"
+              }
+            ],
+            "type": "collection",
+            "label": "Object"
+          },
+          {
+            "name": "raw",
+            "spec": [],
+            "type": "collection",
+            "label": "Raw Webhook Data"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTHOOK__",
+            "type": "hook:stripe2",
+            "label": "Webhook",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTHOOK__": 1528132
+      }
+    },
+    {
+      "id": 6,
+      "mapper": {
+        "expand": [
+          "default_source",
+          "invoice_credit_balance",
+          "subscriptions",
+          "sources",
+          "tax",
+          "tax_ids"
+        ],
+        "customer": "{{2.object.customer}}"
+      },
+      "module": "stripe:retrieveCustomer",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "customer",
+            "type": "select",
+            "label": "Customer ID",
+            "required": true
+          },
+          {
+            "name": "expand",
+            "type": "select",
+            "label": "Expand",
+            "multiple": true,
+            "validate": {
+              "enum": [
+                "default_source",
+                "invoice_credit_balance",
+                "subscriptions",
+                "sources",
+                "tax",
+                "tax_ids"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "customer": {
+              "mode": "edit"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "stripe2"
+              },
+              "label": "My Stripe OAuth connection (hello@zynera.de)"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:stripe,stripe2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2751169
+      }
+    },
+    {
+      "id": 5,
+      "mapper": {
+        "id": "{{emptystring}}",
+        "base": "appmLkopsWumFkgXM",
+        "table": "tbl1yBFtIwWVJuzJB",
+        "record": {
+          "fldY1aIYdoAvMSW90": {}
+        },
+        "typecast": false,
+        "useColumnId": false
+      },
+      "module": "airtable:ActionUpdateRecords",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "typecast",
+            "type": "boolean",
+            "label": "Smart links",
+            "required": true
+          },
+          {
+            "name": "useColumnId",
+            "type": "boolean",
+            "label": "Use Column ID",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "label": "Record ID",
+            "required": true
+          },
+          {
+            "name": "record",
+            "spec": [
+              {
+                "name": "fldOjexfc3WQqFKZC",
+                "type": "text",
+                "label": "Name"
+              },
+              {
+                "name": "fldrLzdFLjE5hXrTp",
+                "type": "text",
+                "label": "Contact Person"
+              },
+              {
+                "name": "fldY1aIYdoAvMSW90",
+                "spec": [
+                  {
+                    "name": "id",
+                    "type": "text",
+                    "label": "ID"
+                  },
+                  {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email"
+                  }
+                ],
+                "type": "collection",
+                "label": "Owner"
+              },
+              {
+                "name": "fldZNJvuxW8ltb213",
+                "type": "text",
+                "label": "Notes"
+              },
+              {
+                "mode": "edit",
+                "name": "fldLWlTj28FOxTmzh",
+                "type": "select",
+                "label": "Stage"
+              },
+              {
+                "name": "fldThucvu6Urwvq8R",
+                "time": false,
+                "type": "date",
+                "label": "Last Contact"
+              },
+              {
+                "name": "fldmHDIx0dHxy4vHV",
+                "time": true,
+                "type": "date",
+                "label": "Next Contact"
+              },
+              {
+                "name": "fldD33GE0Lv6GNhxm",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Projects"
+              },
+              {
+                "name": "fld3FoZ9fgK9g6wGS",
+                "type": "number",
+                "label": "Hourly Rate"
+              },
+              {
+                "mode": "edit",
+                "name": "fldGeS54lQT6gV7gR",
+                "type": "select",
+                "label": "Tax"
+              },
+              {
+                "name": "fldi4NiEFPIZ12KKc",
+                "type": "boolean",
+                "label": "Dollar ($)"
+              },
+              {
+                "name": "fldD5MNf3MTBBsDk8",
+                "type": "uinteger",
+                "label": "Experience",
+                "validate": {
+                  "min": 1
+                }
+              },
+              {
+                "name": "fldETbmzIqEr1y7UR",
+                "spec": {
+                  "mode": "edit",
+                  "name": "value",
+                  "type": "select",
+                  "label": "Value",
+                  "dynamic": true,
+                  "options": [
+                    {
+                      "label": "Phone",
+                      "value": "Phone"
+                    },
+                    {
+                      "label": "Email",
+                      "value": "Email"
+                    },
+                    {
+                      "label": "LinkedIn",
+                      "value": "LinkedIn"
+                    },
+                    {
+                      "label": "Zoom",
+                      "value": "Zoom"
+                    },
+                    {
+                      "label": "Google Meet",
+                      "value": "Google Meet"
+                    },
+                    {
+                      "label": "Microsoft Teams",
+                      "value": "Microsoft Teams"
+                    },
+                    {
+                      "label": "Personal",
+                      "value": "Personal"
+                    }
+                  ],
+                  "validate": false
+                },
+                "type": "array",
+                "label": "Channel"
+              },
+              {
+                "name": "fldUaSN8bXkyyWdg7",
+                "type": "text",
+                "label": "Email"
+              },
+              {
+                "name": "fldPRnlwn33orTnog",
+                "type": "text",
+                "label": "Phone"
+              },
+              {
+                "name": "fldd8BLSPuAWb1f08",
+                "type": "text",
+                "label": "LinkedIn"
+              },
+              {
+                "name": "fldkcTJfttxeQL82b",
+                "type": "text",
+                "label": "Street"
+              },
+              {
+                "name": "fldCWtwfNRIgFek2R",
+                "type": "text",
+                "label": "ZIP"
+              },
+              {
+                "name": "fld8oUexYrX4VMSUh",
+                "type": "text",
+                "label": "City"
+              },
+              {
+                "mode": "edit",
+                "name": "fldLfFNIPFLjfcQDL",
+                "type": "select",
+                "label": "Country"
+              },
+              {
+                "name": "fldTezR58u3GVTywJ",
+                "type": "text",
+                "label": "Website"
+              },
+              {
+                "name": "fldU3q9EY6nLJ4R3y",
+                "spec": [
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "File URL"
+                  },
+                  {
+                    "name": "filename",
+                    "type": "filename",
+                    "label": "File name"
+                  }
+                ],
+                "type": "array",
+                "label": "Assets"
+              },
+              {
+                "name": "fldFNujltSnIwonrz",
+                "spec": [
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "File URL"
+                  },
+                  {
+                    "name": "filename",
+                    "type": "filename",
+                    "label": "File name"
+                  }
+                ],
+                "type": "array",
+                "label": "Invoices"
+              },
+              {
+                "name": "fldg8uPW9e89WNEpL",
+                "type": "boolean",
+                "label": "Archive"
+              },
+              {
+                "name": "fldyJ270GDcW5ptP2",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Accounts"
+              },
+              {
+                "name": "fldBIR2yHvjwpQLJk",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Features"
+              },
+              {
+                "name": "fldtf41vepca62Heh",
+                "type": "text",
+                "label": "Legal Name"
+              },
+              {
+                "name": "fldjYvfmi1rBT4P6g",
+                "type": "text",
+                "label": "Shortcut"
+              },
+              {
+                "name": "fldLsJ9mpeN2kthmi",
+                "type": "text",
+                "label": "VAT ID"
+              }
+            ],
+            "type": "collection",
+            "label": "Record"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "base": {
+              "label": "Zynera OS"
+            },
+            "table": {
+              "label": "Clients"
+            },
+            "record": {
+              "nested": {
+                "fldBIR2yHvjwpQLJk": {
+                  "mode": "chose"
+                },
+                "fldD33GE0Lv6GNhxm": {
+                  "mode": "chose"
+                },
+                "fldETbmzIqEr1y7UR": {
+                  "mode": "chose"
+                },
+                "fldFNujltSnIwonrz": {
+                  "mode": "chose"
+                },
+                "fldGeS54lQT6gV7gR": {
+                  "mode": "edit"
+                },
+                "fldLWlTj28FOxTmzh": {
+                  "mode": "edit"
+                },
+                "fldLfFNIPFLjfcQDL": {
+                  "mode": "edit"
+                },
+                "fldU3q9EY6nLJ4R3y": {
+                  "mode": "chose"
+                },
+                "fldg8uPW9e89WNEpL": {
+                  "mode": "chose"
+                },
+                "fldi4NiEFPIZ12KKc": {
+                  "mode": "chose"
+                },
+                "fldyJ270GDcW5ptP2": {
+                  "mode": "chose"
+                }
+              }
+            },
+            "typecast": {
+              "mode": "chose"
+            },
+            "useColumnId": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "karim@zynera.de (User ID: usryWvTaoddQVF23q)"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "id",
+            "type": "text",
+            "label": "ID"
+          },
+          {
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "Name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "Contact Person",
+            "type": "text",
+            "label": "Contact Person"
+          },
+          {
+            "name": "Owner",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              }
+            ],
+            "type": "collection",
+            "label": "Owner"
+          },
+          {
+            "name": "Notes",
+            "type": "text",
+            "label": "Notes",
+            "multiline": true
+          },
+          {
+            "name": "Stage",
+            "type": "text",
+            "label": "Stage"
+          },
+          {
+            "name": "Last Contact",
+            "time": false,
+            "type": "date",
+            "label": "Last Contact"
+          },
+          {
+            "name": "Next Contact",
+            "time": true,
+            "type": "date",
+            "label": "Next Contact"
+          },
+          {
+            "name": "DoneProjects",
+            "type": "number",
+            "label": "DoneProjects"
+          },
+          {
+            "name": "TotalProjects",
+            "type": "number",
+            "label": "TotalProjects"
+          },
+          {
+            "name": "Progress",
+            "type": "text",
+            "label": "Progress"
+          },
+          {
+            "name": "Projects",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Projects"
+          },
+          {
+            "name": "Revenue",
+            "type": "array",
+            "label": "Revenue"
+          },
+          {
+            "name": "Hourly Rate",
+            "type": "number",
+            "label": "Hourly Rate"
+          },
+          {
+            "name": "Tax",
+            "type": "text",
+            "label": "Tax"
+          },
+          {
+            "name": "Dollar ($)",
+            "type": "boolean",
+            "label": "Dollar ($)"
+          },
+          {
+            "name": "Experience",
+            "type": "uinteger",
+            "label": "Experience",
+            "validate": {
+              "min": 1
+            }
+          },
+          {
+            "name": "Channel",
+            "type": "array",
+            "label": "Channel",
+            "dynamic": true,
+            "editable": true
+          },
+          {
+            "name": "Email",
+            "type": "text",
+            "label": "Email"
+          },
+          {
+            "name": "Phone",
+            "type": "text",
+            "label": "Phone"
+          },
+          {
+            "name": "LinkedIn",
+            "type": "text",
+            "label": "LinkedIn"
+          },
+          {
+            "name": "Street",
+            "type": "text",
+            "label": "Street"
+          },
+          {
+            "name": "ZIP",
+            "type": "text",
+            "label": "ZIP"
+          },
+          {
+            "name": "City",
+            "type": "text",
+            "label": "City"
+          },
+          {
+            "name": "Country",
+            "type": "text",
+            "label": "Country"
+          },
+          {
+            "name": "Website",
+            "type": "text",
+            "label": "Website"
+          },
+          {
+            "name": "Assets",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Assets"
+          },
+          {
+            "name": "Invoices",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Invoices"
+          },
+          {
+            "name": "Archive",
+            "type": "boolean",
+            "label": "Archive"
+          },
+          {
+            "name": "Accounts",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Accounts"
+          },
+          {
+            "name": "Onboarding Date",
+            "type": "date",
+            "label": "Onboarding Date"
+          },
+          {
+            "name": "Features",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Features"
+          },
+          {
+            "name": "Legal Name",
+            "type": "text",
+            "label": "Legal Name"
+          },
+          {
+            "name": "Shortcut",
+            "type": "text",
+            "label": "Shortcut"
+          },
+          {
+            "name": "VAT ID",
+            "type": "text",
+            "label": "VAT ID"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
+    },
+    {
+      "id": 7,
+      "mapper": {
+        "cc": [],
+        "to": [
+          "{{emptystring}}"
+        ],
+        "bcc": [],
+        "from": "",
+        "html": "Welcome aboard, {Name}!\n\nWe are pumped to start working with you! Please choose a time from our calendar to schedule your kickoff call here - [insert URL]. Also, do not forget to watch our onboarding video here - [insert video]\n\nWe can't wait to get started!",
+        "sender": "",
+        "headers": [],
+        "replyTo": "",
+        "subject": "",
+        "priority": "normal",
+        "inReplyTo": "",
+        "references": [],
+        "attachments": [],
+        "contentType": "html"
+      },
+      "module": "email:ActionSendEmail",
+      "version": 7,
+      "metadata": {
+        "expect": [
+          {
+            "name": "to",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address",
+              "required": true
+            },
+            "type": "array",
+            "label": "To",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "label": "Subject"
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content Type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "html",
+                "text"
+              ]
+            }
+          },
+          {
+            "name": "attachments",
+            "spec": [
+              {
+                "name": "fileName",
+                "type": "filename",
+                "label": "File name",
+                "required": true,
+                "semantic": "file:name"
+              },
+              {
+                "name": "data",
+                "type": "buffer",
+                "label": "Data",
+                "required": true,
+                "semantic": "file:data"
+              },
+              {
+                "name": "cid",
+                "type": "text",
+                "label": "Content-ID"
+              }
+            ],
+            "type": "array",
+            "label": "Attachments"
+          },
+          {
+            "name": "cc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Copy recipient"
+          },
+          {
+            "name": "bcc",
+            "spec": {
+              "name": "value",
+              "type": "email",
+              "label": "Email address"
+            },
+            "type": "array",
+            "label": "Blind copy recipient"
+          },
+          {
+            "name": "from",
+            "type": "text",
+            "label": "From"
+          },
+          {
+            "name": "sender",
+            "type": "text",
+            "label": "Sender"
+          },
+          {
+            "name": "replyTo",
+            "type": "text",
+            "label": "Reply-To"
+          },
+          {
+            "name": "inReplyTo",
+            "type": "text",
+            "label": "In-Reply-To"
+          },
+          {
+            "name": "references",
+            "spec": {
+              "name": "value",
+              "type": "text",
+              "label": "Reference",
+              "required": true
+            },
+            "type": "array",
+            "label": "References"
+          },
+          {
+            "name": "priority",
+            "type": "select",
+            "label": "Priority",
+            "validate": {
+              "enum": [
+                "high",
+                "normal",
+                "low"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "key",
+                "type": "text",
+                "label": "Key",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value",
+                "required": true
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "html",
+            "type": "text",
+            "label": "Content"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "cc": {
+              "mode": "chose"
+            },
+            "to": {
+              "mode": "chose",
+              "items": [
+                null
+              ]
+            },
+            "bcc": {
+              "mode": "chose"
+            },
+            "priority": {
+              "label": "Normal"
+            },
+            "references": {
+              "mode": "chose"
+            },
+            "attachments": {
+              "mode": "chose"
+            },
+            "contentType": {
+              "label": "HTML"
+            }
+          },
+          "parameters": {
+            "account": {
+              "data": {
+                "scoped": "true",
+                "connection": "smtp"
+              },
+              "label": "My Email connection (SMTP karim@el-kassas.com)"
+            },
+            "saveAfterSent": {
+              "label": "No"
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "account",
+            "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+            "label": "Connection",
+            "required": true
+          },
+          {
+            "name": "saveAfterSent",
+            "type": "select",
+            "label": "Save message after sending",
+            "required": true,
+            "validate": {
+              "enum": [
+                true,
+                false
+              ]
+            }
+          },
+          {
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "account": 2357943,
+        "saveAfterSent": false
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "text": "{{2.raw}}",
+        "parse": false,
+        "mrkdwn": true,
+        "channel": "C07E4CHLLLV",
+        "channelType": "public",
+        "channelWType": "list"
+      },
+      "module": "slack:CreateMessage",
+      "version": 4,
+      "metadata": {
+        "expect": [
+          {
+            "name": "channelWType",
+            "type": "select",
+            "label": "Enter a channel ID or name",
+            "required": true,
+            "validate": {
+              "enum": [
+                "manualy",
+                "list"
+              ]
+            }
+          },
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Text"
+          },
+          {
+            "name": "blocks",
+            "type": "text",
+            "label": "Blocks"
+          },
+          {
+            "name": "thread_ts",
+            "type": "text",
+            "label": "Thread message ID (time stamp)"
+          },
+          {
+            "name": "reply_broadcast",
+            "type": "boolean",
+            "label": "Reply broadcast"
+          },
+          {
+            "name": "link_names",
+            "type": "boolean",
+            "label": "Link names"
+          },
+          {
+            "name": "parse",
+            "type": "boolean",
+            "label": "Parse message text"
+          },
+          {
+            "name": "mrkdwn",
+            "type": "boolean",
+            "label": "Use markdown"
+          },
+          {
+            "name": "unfurl_links",
+            "type": "boolean",
+            "label": "Unfurl primarily text-based content"
+          },
+          {
+            "name": "unfurl_media",
+            "type": "boolean",
+            "label": "Unfurl media content"
+          },
+          {
+            "name": "icon_emoji",
+            "type": "text",
+            "label": "Icon emoji"
+          },
+          {
+            "name": "icon_url",
+            "type": "url",
+            "label": "Icon url"
+          },
+          {
+            "name": "username",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "channelType",
+            "type": "select",
+            "label": "Channel type",
+            "required": true,
+            "validate": {
+              "enum": [
+                "public",
+                "private",
+                "im",
+                "mpim"
+              ]
+            }
+          },
+          {
+            "name": "channel",
+            "type": "select",
+            "label": "Public channel",
+            "required": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "parse": {
+              "mode": "chose"
+            },
+            "mrkdwn": {
+              "mode": "chose"
+            },
+            "channel": {
+              "mode": "chose",
+              "label": "wins"
+            },
+            "link_names": {
+              "mode": "chose"
+            },
+            "channelType": {
+              "label": "Public channel"
+            },
+            "channelWType": {
+              "label": "Select from the list"
+            },
+            "unfurl_links": {
+              "mode": "chose"
+            },
+            "unfurl_media": {
+              "mode": "chose"
+            },
+            "reply_broadcast": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "slack3"
+              },
+              "label": "My Slack (bot) connection (zarvis)"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:slack2,slack3",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2736305
+      }
+    }
+  ],
+  "name": "Stripe Setup",
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
