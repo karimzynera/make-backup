@@ -1,94 +1,63 @@
 {
   "flow": [
     {
-      "id": 1,
+      "id": 3,
       "mapper": {
-        "organization": 277690
+        "id": "rec2XPZnALaEUysnz",
+        "base": "appmLkopsWumFkgXM",
+        "table": "tblMaSYop5fzqigPi",
+        "useColumnId": false
       },
-      "module": "make:listScenarios",
-      "version": 1,
+      "module": "airtable:ActionGetRecord",
+      "version": 3,
       "metadata": {
         "expect": [
           {
-            "name": "organization",
+            "name": "base",
             "type": "select",
-            "label": "Organization ID"
+            "label": "Base",
+            "required": true
           },
           {
-            "name": "islinked",
+            "name": "useColumnId",
             "type": "boolean",
-            "label": "Only Active Scenarios"
+            "label": "Use Column ID",
+            "required": true
           },
           {
-            "name": "cols",
+            "name": "table",
             "type": "select",
-            "label": "Fields",
-            "multiple": true,
-            "validate": {
-              "enum": [
-                "created",
-                "createdByUser",
-                "description",
-                "deviceId",
-                "deviceScope",
-                "dlqCount",
-                "folderId",
-                "hookId",
-                "isinvalid",
-                "islinked",
-                "islocked",
-                "isPaused",
-                "iswaiting",
-                "lastEdit",
-                "name",
-                "nextExec",
-                "id",
-                "scheduling",
-                "teamId",
-                "updatedByUser",
-                "usedPackages",
-                "customProperties"
-              ]
-            }
+            "label": "Table",
+            "required": true
           },
           {
-            "name": "limit",
-            "type": "uinteger",
-            "label": "Limit"
-          },
-          {
-            "name": "team",
-            "type": "select",
-            "label": "Team ID"
+            "name": "id",
+            "type": "text",
+            "label": "Record ID",
+            "required": true
           }
         ],
         "restore": {
           "expect": {
-            "cols": {
-              "mode": "chose"
-            },
-            "team": {
+            "base": {
               "mode": "chose",
-              "label": "Empty"
+              "label": "Zynera OS"
             },
-            "limit": {
-              "empty": true
-            },
-            "islinked": {
-              "mode": "chose"
-            },
-            "organization": {
+            "table": {
               "mode": "chose",
-              "label": "🟣 Zynera"
+              "label": "Team"
+            },
+            "useColumnId": {
+              "mode": "chose"
             }
           },
           "parameters": {
             "__IMTCONN__": {
               "data": {
                 "scoped": "true",
-                "connection": "make"
+                "connection": "airtable3"
               },
-              "label": "Karim's Make connection (karim@el-kassas.com)"
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
             }
           }
         },
@@ -96,243 +65,75 @@
           "x": 0,
           "y": 0
         },
-        "parameters": [
-          {
-            "name": "__IMTCONN__",
-            "type": "account:make",
-            "label": "Connection",
-            "required": true
-          }
-        ]
-      },
-      "parameters": {
-        "__IMTCONN__": 2417656
-      }
-    },
-    {
-      "id": 2,
-      "mapper": {
-        "select": "file",
-        "scenario": "{{1.id}}"
-      },
-      "module": "make:getAScenarioBlueprint",
-      "version": 1,
-      "metadata": {
-        "expect": [
-          {
-            "name": "scenario",
-            "type": "text",
-            "label": "Scenario ID",
-            "required": true
-          },
-          {
-            "name": "draft",
-            "type": "boolean",
-            "label": "Draft"
-          },
-          {
-            "name": "select",
-            "type": "select",
-            "label": "Return a Blueprint",
-            "required": true,
-            "validate": {
-              "enum": [
-                "json",
-                "string",
-                "file"
-              ]
-            }
-          }
-        ],
-        "restore": {
-          "expect": {
-            "draft": {
-              "mode": "chose"
-            },
-            "select": {
-              "mode": "chose",
-              "label": "In a JSON File"
-            }
-          },
-          "parameters": {
-            "__IMTCONN__": {
-              "data": {
-                "scoped": "true",
-                "connection": "make"
-              },
-              "label": "Karim's Make connection (karim@el-kassas.com)"
-            }
-          }
-        },
-        "designer": {
-          "x": 300,
-          "y": 0
-        },
         "interface": [
           {
-            "name": "blueprint",
-            "type": "buffer",
-            "label": "Blueprint Data",
-            "semantic": "file:data"
-          },
-          {
-            "name": "filename",
-            "type": "filename",
-            "label": "File Name",
-            "semantic": "file:name"
-          },
-          {
-            "name": "gitSHA",
+            "name": "id",
             "type": "text",
-            "label": "GitHub SHA"
+            "label": "ID"
           },
           {
-            "name": "scheduling",
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "Name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "Notes",
+            "type": "text",
+            "label": "Notes",
+            "multiline": true
+          },
+          {
+            "name": "Assignee",
             "spec": [
               {
-                "name": "type",
+                "name": "id",
                 "type": "text",
-                "label": "Type"
+                "label": "ID"
               },
               {
-                "name": "between",
-                "spec": {
-                  "type": "date"
-                },
-                "type": "array",
-                "label": "Between"
+                "name": "email",
+                "type": "email",
+                "label": "Email"
               },
               {
-                "name": "interval",
-                "type": "number",
-                "label": "Interval"
-              },
-              {
-                "name": "restrict",
-                "spec": {
-                  "spec": [
-                    {
-                      "name": "days",
-                      "spec": {
-                        "type": "number"
-                      },
-                      "type": "array",
-                      "label": "Days"
-                    },
-                    {
-                      "name": "time",
-                      "spec": {
-                        "type": "text"
-                      },
-                      "type": "array",
-                      "label": "Time"
-                    },
-                    {
-                      "name": "months",
-                      "spec": {
-                        "type": "number"
-                      },
-                      "type": "array",
-                      "label": "Months"
-                    }
-                  ],
-                  "type": "collection"
-                },
-                "type": "array",
-                "label": "Restrict"
-              },
-              {
-                "name": "date",
-                "time": true,
-                "type": "date",
-                "label": "Date"
-              },
-              {
-                "name": "time",
+                "name": "name",
                 "type": "text",
-                "label": "Time"
-              },
-              {
-                "name": "days",
-                "type": "array",
-                "label": "Days"
-              },
-              {
-                "name": "months",
-                "type": "array",
-                "label": "Months"
+                "label": "Name"
               }
             ],
             "type": "collection",
-            "label": "Scheduling"
+            "label": "Assignee"
           },
           {
-            "name": "concept",
-            "type": "boolean",
-            "label": "Concept"
+            "name": "Status",
+            "type": "text",
+            "label": "Status"
           },
           {
-            "name": "idSequence",
-            "type": "uinteger",
-            "label": "ID Sequence"
-          },
-          {
-            "name": "created",
-            "time": true,
-            "type": "date",
-            "label": "Created"
-          },
-          {
-            "name": "last_edit",
-            "time": true,
-            "type": "date",
-            "label": "Last Edit"
-          },
-          {
-            "name": "metadata",
-            "spec": [
-              {
-                "name": "input_spec",
-                "type": "any",
-                "label": "Input Spec"
-              },
-              {
-                "name": "output_spec",
-                "type": "any",
-                "label": "Output Spec"
-              }
-            ],
-            "type": "collection",
-            "label": "Metadata"
-          },
-          {
-            "name": "length",
-            "type": "number",
-            "label": "Length"
+            "name": "Meetings",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Meetings"
           }
         ],
         "parameters": [
           {
             "name": "__IMTCONN__",
-            "type": "account:make",
+            "type": "account:airtable3,airtable2",
             "label": "Connection",
             "required": true
           }
         ]
       },
       "parameters": {
-        "__IMTCONN__": 2417656
-      }
-    },
-    {
-      "id": 3,
-      "module": "airtable:ActionGetRecord",
-      "version": 3,
-      "metadata": {
-        "designer": {
-          "x": 600,
-          "y": 0
-        }
+        "__IMTCONN__": 2419123
       }
     },
     {
@@ -342,7 +143,7 @@
         "variables": [
           {
             "name": "Test",
-            "value": ""
+            "value": "{{3.Notes}}"
           }
         ]
       },
@@ -394,7 +195,7 @@
           }
         },
         "designer": {
-          "x": 900,
+          "x": 300,
           "y": 0
         },
         "interface": [
@@ -415,46 +216,10 @@
     "designer": {
       "orphans": [],
       "samples": {
-        "1": {
-          "id": 2569510,
-          "name": "Discovery Call | Cal.com > Slack @kelkassas",
-          "slots": null,
-          "hookId": 1477289,
-          "teamId": 170759,
-          "concept": false,
-          "created": "2024-06-27T10:40:00.079Z",
-          "deviceId": null,
-          "dlqCount": 0,
-          "folderId": 198180,
-          "isActive": true,
-          "isPaused": false,
-          "islinked": true,
-          "islocked": false,
-          "lastEdit": "2024-11-05T13:25:57.305Z",
-          "nextExec": null,
-          "isinvalid": false,
-          "iswaiting": false,
-          "scheduling": {
-            "type": "immediately"
-          },
-          "description": "",
-          "deviceScope": null,
-          "__IMTINDEX__": 1,
-          "chainingRole": "none",
-          "usedPackages": [
-            "gateway"
-          ],
-          "__IMTLENGTH__": 57,
-          "createdByUser": {
-            "id": 294192,
-            "name": "Karim El Kassas",
-            "email": "karim@zynera.ai"
-          },
-          "updatedByUser": {
-            "id": 294192,
-            "name": "Karim El Kassas",
-            "email": "karim@zynera.ai"
-          }
+        "3": {
+          "id": "rec2XPZnALaEUysnz",
+          "Name": "Karim El Kassas",
+          "createdTime": "2024-07-20T12:20:03.000Z"
         }
       }
     },
