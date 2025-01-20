@@ -1,0 +1,357 @@
+{
+  "flow": [
+    {
+      "id": 3,
+      "module": "airtable:makeApiCall",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "module": "stripe:makeAnApiCall",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 11,
+      "module": "pandadoc:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "google-sheets:makeAPICall",
+      "version": 2,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "google-docs:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "google-drive:makeApiCall",
+      "version": 4,
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "google-email:ActionSendEmail",
+      "version": 2,
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            },
+            {
+              "message": "Field must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 14,
+      "module": "google-calendar:makeApiCall",
+      "version": 5,
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "slack:MakeAPICall",
+      "version": 4,
+      "metadata": {
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 15,
+      "module": "cal-com:makeApiCall",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 2700,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "name": "Authorizations > Standard Apps",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [
+        [
+          {
+            "id": 9,
+            "module": "fillout:newSubmission",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 0,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  },
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 12,
+            "module": "stripe:watchEvents",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 300,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  },
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 13,
+            "module": "pandadoc:watchDocuments",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 600,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  },
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 16,
+            "module": "cal-com:calSubscribe",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 900,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  },
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 17,
+            "module": "cal-com:bookingRescheduled",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 1200,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  },
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 18,
+            "module": "cal-com:bookingDeleted",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 1500,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  },
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        [
+          {
+            "id": 19,
+            "module": "cal-com:meetingEnded",
+            "version": 1,
+            "metadata": {
+              "designer": {
+                "x": 1800,
+                "y": 306,
+                "messages": [
+                  {
+                    "message": "A trigger must be the first module in a scenario.",
+                    "category": "link",
+                    "severity": "warning"
+                  },
+                  {
+                    "message": "Value must not be empty.",
+                    "category": "setup",
+                    "severity": "error"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      ]
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
