@@ -1,0 +1,300 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "module": "google-ads-reports:runCustomReport",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "name": "",
+        "type": ""
+      },
+      "module": "csv:CreateAdvancedAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "label": "Type"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Google Ads Reports - Run a Custom Report [1]"
+            }
+          },
+          "parameters": {
+            "type": {
+              "label": "[1/3] Base Creation API"
+            },
+            "newlineType": {
+              "label": "LF"
+            },
+            "delimiterType": {
+              "label": "Other"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "includeHeaders",
+            "type": "boolean",
+            "label": "Include headers in the first row",
+            "required": true
+          },
+          {
+            "name": "delimiterType",
+            "type": "select",
+            "label": "Delimiter",
+            "required": true,
+            "validate": {
+              "enum": [
+                ",",
+                "\t",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "newlineType",
+            "type": "select",
+            "label": "Newline",
+            "required": true,
+            "validate": {
+              "enum": [
+                "LF",
+                "CRLF"
+              ]
+            }
+          },
+          {
+            "name": "delimiter",
+            "type": "text",
+            "label": "Delimiter character",
+            "required": true,
+            "validate": {
+              "max": 1,
+              "min": 1
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "type": 171424,
+        "feeder": 1,
+        "delimiter": ",",
+        "newlineType": "LF",
+        "delimiterType": "other",
+        "includeHeaders": true
+      }
+    },
+    {
+      "id": 3,
+      "module": "google-ads-reports:runCustomReport",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "name": "",
+        "type": ""
+      },
+      "module": "csv:CreateAdvancedAggregator",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "label": "Type"
+          }
+        ],
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Google Ads Reports - Run a Custom Report [3]"
+            }
+          },
+          "parameters": {
+            "type": {
+              "label": "[1/3] Base Creation API"
+            },
+            "newlineType": {
+              "label": "LF"
+            },
+            "delimiterType": {
+              "label": "Other"
+            }
+          }
+        },
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "includeHeaders",
+            "type": "boolean",
+            "label": "Include headers in the first row",
+            "required": true
+          },
+          {
+            "name": "delimiterType",
+            "type": "select",
+            "label": "Delimiter",
+            "required": true,
+            "validate": {
+              "enum": [
+                ",",
+                "\t",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "newlineType",
+            "type": "select",
+            "label": "Newline",
+            "required": true,
+            "validate": {
+              "enum": [
+                "LF",
+                "CRLF"
+              ]
+            }
+          },
+          {
+            "name": "delimiter",
+            "type": "text",
+            "label": "Delimiter character",
+            "required": true,
+            "validate": {
+              "max": 1,
+              "min": 1
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "type": 171424,
+        "feeder": 3,
+        "delimiter": ",",
+        "newlineType": "LF",
+        "delimiterType": "other",
+        "includeHeaders": true
+      }
+    },
+    {
+      "id": 5,
+      "module": "anthropic-claude:createAMessage",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "slack:CreateMessage",
+      "version": 4,
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "name": "Showcase: Google Ads Report with Claude",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
