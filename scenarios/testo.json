@@ -1,1 +1,871 @@
-hallo
+{
+  "flow": [
+    {
+      "id": 3,
+      "mapper": {},
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "Cal.com"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 300,
+          "name": "Cal.com"
+        },
+        "interface": [
+          {
+            "name": "triggerEvent",
+            "type": "text"
+          },
+          {
+            "name": "createdAt",
+            "type": "text"
+          },
+          {
+            "name": "payload",
+            "spec": [
+              {
+                "name": "type",
+                "type": "text"
+              },
+              {
+                "name": "title",
+                "type": "text"
+              },
+              {
+                "name": "startTime",
+                "type": "text"
+              },
+              {
+                "name": "endTime",
+                "type": "text"
+              },
+              {
+                "name": "attendees",
+                "spec": {
+                  "spec": [
+                    {
+                      "name": "email",
+                      "type": "text"
+                    },
+                    {
+                      "name": "name",
+                      "type": "text"
+                    },
+                    {
+                      "name": "timeZone",
+                      "type": "text"
+                    },
+                    {
+                      "name": "language",
+                      "spec": [
+                        {
+                          "name": "locale",
+                          "type": "text"
+                        }
+                      ],
+                      "type": "collection"
+                    },
+                    {
+                      "name": "utcOffset",
+                      "type": "number"
+                    }
+                  ],
+                  "type": "collection"
+                },
+                "type": "array"
+              },
+              {
+                "name": "organizer",
+                "spec": [
+                  {
+                    "name": "name",
+                    "type": "text"
+                  },
+                  {
+                    "name": "email",
+                    "type": "text"
+                  },
+                  {
+                    "name": "timeZone",
+                    "type": "text"
+                  },
+                  {
+                    "name": "language",
+                    "spec": [
+                      {
+                        "name": "locale",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "collection"
+                  },
+                  {
+                    "name": "utcOffset",
+                    "type": "number"
+                  }
+                ],
+                "type": "collection"
+              }
+            ],
+            "type": "collection"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      },
+      "parameters": {
+        "hook": 1477289,
+        "maxResults": 1
+      }
+    },
+    {
+      "id": 6,
+      "filter": {
+        "name": "Discovery",
+        "conditions": [
+          [
+            {
+              "a": "{{3.payload.type}}",
+              "b": "discovery",
+              "o": "text:equal"
+            }
+          ]
+        ]
+      },
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 4,
+              "filter": {
+                "name": "New Booking",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{3.triggerEvent}}",
+                      "b": "BOOKING_CREATED",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                  {
+                    "name": "Block Kit",
+                    "value": "{\n\t\"blocks\": [\n\t\t{\n\t\t\t\"type\": \"header\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\"text\": \"🚨 New Booking\",\n\t\t\t\t\"emoji\": true\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\"text\": \"*Name:* {{3.payload.responses.name.value.firstName}} {{3.payload.responses.name.value.lastName}}\\n*Email:* {{3.payload.responses.email.value}}\\n*Company:* {{3.payload.responses.companyName.value}}\\n*Website:* {{3.payload.responses.companyWebsite.value}}\\n*Role:* {{3.payload.responses.companyRole.value}}\\n*Size:* {{3.payload.responses.companySize.value}}\\n*Industry:* {{3.payload.responses.companyIndustry.value}}\\n\\n*Requirements:* {{3.payload.responses.projectRequirements.value}}\\n\\n*Budget:* {{3.payload.responses.projectBudget.value}}\\n\\n*Source:* {{3.payload.responses.source.value}}\\n\\n*Further Notes:* {{ifempty(3.payload.responses.value; \"-\")}}\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"type\": \"divider\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\"text\": \"*Attendee Details:*\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"fields\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"*Attendees Timezone:*\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"{{3.payload.attendees[].timeZone}}\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"*Start Date:*\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"<!date^{{formatDate(3.payload.startTime; \"X\")}}^{date_num} {time}|Can't display date>\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"*End Date:*\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"<!date^{{formatDate(3.payload.endTime; \"X\")}}^{date_num} {time}|Can't display date>\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"type\": \"context\",\n\t\t\t\"elements\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\t\"text\": \"*Time displayed in your local timezone*\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"type\": \"divider\"\n\t\t},\n\t\t{\n\t\t\t\"type\": \"section\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"mrkdwn\",\n\t\t\t\t\"text\": \"<{{3.payload.metadata.videoCallUrl}}|📹 *Join the Video Call*>\"\n\t\t\t}\n\t\t}\n\t]\n}"
+                  }
+                ]
+              },
+              "module": "util:SetVariables",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "variables",
+                    "spec": [
+                      {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Variables"
+                  },
+                  {
+                    "name": "scope",
+                    "type": "select",
+                    "label": "Variable lifetime",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "roundtrip",
+                        "execution"
+                      ]
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    },
+                    "variables": {
+                      "items": [
+                        null
+                      ]
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 600,
+                  "y": 0,
+                  "name": "Block Kit"
+                },
+                "interface": [
+                  {
+                    "name": "Block Kit",
+                    "type": "any",
+                    "label": "Block Kit"
+                  }
+                ]
+              },
+              "parameters": {}
+            },
+            {
+              "id": 5,
+              "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                  {
+                    "name": "Formatted Block Kit",
+                    "value": "{{replace(4.`Block Kit`; newline; emptystring)}}"
+                  }
+                ]
+              },
+              "module": "util:SetVariables",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "variables",
+                    "spec": [
+                      {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Variables"
+                  },
+                  {
+                    "name": "scope",
+                    "type": "select",
+                    "label": "Variable lifetime",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "roundtrip",
+                        "execution"
+                      ]
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    },
+                    "variables": {
+                      "items": [
+                        null
+                      ]
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 900,
+                  "y": 0,
+                  "name": "Escape Errors"
+                },
+                "interface": [
+                  {
+                    "name": "Formatted Block Kit",
+                    "type": "any",
+                    "label": "Formatted Block Kit"
+                  }
+                ]
+              },
+              "parameters": {}
+            },
+            {
+              "id": 2,
+              "mapper": {
+                "parse": false,
+                "blocks": "{{5.`Formatted Block Kit`}}",
+                "mrkdwn": true,
+                "channel": "C079LH1T231",
+                "channelType": "public",
+                "channelWType": "list",
+                "unfurl_media": false
+              },
+              "module": "slack:CreateMessage",
+              "version": 4,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "channelWType",
+                    "type": "select",
+                    "label": "Enter a channel ID or name",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "manualy",
+                        "list"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "text",
+                    "type": "text",
+                    "label": "Text"
+                  },
+                  {
+                    "name": "blocks",
+                    "type": "text",
+                    "label": "Blocks"
+                  },
+                  {
+                    "name": "thread_ts",
+                    "type": "text",
+                    "label": "Thread message ID (time stamp)"
+                  },
+                  {
+                    "name": "reply_broadcast",
+                    "type": "boolean",
+                    "label": "Reply broadcast"
+                  },
+                  {
+                    "name": "link_names",
+                    "type": "boolean",
+                    "label": "Link names"
+                  },
+                  {
+                    "name": "parse",
+                    "type": "boolean",
+                    "label": "Parse message text"
+                  },
+                  {
+                    "name": "mrkdwn",
+                    "type": "boolean",
+                    "label": "Use markdown"
+                  },
+                  {
+                    "name": "unfurl_links",
+                    "type": "boolean",
+                    "label": "Unfurl primarily text-based content"
+                  },
+                  {
+                    "name": "unfurl_media",
+                    "type": "boolean",
+                    "label": "Unfurl media content"
+                  },
+                  {
+                    "name": "icon_emoji",
+                    "type": "text",
+                    "label": "Icon emoji"
+                  },
+                  {
+                    "name": "icon_url",
+                    "type": "url",
+                    "label": "Icon url"
+                  },
+                  {
+                    "name": "username",
+                    "type": "text",
+                    "label": "User name"
+                  },
+                  {
+                    "name": "channelType",
+                    "type": "select",
+                    "label": "Channel type",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "public",
+                        "private",
+                        "im",
+                        "mpim"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "channel",
+                    "type": "select",
+                    "label": "Public channel",
+                    "required": true
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "parse": {
+                      "mode": "chose"
+                    },
+                    "mrkdwn": {
+                      "mode": "chose"
+                    },
+                    "channel": {
+                      "mode": "chose",
+                      "label": "booking"
+                    },
+                    "link_names": {
+                      "mode": "chose"
+                    },
+                    "channelType": {
+                      "label": "Public channel"
+                    },
+                    "channelWType": {
+                      "label": "Select from the list"
+                    },
+                    "unfurl_links": {
+                      "mode": "chose"
+                    },
+                    "unfurl_media": {
+                      "mode": "chose"
+                    },
+                    "reply_broadcast": {
+                      "mode": "chose"
+                    }
+                  },
+                  "parameters": {
+                    "__IMTCONN__": {
+                      "data": {
+                        "scoped": "true",
+                        "connection": "slack3"
+                      },
+                      "label": "My Slack (bot) connection (zarvis)"
+                    }
+                  }
+                },
+                "advanced": true,
+                "designer": {
+                  "x": 1200,
+                  "y": 0,
+                  "name": "Ping Booking"
+                },
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:slack2,slack3",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": 2736305
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 8,
+              "filter": {
+                "name": "Meeting Started",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{3.triggerEvent}}",
+                      "b": "MEETING_STARTED",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "duration": "1"
+              },
+              "module": "util:FunctionSleep",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "duration",
+                    "type": "uinteger",
+                    "label": "Delay",
+                    "required": true,
+                    "validate": {
+                      "max": 300,
+                      "min": 1
+                    }
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 600,
+                  "y": 300
+                }
+              },
+              "parameters": {}
+            }
+          ],
+          "disabled": true
+        },
+        {
+          "flow": [
+            {
+              "id": 7,
+              "filter": {
+                "name": "Meeting Ended",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{3.triggerEvent}}",
+                      "b": "MEETING_ENDED",
+                      "o": "text:equal"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "duration": "1"
+              },
+              "module": "util:FunctionSleep",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "duration",
+                    "type": "uinteger",
+                    "label": "Delay",
+                    "required": true,
+                    "validate": {
+                      "max": 300,
+                      "min": 1
+                    }
+                  }
+                ],
+                "restore": {},
+                "designer": {
+                  "x": 600,
+                  "y": 600
+                }
+              },
+              "parameters": {}
+            }
+          ],
+          "disabled": true
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 300
+        }
+      }
+    }
+  ],
+  "name": "Discovery Call | Cal.com > Slack @kelkassas",
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "2": {
+          "ts": "1722505081.376959",
+          "channel": "C079LH1T231",
+          "message": {
+            "ts": "1722505081.376959",
+            "team": "T0766JH8935",
+            "text": ":rotating_light: New Booking *Name:* Anas Zubaid\n*Email:* <mailto:anas.zubaid@esarcar.com|anas.zubai...",
+            "type": "message",
+            "user": "U07EF8P5D2Q",
+            "app_id": "A07ERC5QP97",
+            "blocks": [
+              {
+                "text": {
+                  "text": "<https://app.cal.com/video/2Sj5z8kq5cg6YCSkfri447|:video_camera: *Join the Video Call*>",
+                  "type": "mrkdwn",
+                  "verbatim": false
+                },
+                "type": "section",
+                "fields": [
+                  {
+                    "text": "<!date^1722513600^{date_num} {time}|Can't display date>",
+                    "type": "mrkdwn",
+                    "verbatim": false
+                  }
+                ],
+                "block_id": "eyuu4",
+                "elements": [
+                  {
+                    "text": "*Time displayed in your local timezone*",
+                    "type": "mrkdwn",
+                    "verbatim": false
+                  }
+                ]
+              }
+            ],
+            "bot_id": "B07F1HQ8HPS",
+            "bot_profile": {
+              "id": "B07F1HQ8HPS",
+              "name": "ZARVIS",
+              "icons": {
+                "image_36": "https://avatars.slack-edge.com/2024-07-27/7474217493991_66ecfa41a56d2ebcc673_36.webp",
+                "image_48": "https://avatars.slack-edge.com/2024-07-27/7474217493991_66ecfa41a56d2ebcc673_48.webp",
+                "image_72": "https://avatars.slack-edge.com/2024-07-27/7474217493991_66ecfa41a56d2ebcc673_72.webp"
+              },
+              "app_id": "A07ERC5QP97",
+              "deleted": false,
+              "team_id": "T0766JH8935",
+              "updated": "2024-07-28T01:03:56.000Z"
+            }
+          }
+        },
+        "3": {
+          "payload": {
+            "uid": "2Sj5z8kq5cg6YCSkfri447",
+            "type": "discovery",
+            "price": 0,
+            "title": "Anas Zubaid <> Zynera - Discovery Call",
+            "length": 30,
+            "status": "ACCEPTED",
+            "endTime": "2024-08-01T12:00:00Z",
+            "iCalUID": "2Sj5z8kq5cg6YCSkfri447@Cal.com",
+            "currency": "usd",
+            "location": "integrations:daily",
+            "metadata": {
+              "videoCallUrl": "https://app.cal.com/video/2Sj5z8kq5cg6YCSkfri447"
+            },
+            "attendees": [
+              {
+                "name": "Anas Zubaid",
+                "email": "anas.zubaid@esarcar.com",
+                "language": {
+                  "locale": "en"
+                },
+                "lastName": "Zubaid",
+                "timeZone": "Asia/Riyadh",
+                "firstName": "Anas",
+                "utcOffset": 180
+              }
+            ],
+            "bookerUrl": "https://cal.com",
+            "bookingId": 2765600,
+            "organizer": {
+              "id": 892006,
+              "name": "Karim El Kassas",
+              "email": "karim@zynera.ai",
+              "language": {
+                "locale": "en"
+              },
+              "timeZone": "Europe/Berlin",
+              "username": "zynera",
+              "utcOffset": 120,
+              "timeFormat": "HH:mm"
+            },
+            "responses": {
+              "name": {
+                "label": "your_name",
+                "value": {
+                  "lastName": "Zubaid",
+                  "firstName": "Anas"
+                },
+                "isHidden": false
+              },
+              "email": {
+                "label": "email_address",
+                "value": "anas.zubaid@esarcar.com",
+                "isHidden": false
+              },
+              "notes": {
+                "label": "additional_notes",
+                "isHidden": false
+              },
+              "title": {
+                "label": "what_is_this_meeting_about",
+                "isHidden": true
+              },
+              "guests": {
+                "label": "additional_guests",
+                "value": [],
+                "isHidden": false
+              },
+              "source": {
+                "label": "How Did You Hear About Us",
+                "value": "Website",
+                "isHidden": false
+              },
+              "location": {
+                "label": "location",
+                "value": {
+                  "value": "integrations:daily",
+                  "optionValue": ""
+                },
+                "isHidden": false
+              },
+              "companyName": {
+                "label": "Company Name",
+                "value": "ESAR",
+                "isHidden": false
+              },
+              "companyRole": {
+                "label": "Your Role",
+                "value": "co founder",
+                "isHidden": false
+              },
+              "companySize": {
+                "label": "Company Size",
+                "value": "1 - 10",
+                "isHidden": false
+              },
+              "projectBudget": {
+                "label": "Budget",
+                "value": "$1.000 - $2.500",
+                "isHidden": false
+              },
+              "companyWebsite": {
+                "label": "Company Website",
+                "value": "https://esarcar.com/",
+                "isHidden": false
+              },
+              "companyIndustry": {
+                "label": "Industry",
+                "value": "per to per car rental",
+                "isHidden": false
+              },
+              "rescheduleReason": {
+                "label": "reason_for_reschedule",
+                "isHidden": true
+              },
+              "projectRequirements": {
+                "label": "Project Requirements",
+                "value": "Data Organization and Analysis: Cleaning data, identifying patterns, and extracting valuable insight...",
+                "isHidden": false
+              }
+            },
+            "startTime": "2024-08-01T11:30:00Z",
+            "appsStatus": [
+              {
+                "type": "daily_video",
+                "errors": [],
+                "appName": "daily-video",
+                "success": 1,
+                "failures": 0
+              }
+            ],
+            "eventTitle": "Discovery Call",
+            "description": "Short coffee chat on Google Meet to get to know each other, learn more about the project, & discuss ...",
+            "eventTypeId": 831562,
+            "customInputs": {},
+            "iCalSequence": 0,
+            "videoCallData": {
+              "id": "1VWzdtuaecjyauoRxARp",
+              "url": "https://meetco.daily.co/1VWzdtuaecjyauoRxARp",
+              "type": "daily_video",
+              "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiMVZXemR0dWFlY2p5YXVvUnhBUnAiLCJleHAiOjE3MjM3MjMyMDAsIm8..."
+            },
+            "conferenceData": {
+              "createRequest": {
+                "requestId": "2db644eb-37a5-581a-99fa-ebe6ce513834"
+              }
+            },
+            "schedulingType": null,
+            "additionalNotes": "",
+            "eventDescription": "Short coffee chat on Google Meet to get to know each other, learn more about the project, & discuss ...",
+            "seatsPerTimeSlot": null,
+            "hideCalendarNotes": false,
+            "seatsShowAttendees": true,
+            "destinationCalendar": null,
+            "userFieldsResponses": {
+              "source": {
+                "label": "How Did You Hear About Us",
+                "value": "Website",
+                "isHidden": false
+              },
+              "companyName": {
+                "label": "Company Name",
+                "value": "ESAR",
+                "isHidden": false
+              },
+              "companyRole": {
+                "label": "Your Role",
+                "value": "co founder",
+                "isHidden": false
+              },
+              "companySize": {
+                "label": "Company Size",
+                "value": "1 - 10",
+                "isHidden": false
+              },
+              "projectBudget": {
+                "label": "Budget",
+                "value": "$1.000 - $2.500",
+                "isHidden": false
+              },
+              "companyWebsite": {
+                "label": "Company Website",
+                "value": "https://esarcar.com/",
+                "isHidden": false
+              },
+              "companyIndustry": {
+                "label": "Industry",
+                "value": "per to per car rental",
+                "isHidden": false
+              },
+              "projectRequirements": {
+                "label": "Project Requirements",
+                "value": "Data Organization and Analysis: Cleaning data, identifying patterns, and extracting valuable insight...",
+                "isHidden": false
+              }
+            },
+            "requiresConfirmation": false,
+            "seatsShowAvailabilityCount": true
+          },
+          "createdAt": "2024-07-31T14:19:19.728Z",
+          "triggerEvent": "BOOKING_CREATED"
+        },
+        "4": {
+          "Block Kit": "{\n\t\"blocks\": [\n\t\t{\n\t\t\t\"type\": \"header\",\n\t\t\t\"text\": {\n\t\t\t\t\"type\": \"plain_text\",\n\t\t\t\t\"text\": \"🚨 New B..."
+        },
+        "5": {
+          "Formatted Block Kit": "{\t\"blocks\": [\t\t{\t\t\t\"type\": \"header\",\t\t\t\"text\": {\t\t\t\t\"type\": \"plain_text\",\t\t\t\t\"text\": \"🚨 New Booking..."
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
