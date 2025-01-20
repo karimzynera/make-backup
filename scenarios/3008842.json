@@ -87,7 +87,7 @@
         "authPass": "",
         "authUser": "",
         "bodyType": "raw",
-        "contentType": "text/plain",
+        "contentType": "application/json",
         "serializeUrl": false,
         "shareCookies": false,
         "parseResponse": false,
@@ -286,7 +286,7 @@
               "label": "Raw"
             },
             "contentType": {
-              "label": "Text (text/plain)"
+              "label": "JSON (application/json)"
             }
           }
         },
@@ -318,7 +318,24 @@
     "instant": false,
     "version": 1,
     "designer": {
-      "orphans": []
+      "orphans": [],
+      "samples": {
+        "1": {
+          "data": "{\n  \"json\": \"tesing\",\n  \"profile\": \"chayas\"\n}",
+          "headers": [
+            {
+              "name": "vary",
+              "value": "Accept-Encoding"
+            }
+          ],
+          "fileSize": 45,
+          "statusCode": 200,
+          "cookieHeaders": []
+        },
+        "2": {
+          "json": "{\"json\":\"tesing\",\"profile\":\"chayas\"}"
+        }
+      }
     },
     "scenario": {
       "dlq": false,
