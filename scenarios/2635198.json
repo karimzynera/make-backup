@@ -1,0 +1,642 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {},
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "Slack Event Subscriptions"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Slack Event Subscriptions"
+        },
+        "interface": [
+          {
+            "name": "value",
+            "type": "text"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      },
+      "parameters": {
+        "hook": 1516982,
+        "maxResults": 1
+      }
+    },
+    {
+      "id": 7,
+      "mapper": {
+        "json": "{{1.value}}"
+      },
+      "module": "json:ParseJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "json",
+            "type": "text",
+            "label": "JSON string",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "type": {
+              "label": "Choose a data structure"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Visualize"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure"
+          }
+        ]
+      },
+      "parameters": {
+        "type": ""
+      }
+    },
+    {
+      "id": 9,
+      "mapper": {
+        "Name": "{{var.scenario.name}}",
+        "type": "{{7.type}}",
+        "event": {
+          "item": {
+            "ts": "{{7.event.item.ts}}",
+            "type": "{{7.event.item.type}}",
+            "channel": "{{7.event.item.channel}}"
+          },
+          "type": "{{7.event.type}}",
+          "user": "{{7.event.user}}",
+          "event_ts": "{{7.event.event_ts}}",
+          "reaction": "{{7.event.reaction}}"
+        },
+        "token": "{{7.token}}",
+        "team_id": "{{7.team_id}}",
+        "Scenario": "{{var.scenario.url}}",
+        "event_id": "{{7.event_id}}",
+        "Execution": "{{var.scenario.executionUrl}}",
+        "api_app_id": "{{7.api_app_id}}",
+        "event_time": "{{7.event_time}}",
+        "event_context": "{{7.event_context}}",
+        "authorizations": "{{7.authorizations}}",
+        "context_team_id": "{{7.context_team_id}}",
+        "context_enterprise_id": "{{7.context_enterprise_id}}",
+        "is_ext_shared_channel": "{{7.is_ext_shared_channel}}"
+      },
+      "module": "json:CreateJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "token",
+            "type": "text",
+            "label": "Token"
+          },
+          {
+            "name": "team_id",
+            "type": "text",
+            "label": "Team ID"
+          },
+          {
+            "name": "context_team_id",
+            "type": "text",
+            "label": "Context Team ID"
+          },
+          {
+            "name": "context_enterprise_id",
+            "type": "text",
+            "label": "Context Enterprise ID"
+          },
+          {
+            "name": "api_app_id",
+            "type": "text",
+            "label": "Api App ID"
+          },
+          {
+            "name": "event",
+            "spec": [
+              {
+                "name": "type",
+                "type": "text",
+                "label": null
+              },
+              {
+                "name": "user",
+                "type": "text",
+                "label": null
+              },
+              {
+                "name": "reaction",
+                "type": "text",
+                "label": null
+              },
+              {
+                "name": "item",
+                "spec": [
+                  {
+                    "name": "type",
+                    "type": "text",
+                    "label": null
+                  },
+                  {
+                    "name": "channel",
+                    "type": "text",
+                    "label": null
+                  },
+                  {
+                    "name": "ts",
+                    "type": "text",
+                    "label": null
+                  }
+                ],
+                "type": "collection",
+                "label": null
+              },
+              {
+                "name": "event_ts",
+                "type": "text",
+                "label": null
+              }
+            ],
+            "type": "collection",
+            "label": "Event"
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "label": "Type"
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "label": "Event ID"
+          },
+          {
+            "name": "event_time",
+            "type": "number",
+            "label": "Event Time"
+          },
+          {
+            "name": "authorizations",
+            "spec": {
+              "name": "value",
+              "spec": [
+                {
+                  "name": "enterprise_id",
+                  "type": "text",
+                  "label": null
+                },
+                {
+                  "name": "team_id",
+                  "type": "text",
+                  "label": null
+                },
+                {
+                  "name": "user_id",
+                  "type": "text",
+                  "label": null
+                },
+                {
+                  "name": "is_bot",
+                  "type": "boolean",
+                  "label": null
+                },
+                {
+                  "name": "is_enterprise_install",
+                  "type": "boolean",
+                  "label": null
+                }
+              ],
+              "type": "collection"
+            },
+            "type": "array",
+            "label": "Authorizations"
+          },
+          {
+            "name": "is_ext_shared_channel",
+            "type": "boolean",
+            "label": "Is Ext Shared Channel"
+          },
+          {
+            "name": "event_context",
+            "type": "text",
+            "label": "Event Context"
+          },
+          {
+            "name": "Name",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "Scenario",
+            "type": "text",
+            "label": null
+          },
+          {
+            "name": "Execution",
+            "type": "text",
+            "label": null
+          }
+        ],
+        "restore": {
+          "expect": {
+            "authorizations": {
+              "mode": "edit"
+            },
+            "is_ext_shared_channel": {
+              "mode": "edit"
+            }
+          },
+          "parameters": {
+            "type": {
+              "label": "Slack Event Subscriptions"
+            },
+            "space": {
+              "label": "Empty"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Add Source"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "space",
+            "type": "select",
+            "label": "Indentation",
+            "validate": {
+              "enum": [
+                "tab",
+                "2",
+                "4"
+              ]
+            }
+          }
+        ]
+      },
+      "parameters": {
+        "type": 176496,
+        "space": ""
+      }
+    },
+    {
+      "id": 5,
+      "mapper": null,
+      "module": "builtin:BasicRouter",
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 6,
+              "mapper": {
+                "ca": "",
+                "qs": [],
+                "url": "https://google.com",
+                "data": "{{9.json}}",
+                "gzip": true,
+                "method": "post",
+                "headers": [],
+                "timeout": "",
+                "useMtls": false,
+                "authPass": "",
+                "authUser": "",
+                "bodyType": "raw",
+                "contentType": "application/json",
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": false,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+              },
+              "module": "http:ActionSendData",
+              "version": 3,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "url",
+                    "type": "url",
+                    "label": "URL",
+                    "required": true
+                  },
+                  {
+                    "name": "serializeUrl",
+                    "type": "boolean",
+                    "label": "Serialize URL",
+                    "required": true
+                  },
+                  {
+                    "name": "method",
+                    "type": "select",
+                    "label": "Method",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "get",
+                        "head",
+                        "post",
+                        "put",
+                        "patch",
+                        "delete",
+                        "options"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "headers",
+                    "spec": [
+                      {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Headers"
+                  },
+                  {
+                    "name": "qs",
+                    "spec": [
+                      {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Value"
+                      }
+                    ],
+                    "type": "array",
+                    "label": "Query String"
+                  },
+                  {
+                    "name": "bodyType",
+                    "type": "select",
+                    "label": "Body type",
+                    "validate": {
+                      "enum": [
+                        "raw",
+                        "x_www_form_urlencoded",
+                        "multipart_form_data"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "parseResponse",
+                    "type": "boolean",
+                    "label": "Parse response",
+                    "required": true
+                  },
+                  {
+                    "name": "authUser",
+                    "type": "text",
+                    "label": "User name"
+                  },
+                  {
+                    "name": "authPass",
+                    "type": "password",
+                    "label": "Password"
+                  },
+                  {
+                    "name": "timeout",
+                    "type": "uinteger",
+                    "label": "Timeout",
+                    "validate": {
+                      "max": 300,
+                      "min": 1
+                    }
+                  },
+                  {
+                    "name": "shareCookies",
+                    "type": "boolean",
+                    "label": "Share cookies with other HTTP modules",
+                    "required": true
+                  },
+                  {
+                    "name": "ca",
+                    "type": "cert",
+                    "label": "Self-signed certificate"
+                  },
+                  {
+                    "name": "rejectUnauthorized",
+                    "type": "boolean",
+                    "label": "Reject connections that are using unverified (self-signed) certificates",
+                    "required": true
+                  },
+                  {
+                    "name": "followRedirect",
+                    "type": "boolean",
+                    "label": "Follow redirect",
+                    "required": true
+                  },
+                  {
+                    "name": "useQuerystring",
+                    "type": "boolean",
+                    "label": "Disable serialization of multiple same query string keys as arrays",
+                    "required": true
+                  },
+                  {
+                    "name": "gzip",
+                    "type": "boolean",
+                    "label": "Request compressed content",
+                    "required": true
+                  },
+                  {
+                    "name": "useMtls",
+                    "type": "boolean",
+                    "label": "Use Mutual TLS",
+                    "required": true
+                  },
+                  {
+                    "name": "contentType",
+                    "type": "select",
+                    "label": "Content type",
+                    "validate": {
+                      "enum": [
+                        "text/plain",
+                        "application/json",
+                        "application/xml",
+                        "text/xml",
+                        "text/html",
+                        "custom"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "data",
+                    "type": "buffer",
+                    "label": "Request content"
+                  },
+                  {
+                    "name": "followAllRedirects",
+                    "type": "boolean",
+                    "label": "Follow all redirect",
+                    "required": true
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "qs": {
+                      "mode": "chose"
+                    },
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "bodyType": {
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "label": "JSON (application/json)"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 1200,
+                  "y": 0,
+                  "name": "Trigger Scenario"
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "hidden"
+                  }
+                ]
+              },
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              }
+            }
+          ]
+        }
+      ],
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "name": "Slack Event Subscriptions",
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "value": "{\"token\":\"NC1vqlPKEFpGCLtbyEZ1EQNa\",\"team_id\":\"T0766JH8935\",\"context_team_id\":\"T0766JH8935\",\"context..."
+        },
+        "7": {
+          "type": "event_callback",
+          "event": {
+            "item": {
+              "ts": "1719484894.540039",
+              "type": "message",
+              "channel": "C079LH1T231"
+            },
+            "type": "reaction_added",
+            "user": "U0766MTE84A",
+            "event_ts": "1722131869.001600",
+            "reaction": "eyes"
+          },
+          "token": "NC1vqlPKEFpGCLtbyEZ1EQNa",
+          "team_id": "T0766JH8935",
+          "event_id": "Ev07ERFWGANM",
+          "api_app_id": "A07ERC5QP97",
+          "event_time": 1722131869,
+          "event_context": "4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDA3NjZKSDg5MzUiLCJhaWQiOiJBMDdFUkM1UVA5NyIsImNpZCI6IkMwNz...",
+          "authorizations": [
+            {
+              "is_bot": false,
+              "team_id": "T0766JH8935",
+              "user_id": "U0766MTE84A",
+              "enterprise_id": null,
+              "is_enterprise_install": false
+            }
+          ],
+          "context_team_id": "T0766JH8935",
+          "context_enterprise_id": null,
+          "is_ext_shared_channel": false
+        },
+        "9": {
+          "json": "{\"Name\":\"Slack Event Subscriptions\",\"type\":\"event_callback\",\"event\":{\"item\":{\"ts\":\"1719484894.540039..."
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
