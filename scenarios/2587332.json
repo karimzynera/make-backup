@@ -1,0 +1,343 @@
+{
+  "flow": [
+    {
+      "id": 8,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "Batch Size",
+            "value": "5"
+          }
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null
+              ]
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "Batch Size",
+            "type": "any",
+            "label": "Batch Size"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 1,
+      "mapper": {
+        "json": "[\n  {\n    \"id\": 1,\n    \"name\": \"Object 1\",\n    \"value\": \"Value 1\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Object 2\",\n    \"value\": \"Value 2\"\n  },\n  {\n    \"id\": 3,\n    \"name\": \"Object 3\",\n    \"value\": \"Value 3\"\n  },\n  {\n    \"id\": 4,\n    \"name\": \"Object 4\",\n    \"value\": \"Value 4\"\n  },\n  {\n    \"id\": 5,\n    \"name\": \"Object 5\",\n    \"value\": \"Value 5\"\n  },\n  {\n    \"id\": 6,\n    \"name\": \"Object 6\",\n    \"value\": \"Value 6\"\n  },\n  {\n    \"id\": 7,\n    \"name\": \"Object 7\",\n    \"value\": \"Value 7\"\n  },\n  {\n    \"id\": 8,\n    \"name\": \"Object 8\",\n    \"value\": \"Value 8\"\n  },\n  {\n    \"id\": 9,\n    \"name\": \"Object 9\",\n    \"value\": \"Value 9\"\n  },\n  {\n    \"id\": 10,\n    \"name\": \"Object 10\",\n    \"value\": \"Value 10\"\n  }\n]"
+      },
+      "module": "json:ParseJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "json",
+            "type": "text",
+            "label": "JSON string",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "type": {
+              "label": "Choose a data structure"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure"
+          }
+        ]
+      },
+      "parameters": {
+        "type": ""
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "sample_array": "{{1.sample_array}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "JSON - Parse JSON [1]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "feeder": 1
+      }
+    },
+    {
+      "id": 3,
+      "mapper": {
+        "step": "1",
+        "start": "1",
+        "repeats": "{{ceil(length(2.array) / 8.`Batch Size`)}}"
+      },
+      "module": "builtin:BasicRepeater",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "start",
+            "type": "number",
+            "label": "Initial value",
+            "required": true
+          },
+          {
+            "name": "repeats",
+            "type": "number",
+            "label": "Repeats",
+            "required": true,
+            "validate": {
+              "max": 10000,
+              "min": 0
+            }
+          },
+          {
+            "name": "step",
+            "type": "number",
+            "label": "Step",
+            "required": true
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "array": "{{2.array}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 6,
+      "filter": {
+        "name": "Batch Split",
+        "conditions": [
+          [
+            {
+              "a": "{{4.`__IMTINDEX__`}}",
+              "b": "{{if(3.i = 1; 0; (3.i - 1) * 8.`Batch Size`)}}",
+              "o": "number:greater"
+            },
+            {
+              "a": "{{4.`__IMTINDEX__`}}",
+              "b": "{{if(3.i = 1; 8.`Batch Size`; 3.i * 8.`Batch Size`)}}",
+              "o": "number:lessorequal"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "i": "{{3.i}}",
+        "__IMTINDEX__": "{{4.`__IMTINDEX__`}}"
+      },
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "metadata": {
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Iterator [4]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        },
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "feeder": 4
+      }
+    },
+    {
+      "id": 7,
+      "mapper": {
+        "duration": "1"
+      },
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "duration",
+            "type": "uinteger",
+            "label": "Delay",
+            "required": true,
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    }
+  ],
+  "name": "Showcase: Group Bundles (Custom Module Workaround)",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "id": 1,
+          "name": "Object 1",
+          "value": "Value 1"
+        },
+        "2": {
+          "array": [
+            {
+              "sample_array": null
+            }
+          ],
+          "__IMTAGGLENGTH__": 10
+        },
+        "3": {
+          "i": 1
+        },
+        "4": {
+          "__IMTINDEX__": 1,
+          "sample_array": null,
+          "__IMTLENGTH__": 10
+        },
+        "6": {
+          "array": [
+            {
+              "i": 1,
+              "__IMTINDEX__": 10
+            }
+          ],
+          "__IMTAGGLENGTH__": 10
+        },
+        "8": {
+          "Batch Size": "5"
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
