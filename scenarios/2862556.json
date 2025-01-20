@@ -1,0 +1,71 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "anthropic-claude:createAMessage",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "messages": [
+            {
+              "message": "The module is not set up.",
+              "category": "setupreq",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "google-docs:createADocumentFromTemplate",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "messages": [
+            {
+              "message": "The module is not set up.",
+              "category": "setupreq",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "name": "Create SOP Using Loom",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
