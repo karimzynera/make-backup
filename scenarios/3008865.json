@@ -1,0 +1,330 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {
+        "json": "[{\n  \"flow\": [\n    {\n      \"id\": 3,\n      \"mapper\": {\n        \"id\": \"rec2XPZnALaEUysnz\",\n        \"base\": \"appmLkopsWumFkgXM\",\n        \"table\": \"tblMaSYop5fzqigPi\",\n        \"useColumnId\": false\n      },\n      \"module\": \"airtable:ActionGetRecord\",\n      \"version\": 3,\n      \"metadata\": {\n        \"expect\": [\n          {\n            \"name\": \"base\",\n            \"type\": \"select\",\n            \"label\": \"Base\",\n            \"required\": true\n          },\n          {\n            \"name\": \"useColumnId\",\n            \"type\": \"boolean\",\n            \"label\": \"Use Column ID\",\n            \"required\": true\n          },\n          {\n            \"name\": \"table\",\n            \"type\": \"select\",\n            \"label\": \"Table\",\n            \"required\": true\n          },\n          {\n            \"name\": \"id\",\n            \"type\": \"text\",\n            \"label\": \"Record ID\",\n            \"required\": true\n          }\n        ],\n        \"restore\": {\n          \"expect\": {\n            \"base\": {\n              \"mode\": \"chose\",\n              \"label\": \"Zynera OS\"\n            },\n            \"table\": {\n              \"mode\": \"chose\",\n              \"label\": \"Team\"\n            },\n            \"useColumnId\": {\n              \"mode\": \"chose\"\n            }\n          },\n          \"parameters\": {\n            \"__IMTCONN__\": {\n              \"data\": {\n                \"scoped\": \"true\",\n                \"connection\": \"airtable3\"\n              },\n              \"label\": \"Karim's Airtable connection (User ID: usryWvTaoddQVF23q)\"\n            }\n          }\n        },\n        \"designer\": {\n          \"x\": 0,\n          \"y\": 0\n        },\n        \"interface\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"text\",\n            \"label\": \"ID\"\n          },\n          {\n            \"name\": \"createdTime\",\n            \"type\": \"date\",\n            \"label\": \"Created Time\"\n          },\n          {\n            \"name\": \"Name\",\n            \"type\": \"text\",\n            \"label\": \"Name\"\n          },\n          {\n            \"name\": \"Notes\",\n            \"type\": \"text\",\n            \"label\": \"Notes\",\n            \"multiline\": true\n          },\n          {\n            \"name\": \"Assignee\",\n            \"spec\": [\n              {\n                \"name\": \"id\",\n                \"type\": \"text\",\n                \"label\": \"ID\"\n              },\n              {\n                \"name\": \"email\",\n                \"type\": \"email\",\n                \"label\": \"Email\"\n              },\n              {\n                \"name\": \"name\",\n                \"type\": \"text\",\n                \"label\": \"Name\"\n              }\n            ],\n            \"type\": \"collection\",\n            \"label\": \"Assignee\"\n          },\n          {\n            \"name\": \"Status\",\n            \"type\": \"text\",\n            \"label\": \"Status\"\n          },\n          {\n            \"name\": \"Meetings\",\n            \"spec\": {\n              \"label\": \"Record ID\"\n            },\n            \"type\": \"array\",\n            \"label\": \"Meetings\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"name\": \"__IMTCONN__\",\n            \"type\": \"account:airtable3,airtable2\",\n            \"label\": \"Connection\",\n            \"required\": true\n          }\n        ]\n      },\n      \"parameters\": {\n        \"__IMTCONN__\": 2419123\n      }\n    },\n    {\n      \"id\": 4,\n      \"mapper\": {\n        \"scope\": \"roundtrip\",\n        \"variables\": [\n          {\n            \"name\": \"Test\",\n            \"value\": \"3.Notes\"\n          }\n        ]\n      },\n      \"module\": \"util:SetVariables\",\n      \"version\": 1,\n      \"metadata\": {\n        \"expect\": [\n          {\n            \"name\": \"variables\",\n            \"spec\": [\n              {\n                \"name\": \"name\",\n                \"type\": \"text\",\n                \"label\": \"Variable name\",\n                \"required\": true\n              },\n              {\n                \"name\": \"value\",\n                \"type\": \"any\",\n                \"label\": \"Variable value\"\n              }\n            ],\n            \"type\": \"array\",\n            \"label\": \"Variables\"\n          },\n          {\n            \"name\": \"scope\",\n            \"type\": \"select\",\n            \"label\": \"Variable lifetime\",\n            \"required\": true,\n            \"validate\": {\n              \"enum\": [\n                \"roundtrip\",\n                \"execution\"\n              ]\n            }\n          }\n        ],\n        \"restore\": {\n          \"expect\": {\n            \"scope\": {\n              \"label\": \"One cycle\"\n            },\n            \"variables\": {\n              \"items\": [\n                null\n              ]\n            }\n          }\n        },\n        \"designer\": {\n          \"x\": 300,\n          \"y\": 0\n        },\n        \"interface\": [\n          {\n            \"name\": \"Test\",\n            \"type\": \"any\",\n            \"label\": \"Test\"\n          }\n        ]\n      },\n      \"parameters\": {}\n    }\n  ],\n  \"name\": \"Airtable Dependencies Test\",\n  \"metadata\": {\n    \"instant\": false,\n    \"version\": 1,\n    \"designer\": {\n      \"orphans\": [],\n      \"samples\": {\n        \"3\": {\n          \"id\": \"rec2XPZnALaEUysnz\",\n          \"Name\": \"Karim El Kassas\",\n          \"createdTime\": \"2024-07-20T12:20:03.000Z\"\n        }\n      }\n    },\n    \"scenario\": {\n      \"dlq\": false,\n      \"slots\": null,\n      \"dataloss\": false,\n      \"maxErrors\": 3,\n      \"autoCommit\": true,\n      \"roundtrips\": 1,\n      \"sequential\": false,\n      \"confidential\": false,\n      \"freshVariables\": false,\n      \"autoCommitTriggerLast\": true\n    }\n  }\n},{\n  \"flow\": [\n    {\n      \"id\": 3,\n      \"mapper\": {\n        \"id\": \"rec2XPZnALaEUysnz\",\n        \"base\": \"appmLkopsWumFkgXM\",\n        \"table\": \"tblMaSYop5fzqigPi\",\n        \"useColumnId\": false\n      },\n      \"module\": \"airtable:ActionGetRecord\",\n      \"version\": 3,\n      \"metadata\": {\n        \"expect\": [\n          {\n            \"name\": \"base\",\n            \"type\": \"select\",\n            \"label\": \"Base\",\n            \"required\": true\n          },\n          {\n            \"name\": \"useColumnId\",\n            \"type\": \"boolean\",\n            \"label\": \"Use Column ID\",\n            \"required\": true\n          },\n          {\n            \"name\": \"table\",\n            \"type\": \"select\",\n            \"label\": \"Table\",\n            \"required\": true\n          },\n          {\n            \"name\": \"id\",\n            \"type\": \"text\",\n            \"label\": \"Record ID\",\n            \"required\": true\n          }\n        ],\n        \"restore\": {\n          \"expect\": {\n            \"base\": {\n              \"mode\": \"chose\",\n              \"label\": \"Zynera OS\"\n            },\n            \"table\": {\n              \"mode\": \"chose\",\n              \"label\": \"Team\"\n            },\n            \"useColumnId\": {\n              \"mode\": \"chose\"\n            }\n          },\n          \"parameters\": {\n            \"__IMTCONN__\": {\n              \"data\": {\n                \"scoped\": \"true\",\n                \"connection\": \"airtable3\"\n              },\n              \"label\": \"Karim's Airtable connection (User ID: usryWvTaoddQVF23q)\"\n            }\n          }\n        },\n        \"designer\": {\n          \"x\": 0,\n          \"y\": 0\n        },\n        \"interface\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"text\",\n            \"label\": \"ID\"\n          },\n          {\n            \"name\": \"createdTime\",\n            \"type\": \"date\",\n            \"label\": \"Created Time\"\n          },\n          {\n            \"name\": \"Name\",\n            \"type\": \"text\",\n            \"label\": \"Name\"\n          },\n          {\n            \"name\": \"Notes\",\n            \"type\": \"text\",\n            \"label\": \"Notes\",\n            \"multiline\": true\n          },\n          {\n            \"name\": \"Assignee\",\n            \"spec\": [\n              {\n                \"name\": \"id\",\n                \"type\": \"text\",\n                \"label\": \"ID\"\n              },\n              {\n                \"name\": \"email\",\n                \"type\": \"email\",\n                \"label\": \"Email\"\n              },\n              {\n                \"name\": \"name\",\n                \"type\": \"text\",\n                \"label\": \"Name\"\n              }\n            ],\n            \"type\": \"collection\",\n            \"label\": \"Assignee\"\n          },\n          {\n            \"name\": \"Status\",\n            \"type\": \"text\",\n            \"label\": \"Status\"\n          },\n          {\n            \"name\": \"Meetings\",\n            \"spec\": {\n              \"label\": \"Record ID\"\n            },\n            \"type\": \"array\",\n            \"label\": \"Meetings\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"name\": \"__IMTCONN__\",\n            \"type\": \"account:airtable3,airtable2\",\n            \"label\": \"Connection\",\n            \"required\": true\n          }\n        ]\n      },\n      \"parameters\": {\n        \"__IMTCONN__\": 2419123\n      }\n    },\n    {\n      \"id\": 4,\n      \"mapper\": {\n        \"scope\": \"roundtrip\",\n        \"variables\": [\n          {\n            \"name\": \"Test\",\n            \"value\": \"3.Notes\"\n          }\n        ]\n      },\n      \"module\": \"util:SetVariables\",\n      \"version\": 1,\n      \"metadata\": {\n        \"expect\": [\n          {\n            \"name\": \"variables\",\n            \"spec\": [\n              {\n                \"name\": \"name\",\n                \"type\": \"text\",\n                \"label\": \"Variable name\",\n                \"required\": true\n              },\n              {\n                \"name\": \"value\",\n                \"type\": \"any\",\n                \"label\": \"Variable value\"\n              }\n            ],\n            \"type\": \"array\",\n            \"label\": \"Variables\"\n          },\n          {\n            \"name\": \"scope\",\n            \"type\": \"select\",\n            \"label\": \"Variable lifetime\",\n            \"required\": true,\n            \"validate\": {\n              \"enum\": [\n                \"roundtrip\",\n                \"execution\"\n              ]\n            }\n          }\n        ],\n        \"restore\": {\n          \"expect\": {\n            \"scope\": {\n              \"label\": \"One cycle\"\n            },\n            \"variables\": {\n              \"items\": [\n                null\n              ]\n            }\n          }\n        },\n        \"designer\": {\n          \"x\": 300,\n          \"y\": 0\n        },\n        \"interface\": [\n          {\n            \"name\": \"Test\",\n            \"type\": \"any\",\n            \"label\": \"Test\"\n          }\n        ]\n      },\n      \"parameters\": {}\n    }\n  ],\n  \"name\": \"Airtable Dependencies Test\",\n  \"metadata\": {\n    \"instant\": false,\n    \"version\": 1,\n    \"designer\": {\n      \"orphans\": [],\n      \"samples\": {\n        \"3\": {\n          \"id\": \"rec2XPZnALaEUysnz\",\n          \"Name\": \"Karim El Kassas\",\n          \"createdTime\": \"2024-07-20T12:20:03.000Z\"\n        }\n      }\n    },\n    \"scenario\": {\n      \"dlq\": false,\n      \"slots\": null,\n      \"dataloss\": false,\n      \"maxErrors\": 3,\n      \"autoCommit\": true,\n      \"roundtrips\": 1,\n      \"sequential\": false,\n      \"confidential\": false,\n      \"freshVariables\": false,\n      \"autoCommitTriggerLast\": true\n    }\n  }\n}]"
+      },
+      "module": "json:ParseJSON",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "json",
+            "type": "text",
+            "label": "JSON string",
+            "required": true
+          }
+        ],
+        "restore": {
+          "parameters": {
+            "type": {
+              "label": "Choose a data structure"
+            }
+          }
+        },
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure"
+          }
+        ]
+      },
+      "parameters": {
+        "type": ""
+      }
+    },
+    {
+      "id": 4,
+      "mapper": {
+        "array": "{{1.flow}}"
+      },
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "mode": "edit",
+            "name": "array",
+            "spec": [],
+            "type": "array",
+            "label": "Array"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": 5,
+      "filter": {
+        "name": "Module Airtable",
+        "conditions": [
+          [
+            {
+              "a": "{{4.module}}",
+              "b": "airtable",
+              "o": "text:contain"
+            }
+          ]
+        ]
+      },
+      "module": "util:SetVariables",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "name": "Integration JSON",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": [],
+      "samples": {
+        "1": {
+          "flow": [
+            {
+              "id": 4,
+              "mapper": {
+                "id": "rec2XPZnALaEUysnz",
+                "base": "appmLkopsWumFkgXM",
+                "scope": "roundtrip",
+                "table": "tblMaSYop5fzqigPi",
+                "variables": [
+                  {
+                    "name": "Test",
+                    "value": "3.Notes"
+                  }
+                ],
+                "useColumnId": null
+              },
+              "module": "util:SetVariables",
+              "version": 1,
+              "metadata": {
+                "expect": [
+                  {
+                    "name": "scope",
+                    "spec": [
+                      {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value",
+                        "required": true
+                      }
+                    ],
+                    "type": "select",
+                    "label": "Variable lifetime",
+                    "required": true,
+                    "validate": {
+                      "enum": [
+                        "roundtrip"
+                      ]
+                    }
+                  }
+                ],
+                "restore": {
+                  "expect": {
+                    "base": {
+                      "mode": "chose",
+                      "label": "Zynera OS"
+                    },
+                    "scope": {
+                      "label": "One cycle"
+                    },
+                    "table": {
+                      "mode": "chose",
+                      "label": "Team"
+                    },
+                    "variables": {
+                      "items": [
+                        null
+                      ]
+                    },
+                    "useColumnId": {
+                      "mode": "chose"
+                    }
+                  },
+                  "parameters": {
+                    "__IMTCONN__": {
+                      "data": {
+                        "scoped": "true",
+                        "connection": "airtable3"
+                      },
+                      "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
+                    }
+                  }
+                },
+                "designer": {
+                  "x": 300,
+                  "y": null
+                },
+                "interface": [
+                  {
+                    "name": "Test",
+                    "spec": [
+                      {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                      }
+                    ],
+                    "type": "any",
+                    "label": "Test",
+                    "multiline": true
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "__IMTCONN__",
+                    "type": "account:airtable3,airtable2",
+                    "label": "Connection",
+                    "required": true
+                  }
+                ]
+              },
+              "parameters": {
+                "__IMTCONN__": 2419123
+              }
+            }
+          ],
+          "name": "Airtable Dependencies Test",
+          "metadata": {
+            "instant": false,
+            "version": 1,
+            "designer": {
+              "orphans": [],
+              "samples": {
+                "3": {
+                  "id": "rec2XPZnALaEUysnz",
+                  "Name": "Karim El Kassas",
+                  "createdTime": "2024-07-20T12:20:03.000Z"
+                }
+              }
+            },
+            "scenario": {
+              "dlq": false,
+              "slots": null,
+              "dataloss": false,
+              "maxErrors": 3,
+              "autoCommit": true,
+              "roundtrips": 1,
+              "sequential": false,
+              "confidential": false,
+              "freshVariables": false,
+              "autoCommitTriggerLast": true
+            }
+          }
+        },
+        "4": {
+          "id": 3,
+          "mapper": {
+            "id": "rec2XPZnALaEUysnz",
+            "base": "appmLkopsWumFkgXM",
+            "table": "tblMaSYop5fzqigPi",
+            "useColumnId": false
+          },
+          "module": "airtable:ActionGetRecord",
+          "version": 3,
+          "metadata": {
+            "expect": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "Record ID",
+                "required": true
+              }
+            ],
+            "restore": {
+              "expect": {
+                "base": {
+                  "mode": "chose",
+                  "label": "Zynera OS"
+                },
+                "table": {
+                  "mode": "chose",
+                  "label": "Team"
+                },
+                "useColumnId": {
+                  "mode": "chose"
+                }
+              },
+              "parameters": {
+                "__IMTCONN__": {
+                  "data": {
+                    "scoped": "true",
+                    "connection": "airtable3"
+                  },
+                  "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
+                }
+              }
+            },
+            "designer": {
+              "x": 0,
+              "y": 0
+            },
+            "interface": [
+              {
+                "name": "Meetings",
+                "spec": [
+                  {
+                    "name": "name",
+                    "type": "text",
+                    "label": "Name"
+                  }
+                ],
+                "type": "array",
+                "label": "Meetings",
+                "multiline": true
+              }
+            ],
+            "parameters": [
+              {
+                "name": "__IMTCONN__",
+                "type": "account:airtable3,airtable2",
+                "label": "Connection",
+                "required": true
+              }
+            ]
+          },
+          "parameters": {
+            "__IMTCONN__": 2419123
+          },
+          "__IMTINDEX__": 1,
+          "__IMTLENGTH__": 2
+        }
+      }
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
