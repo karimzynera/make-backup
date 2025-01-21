@@ -82,6 +82,10 @@
           {
             "name": "Table",
             "value": "{{4.mapper.table}}"
+          },
+          {
+            "name": "t",
+            "value": "{{toString(4.mapper)}}"
           }
         ]
       },
@@ -128,6 +132,7 @@
             "variables": {
               "items": [
                 null,
+                null,
                 null
               ]
             }
@@ -147,6 +152,11 @@
             "name": "Table",
             "type": "any",
             "label": "Table"
+          },
+          {
+            "name": "t",
+            "type": "any",
+            "label": "t"
           }
         ]
       },
@@ -155,7 +165,7 @@
     {
       "id": 6,
       "mapper": {
-        "text": "{{4.mapper}}",
+        "text": "{{toString(4.mapper)}}",
         "pattern": "{{4.id}}\\.\\s*(\\w+)"
       },
       "module": "regexp:AdvancedParser",
@@ -234,7 +244,7 @@
       }
     }
   ],
-  "name": "Integration JSON",
+  "name": "Airtable Dependencies V3",
   "metadata": {
     "instant": false,
     "version": 1,
@@ -451,6 +461,11 @@
           },
           "__IMTINDEX__": 1,
           "__IMTLENGTH__": 2
+        },
+        "7": {
+          "t": "{object}",
+          "Base": "appmLkopsWumFkgXM",
+          "Table": "tblMaSYop5fzqigPi"
         }
       }
     },
