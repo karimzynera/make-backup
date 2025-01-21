@@ -71,26 +71,166 @@
       "parameters": {}
     },
     {
-      "id": 5,
-      "filter": {
-        "name": "Module Airtable",
-        "conditions": [
-          [
-            {
-              "a": "{{4.module}}",
-              "b": "airtable",
-              "o": "text:contain"
-            }
-          ]
+      "id": 7,
+      "mapper": {
+        "scope": "roundtrip",
+        "variables": [
+          {
+            "name": "Base",
+            "value": "{{4.mapper.base}}"
+          },
+          {
+            "name": "Table",
+            "value": "{{4.mapper.table}}"
+          }
         ]
       },
       "module": "util:SetVariables",
       "version": 1,
       "metadata": {
+        "expect": [
+          {
+            "name": "variables",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Variable name",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "any",
+                "label": "Variable value"
+              }
+            ],
+            "type": "array",
+            "label": "Variables"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "label": "Variable lifetime",
+            "required": true,
+            "validate": {
+              "enum": [
+                "roundtrip",
+                "execution"
+              ]
+            }
+          }
+        ],
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            },
+            "variables": {
+              "items": [
+                null,
+                null
+              ]
+            }
+          }
+        },
         "designer": {
           "x": 600,
           "y": 0
-        }
+        },
+        "interface": [
+          {
+            "name": "Base",
+            "type": "any",
+            "label": "Base"
+          },
+          {
+            "name": "Table",
+            "type": "any",
+            "label": "Table"
+          }
+        ]
+      },
+      "parameters": {}
+    },
+    {
+      "id": 6,
+      "mapper": {
+        "text": "{{4.mapper}}",
+        "pattern": "{{4.id}}\\.\\s*(\\w+)"
+      },
+      "module": "regexp:AdvancedParser",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "pattern",
+            "type": "text",
+            "label": "Pattern",
+            "required": true
+          },
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Text",
+            "required": true
+          }
+        ],
+        "restore": {},
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "messages": [
+            {
+              "message": "A transformer should not be the last module in the route.",
+              "category": "last",
+              "severity": "warning"
+            }
+          ]
+        },
+        "parameters": [
+          {
+            "name": "global",
+            "type": "boolean",
+            "label": "Global match",
+            "required": true
+          },
+          {
+            "name": "sensitive",
+            "type": "boolean",
+            "label": "Case sensitive",
+            "required": true
+          },
+          {
+            "name": "multiline",
+            "type": "boolean",
+            "label": "Multiline",
+            "required": true
+          },
+          {
+            "name": "singleline",
+            "type": "boolean",
+            "label": "Singleline",
+            "required": true
+          },
+          {
+            "name": "continueWhenNoRes",
+            "type": "boolean",
+            "label": "Continue the execution of the route even if the module finds no matches",
+            "required": true
+          },
+          {
+            "name": "advancedParser",
+            "type": "hidden"
+          }
+        ]
+      },
+      "parameters": {
+        "global": false,
+        "multiline": false,
+        "sensitive": true,
+        "singleline": false,
+        "advancedParser": true,
+        "continueWhenNoRes": false
       }
     }
   ],
