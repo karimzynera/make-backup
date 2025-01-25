@@ -425,7 +425,8 @@
         "base": "appmLkopsWumFkgXM",
         "table": "tbl1yBFtIwWVJuzJB",
         "record": {
-          "fldY1aIYdoAvMSW90": {}
+          "fldY1aIYdoAvMSW90": {},
+          "fldrLzdFLjE5hXrTp": "test"
         },
         "typecast": false,
         "useColumnId": false
@@ -675,11 +676,7 @@
               },
               {
                 "name": "fldyJ270GDcW5ptP2",
-                "spec": {
-                  "name": "value",
-                  "label": "Record ID"
-                },
-                "type": "array",
+                "type": "text",
                 "label": "Accounts"
               },
               {
@@ -705,6 +702,25 @@
                 "name": "fldLsJ9mpeN2kthmi",
                 "type": "text",
                 "label": "VAT ID"
+              },
+              {
+                "name": "fldWzATEE8lULdstI",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Meetings"
+              },
+              {
+                "name": "fldpuUT70wrNiWBsP",
+                "type": "text",
+                "label": "Make Environment"
+              },
+              {
+                "name": "fldMsUls0GKiSidrT",
+                "type": "text",
+                "label": "Whimsical Folder"
               }
             ],
             "type": "collection",
@@ -745,13 +761,13 @@
                 "fldU3q9EY6nLJ4R3y": {
                   "mode": "chose"
                 },
+                "fldWzATEE8lULdstI": {
+                  "mode": "chose"
+                },
                 "fldg8uPW9e89WNEpL": {
                   "mode": "chose"
                 },
                 "fldi4NiEFPIZ12KKc": {
-                  "mode": "chose"
-                },
-                "fldyJ270GDcW5ptP2": {
                   "mode": "chose"
                 }
               }
@@ -769,7 +785,7 @@
                 "scoped": "true",
                 "connection": "airtable3"
               },
-              "label": "karim@zynera.de (User ID: usryWvTaoddQVF23q)"
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
             }
           }
         },
