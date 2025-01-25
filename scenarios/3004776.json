@@ -143,7 +143,7 @@
         "scope": "roundtrip",
         "variables": [
           {
-            "name": "Test",
+            "name": "Make vs. n8n",
             "value": "{{3.fldUAitpwkofC6Ilw}}"
           }
         ]
@@ -201,9 +201,9 @@
         },
         "interface": [
           {
-            "name": "Test",
+            "name": "Make vs. n8n",
             "type": "any",
-            "label": "Test"
+            "label": "Make vs. n8n"
           }
         ]
       },
