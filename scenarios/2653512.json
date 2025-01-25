@@ -694,11 +694,6 @@
                 "label": "Legal Name"
               },
               {
-                "name": "fldjYvfmi1rBT4P6g",
-                "type": "text",
-                "label": "Shortcut"
-              },
-              {
                 "name": "fldLsJ9mpeN2kthmi",
                 "type": "text",
                 "label": "VAT ID"
@@ -1194,10 +1189,7 @@
           },
           {
             "name": "Accounts",
-            "spec": {
-              "label": "Record ID"
-            },
-            "type": "array",
+            "type": "text",
             "label": "Accounts"
           },
           {
@@ -1227,6 +1219,24 @@
             "name": "VAT ID",
             "type": "text",
             "label": "VAT ID"
+          },
+          {
+            "name": "Meetings",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Meetings"
+          },
+          {
+            "name": "Make Environment",
+            "type": "text",
+            "label": "Make Environment"
+          },
+          {
+            "name": "Whimsical Folder",
+            "type": "text",
+            "label": "Whimsical Folder"
           }
         ],
         "parameters": [
@@ -1255,7 +1265,7 @@
         "sender": "",
         "headers": [],
         "replyTo": "",
-        "subject": "",
+        "subject": "{{5.`Last Contact`}}",
         "priority": "normal",
         "inReplyTo": "",
         "references": [],
@@ -1442,7 +1452,7 @@
                 "scoped": "true",
                 "connection": "smtp"
               },
-              "label": "My Email connection (SMTP karim@el-kassas.com)"
+              "label": "Karim's Private Email connection (SMTP karim@el-kassas.com)"
             },
             "saveAfterSent": {
               "label": "No"
