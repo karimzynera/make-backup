@@ -6,7 +6,7 @@
         "id": "rec2XPZnALaEUysnz",
         "base": "appmLkopsWumFkgXM",
         "table": "tblMaSYop5fzqigPi",
-        "useColumnId": false
+        "useColumnId": true
       },
       "module": "airtable:ActionGetRecord",
       "version": 3,
@@ -61,6 +61,7 @@
             }
           }
         },
+        "advanced": true,
         "designer": {
           "x": 0,
           "y": 0
@@ -77,18 +78,18 @@
             "label": "Created Time"
           },
           {
-            "name": "Name",
+            "name": "fld8JSvFF9DHvyx8U",
             "type": "text",
             "label": "Name"
           },
           {
-            "name": "Notes",
+            "name": "fldUAitpwkofC6Ilw",
             "type": "text",
             "label": "Notes",
             "multiline": true
           },
           {
-            "name": "Assignee",
+            "name": "fldMl8lw9Cf18yOni",
             "spec": [
               {
                 "name": "id",
@@ -110,12 +111,12 @@
             "label": "Assignee"
           },
           {
-            "name": "Status",
+            "name": "fldkdKw2c3nBm9kGJ",
             "type": "text",
             "label": "Status"
           },
           {
-            "name": "Meetings",
+            "name": "fldzL9feKkz4PufmD",
             "spec": {
               "label": "Record ID"
             },
@@ -143,7 +144,7 @@
         "variables": [
           {
             "name": "Test",
-            "value": "{{3.Notes}}"
+            "value": "{{3.fldUAitpwkofC6Ilw}}"
           }
         ]
       },
@@ -425,8 +426,12 @@
       "samples": {
         "3": {
           "id": "rec2XPZnALaEUysnz",
-          "Name": "Karim El Kassas",
-          "createdTime": "2024-07-20T12:20:03.000Z"
+          "createdTime": "2024-07-20T12:20:03.000Z",
+          "fld8JSvFF9DHvyx8U": "Karim El Kassas",
+          "fldUAitpwkofC6Ilw": "I want to get this value!"
+        },
+        "4": {
+          "Test": null
         }
       }
     },
