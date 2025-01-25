@@ -207,6 +207,213 @@
         ]
       },
       "parameters": {}
+    },
+    {
+      "id": 6,
+      "mapper": {
+        "id": "{{3.id}}",
+        "base": "appmLkopsWumFkgXM",
+        "table": "tblMaSYop5fzqigPi",
+        "record": {
+          "fldMl8lw9Cf18yOni": {},
+          "fldkdKw2c3nBm9kGJ": "Yeahhhhh"
+        },
+        "typecast": true,
+        "useColumnId": false
+      },
+      "module": "airtable:ActionUpdateRecords",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "typecast",
+            "type": "boolean",
+            "label": "Smart links",
+            "required": true
+          },
+          {
+            "name": "useColumnId",
+            "type": "boolean",
+            "label": "Use Column ID",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "label": "Record ID",
+            "required": true
+          },
+          {
+            "name": "record",
+            "spec": [
+              {
+                "name": "fld8JSvFF9DHvyx8U",
+                "type": "text",
+                "label": "Name"
+              },
+              {
+                "name": "fldUAitpwkofC6Ilw",
+                "type": "text",
+                "label": "Notes"
+              },
+              {
+                "name": "fldMl8lw9Cf18yOni",
+                "spec": [
+                  {
+                    "name": "id",
+                    "type": "text",
+                    "label": "ID"
+                  },
+                  {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email"
+                  }
+                ],
+                "type": "collection",
+                "label": "Assignee"
+              },
+              {
+                "mode": "edit",
+                "name": "fldkdKw2c3nBm9kGJ",
+                "type": "select",
+                "label": "Status"
+              },
+              {
+                "name": "fldzL9feKkz4PufmD",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Meetings"
+              }
+            ],
+            "type": "collection",
+            "label": "Record"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "base": {
+              "label": "Zynera OS"
+            },
+            "table": {
+              "label": "Team"
+            },
+            "record": {
+              "nested": {
+                "fldkdKw2c3nBm9kGJ": {
+                  "mode": "edit"
+                },
+                "fldzL9feKkz4PufmD": {
+                  "mode": "chose"
+                }
+              }
+            },
+            "typecast": {
+              "mode": "chose"
+            },
+            "useColumnId": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "id",
+            "type": "text",
+            "label": "ID"
+          },
+          {
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "Name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "Notes",
+            "type": "text",
+            "label": "Notes",
+            "multiline": true
+          },
+          {
+            "name": "Assignee",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              }
+            ],
+            "type": "collection",
+            "label": "Assignee"
+          },
+          {
+            "name": "Status",
+            "type": "text",
+            "label": "Status"
+          },
+          {
+            "name": "Meetings",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Meetings"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
     }
   ],
   "name": "Airtable Dependencies Test",
