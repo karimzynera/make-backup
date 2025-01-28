@@ -83,10 +83,9 @@
             "label": "Name"
           },
           {
-            "name": "fldUAitpwkofC6Ilw",
+            "name": "fldkdKw2c3nBm9kGJ",
             "type": "text",
-            "label": "Notes",
-            "multiline": true
+            "label": "Status"
           },
           {
             "name": "fldMl8lw9Cf18yOni",
@@ -108,12 +107,7 @@
               }
             ],
             "type": "collection",
-            "label": "Assignee"
-          },
-          {
-            "name": "fldkdKw2c3nBm9kGJ",
-            "type": "text",
-            "label": "Status"
+            "label": "Airtable User"
           },
           {
             "name": "fldzL9feKkz4PufmD",
@@ -122,6 +116,187 @@
             },
             "type": "array",
             "label": "Meetings"
+          },
+          {
+            "name": "fldxXiZHRiVpKszM6",
+            "type": "text",
+            "label": "Prename"
+          },
+          {
+            "name": "fldBxBm5QvWqYcsNg",
+            "type": "text",
+            "label": "Lastname"
+          },
+          {
+            "name": "fldYxoy6SCynnUMgx",
+            "type": "text",
+            "label": "Email"
+          },
+          {
+            "name": "fldq3AEE1cemrs39R",
+            "type": "text",
+            "label": "Slack ID"
+          },
+          {
+            "name": "fld0USfkRcnXGScFB",
+            "type": "text",
+            "label": "Timezone"
+          },
+          {
+            "name": "fldeWZiGJW1XKSKxA",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Profile Picture"
+          },
+          {
+            "name": "fldozHkkEY73ULjYZ",
+            "type": "text",
+            "label": "Phone"
+          },
+          {
+            "name": "fldWOkEF4MMNfct3D",
+            "type": "text",
+            "label": "Role"
+          },
+          {
+            "name": "flddc9lk1X9XKHn2B",
+            "type": "date",
+            "label": "Created at"
+          },
+          {
+            "name": "fldyOChw50mZWwLyw",
+            "type": "date",
+            "label": "Upadted at"
+          },
+          {
+            "name": "fldMyEFUgTElWNWUk",
+            "type": "text",
+            "label": "Record ID"
+          },
+          {
+            "name": "fldm3VEUlEZOp8mjG",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Clients"
+          },
+          {
+            "name": "fldbJdKMR8RY9fwU8",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Features"
           }
         ],
         "parameters": [
@@ -144,7 +319,11 @@
         "variables": [
           {
             "name": "Make vs. n8n",
-            "value": "{{3.fldUAitpwkofC6Ilw}}"
+            "value": "{{3.fld8JSvFF9DHvyx8U}}"
+          },
+          {
+            "name": "Zacharia",
+            "value": "{{3.fld0USfkRcnXGScFB}}"
           }
         ]
       },
@@ -190,6 +369,7 @@
             },
             "variables": {
               "items": [
+                null,
                 null
               ]
             }
@@ -204,6 +384,11 @@
             "name": "Make vs. n8n",
             "type": "any",
             "label": "Make vs. n8n"
+          },
+          {
+            "name": "Zacharia",
+            "type": "any",
+            "label": "Zacharia"
           }
         ]
       },
@@ -216,11 +401,13 @@
         "base": "appmLkopsWumFkgXM",
         "table": "tblMaSYop5fzqigPi",
         "record": {
+          "fldBxBm5QvWqYcsNg": "El Kassas",
           "fldMl8lw9Cf18yOni": {},
-          "fldkdKw2c3nBm9kGJ": "Yeahhhhh"
+          "fldkdKw2c3nBm9kGJ": "Active",
+          "fldozHkkEY73ULjYZ": "{{3.fldozHkkEY73ULjYZ}}"
         },
         "typecast": true,
-        "useColumnId": false
+        "useColumnId": true
       },
       "module": "airtable:ActionUpdateRecords",
       "version": 3,
@@ -260,14 +447,10 @@
             "name": "record",
             "spec": [
               {
-                "name": "fld8JSvFF9DHvyx8U",
-                "type": "text",
-                "label": "Name"
-              },
-              {
-                "name": "fldUAitpwkofC6Ilw",
-                "type": "text",
-                "label": "Notes"
+                "mode": "edit",
+                "name": "fldkdKw2c3nBm9kGJ",
+                "type": "select",
+                "label": "Status"
               },
               {
                 "name": "fldMl8lw9Cf18yOni",
@@ -284,13 +467,7 @@
                   }
                 ],
                 "type": "collection",
-                "label": "Assignee"
-              },
-              {
-                "mode": "edit",
-                "name": "fldkdKw2c3nBm9kGJ",
-                "type": "select",
-                "label": "Status"
+                "label": "Airtable User"
               },
               {
                 "name": "fldzL9feKkz4PufmD",
@@ -300,6 +477,78 @@
                 },
                 "type": "array",
                 "label": "Meetings"
+              },
+              {
+                "name": "fldxXiZHRiVpKszM6",
+                "type": "text",
+                "label": "Prename"
+              },
+              {
+                "name": "fldBxBm5QvWqYcsNg",
+                "type": "text",
+                "label": "Lastname"
+              },
+              {
+                "name": "fldYxoy6SCynnUMgx",
+                "type": "text",
+                "label": "Email"
+              },
+              {
+                "name": "fldq3AEE1cemrs39R",
+                "type": "text",
+                "label": "Slack ID"
+              },
+              {
+                "mode": "edit",
+                "name": "fld0USfkRcnXGScFB",
+                "type": "select",
+                "label": "Timezone"
+              },
+              {
+                "name": "fldeWZiGJW1XKSKxA",
+                "spec": [
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "File URL"
+                  },
+                  {
+                    "name": "filename",
+                    "type": "filename",
+                    "label": "File name"
+                  }
+                ],
+                "type": "array",
+                "label": "Profile Picture"
+              },
+              {
+                "name": "fldozHkkEY73ULjYZ",
+                "type": "text",
+                "label": "Phone"
+              },
+              {
+                "mode": "edit",
+                "name": "fldWOkEF4MMNfct3D",
+                "type": "select",
+                "label": "Role"
+              },
+              {
+                "name": "fldm3VEUlEZOp8mjG",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Clients"
+              },
+              {
+                "name": "fldbJdKMR8RY9fwU8",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Features"
               }
             ],
             "type": "collection",
@@ -316,8 +565,24 @@
             },
             "record": {
               "nested": {
-                "fldkdKw2c3nBm9kGJ": {
+                "fld0USfkRcnXGScFB": {
                   "mode": "edit"
+                },
+                "fldWOkEF4MMNfct3D": {
+                  "mode": "edit"
+                },
+                "fldbJdKMR8RY9fwU8": {
+                  "mode": "chose"
+                },
+                "fldeWZiGJW1XKSKxA": {
+                  "mode": "chose"
+                },
+                "fldkdKw2c3nBm9kGJ": {
+                  "mode": "chose",
+                  "label": "Active"
+                },
+                "fldm3VEUlEZOp8mjG": {
+                  "mode": "chose"
                 },
                 "fldzL9feKkz4PufmD": {
                   "mode": "chose"
@@ -341,6 +606,7 @@
             }
           }
         },
+        "advanced": true,
         "designer": {
           "x": 600,
           "y": 0
@@ -357,18 +623,17 @@
             "label": "Created Time"
           },
           {
-            "name": "Name",
+            "name": "fld8JSvFF9DHvyx8U",
             "type": "text",
             "label": "Name"
           },
           {
-            "name": "Notes",
+            "name": "fldkdKw2c3nBm9kGJ",
             "type": "text",
-            "label": "Notes",
-            "multiline": true
+            "label": "Status"
           },
           {
-            "name": "Assignee",
+            "name": "fldMl8lw9Cf18yOni",
             "spec": [
               {
                 "name": "id",
@@ -387,20 +652,196 @@
               }
             ],
             "type": "collection",
-            "label": "Assignee"
+            "label": "Airtable User"
           },
           {
-            "name": "Status",
-            "type": "text",
-            "label": "Status"
-          },
-          {
-            "name": "Meetings",
+            "name": "fldzL9feKkz4PufmD",
             "spec": {
               "label": "Record ID"
             },
             "type": "array",
             "label": "Meetings"
+          },
+          {
+            "name": "fldxXiZHRiVpKszM6",
+            "type": "text",
+            "label": "Prename"
+          },
+          {
+            "name": "fldBxBm5QvWqYcsNg",
+            "type": "text",
+            "label": "Lastname"
+          },
+          {
+            "name": "fldYxoy6SCynnUMgx",
+            "type": "text",
+            "label": "Email"
+          },
+          {
+            "name": "fldq3AEE1cemrs39R",
+            "type": "text",
+            "label": "Slack ID"
+          },
+          {
+            "name": "fld0USfkRcnXGScFB",
+            "type": "text",
+            "label": "Timezone"
+          },
+          {
+            "name": "fldeWZiGJW1XKSKxA",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Profile Picture"
+          },
+          {
+            "name": "fldozHkkEY73ULjYZ",
+            "type": "text",
+            "label": "Phone"
+          },
+          {
+            "name": "fldWOkEF4MMNfct3D",
+            "type": "text",
+            "label": "Role"
+          },
+          {
+            "name": "flddc9lk1X9XKHn2B",
+            "type": "date",
+            "label": "Created at"
+          },
+          {
+            "name": "fldyOChw50mZWwLyw",
+            "type": "date",
+            "label": "Upadted at"
+          },
+          {
+            "name": "fldMyEFUgTElWNWUk",
+            "type": "text",
+            "label": "Record ID"
+          },
+          {
+            "name": "fldm3VEUlEZOp8mjG",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Clients"
+          },
+          {
+            "name": "fldbJdKMR8RY9fwU8",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Features"
           }
         ],
         "parameters": [
@@ -427,8 +868,53 @@
         "3": {
           "id": "rec2XPZnALaEUysnz",
           "createdTime": "2024-07-20T12:20:03.000Z",
+          "fld0USfkRcnXGScFB": "Europe/Amsterdam",
           "fld8JSvFF9DHvyx8U": "Karim El Kassas",
-          "fldUAitpwkofC6Ilw": "I want to get this value!"
+          "fldBxBm5QvWqYcsNg": "El Kassas",
+          "fldMl8lw9Cf18yOni": {
+            "id": "usryWvTaoddQVF23q",
+            "name": "Karim El Kassas",
+            "email": "karim@zynera.ai"
+          },
+          "fldMyEFUgTElWNWUk": "rec2XPZnALaEUysnz",
+          "fldWOkEF4MMNfct3D": "Developer",
+          "fldYxoy6SCynnUMgx": "karim@zynera.ai",
+          "flddc9lk1X9XKHn2B": "2024-07-20",
+          "fldeWZiGJW1XKSKxA": [
+            {
+              "id": "attPC3LzSwIGlYoH8",
+              "url": "https://v5.airtableusercontent.com/v3/u/37/37/1738094400000/ZmY6KZLv2cxMInHOmG4fsA/1NVoB0IAZ2luU4_4M...",
+              "size": 181443,
+              "type": "image/png",
+              "width": 512,
+              "height": 512,
+              "filename": "7573711801604_96e436719871e21e7d8f_512.png",
+              "thumbnails": {
+                "full": {
+                  "url": "https://v5.airtableusercontent.com/v3/u/37/37/1738094400000/ZscJgxKK-UJax_PXr0Z4nw/4RX7_5D7Klz_gDsGd...",
+                  "width": 512,
+                  "height": 512
+                },
+                "large": {
+                  "url": "https://v5.airtableusercontent.com/v3/u/37/37/1738094400000/revW6jMaGuGuigP94GMj2w/EnDe4kb1-yiV5fdfQ...",
+                  "width": 512,
+                  "height": 512
+                },
+                "small": {
+                  "url": "https://v5.airtableusercontent.com/v3/u/37/37/1738094400000/YmXX1G-gf3uOU1M-QmfIWw/9V5c_IFWwlF6zvefO...",
+                  "width": 36,
+                  "height": 36
+                }
+              }
+            }
+          ],
+          "fldkdKw2c3nBm9kGJ": "Active",
+          "fldm3VEUlEZOp8mjG": [
+            "recaLrwfJxPLllUZZ"
+          ],
+          "fldq3AEE1cemrs39R": "U0766MTE84A",
+          "fldxXiZHRiVpKszM6": "Karim",
+          "fldyOChw50mZWwLyw": "2025-01-27T23:00:20.000Z"
         },
         "4": {
           "Test": null
