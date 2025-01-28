@@ -313,13 +313,13 @@
                     "severity": "error"
                   },
                   {
-                    "message": "The module is not connected to the data flow.",
-                    "category": "link",
+                    "message": "Referenced module 'Tools - Set multiple variables' [1] is not accessible.",
+                    "category": "reference",
                     "severity": "warning"
                   },
                   {
-                    "message": "Referenced module 'Tools - Set multiple variables' [1] is not accessible.",
-                    "category": "reference",
+                    "message": "The module is not connected to the data flow.",
+                    "category": "link",
                     "severity": "warning"
                   }
                 ]
