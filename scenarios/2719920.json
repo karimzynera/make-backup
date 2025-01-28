@@ -1,164 +1,1054 @@
 {
   "flow": [
     {
-      "id": 31,
-      "mapper": {},
-      "module": "util:BasicTrigger",
-      "version": 1,
+      "id": 35,
+      "mapper": {
+        "base": "appmLkopsWumFkgXM",
+        "table": "tblMaSYop5fzqigPi",
+        "record": {
+          "fldMl8lw9Cf18yOni": {},
+          "fldq3AEE1cemrs39R": "Hi",
+          "fldxXiZHRiVpKszM6": "Zacharia Test"
+        },
+        "typecast": false,
+        "useColumnId": true
+      },
+      "module": "airtable:ActionCreateRecord",
+      "version": 3,
       "metadata": {
-        "restore": {
-          "parameters": {
-            "values": {
-              "items": [
-                {
-                  "spec": {
-                    "mode": "chose",
-                    "items": [
-                      null
-                    ]
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "typecast",
+            "type": "boolean",
+            "label": "Smart links",
+            "required": true
+          },
+          {
+            "name": "useColumnId",
+            "type": "boolean",
+            "label": "Use Column ID",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "record",
+            "spec": [
+              {
+                "mode": "edit",
+                "name": "fldkdKw2c3nBm9kGJ",
+                "type": "select",
+                "label": "Status"
+              },
+              {
+                "name": "fldMl8lw9Cf18yOni",
+                "spec": [
+                  {
+                    "name": "id",
+                    "type": "text",
+                    "label": "ID"
+                  },
+                  {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email"
                   }
+                ],
+                "type": "collection",
+                "label": "Airtable User"
+              },
+              {
+                "name": "fldzL9feKkz4PufmD",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Meetings"
+              },
+              {
+                "name": "fldxXiZHRiVpKszM6",
+                "type": "text",
+                "label": "Prename"
+              },
+              {
+                "name": "fldBxBm5QvWqYcsNg",
+                "type": "text",
+                "label": "Lastname"
+              },
+              {
+                "name": "fldYxoy6SCynnUMgx",
+                "type": "text",
+                "label": "Email"
+              },
+              {
+                "name": "fldq3AEE1cemrs39R",
+                "type": "text",
+                "label": "Slack ID"
+              },
+              {
+                "mode": "edit",
+                "name": "fld0USfkRcnXGScFB",
+                "type": "select",
+                "label": "Timezone"
+              },
+              {
+                "name": "fldeWZiGJW1XKSKxA",
+                "spec": [
+                  {
+                    "name": "url",
+                    "type": "text",
+                    "label": "File URL"
+                  },
+                  {
+                    "name": "filename",
+                    "type": "filename",
+                    "label": "File name"
+                  }
+                ],
+                "type": "array",
+                "label": "Profile Picture"
+              },
+              {
+                "name": "fldozHkkEY73ULjYZ",
+                "type": "text",
+                "label": "Phone"
+              },
+              {
+                "mode": "edit",
+                "name": "fldWOkEF4MMNfct3D",
+                "type": "select",
+                "label": "Role"
+              },
+              {
+                "name": "fldm3VEUlEZOp8mjG",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Clients"
+              },
+              {
+                "name": "fldbJdKMR8RY9fwU8",
+                "spec": {
+                  "name": "value",
+                  "label": "Record ID"
+                },
+                "type": "array",
+                "label": "Features"
+              }
+            ],
+            "type": "collection",
+            "label": "Record"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "base": {
+              "label": "Zynera OS"
+            },
+            "table": {
+              "label": "Team",
+              "nested": [
+                {
+                  "name": "record",
+                  "spec": [
+                    {
+                      "mode": "edit",
+                      "name": "fldkdKw2c3nBm9kGJ",
+                      "type": "select",
+                      "label": "Status",
+                      "dynamic": true,
+                      "options": [
+                        {
+                          "label": "Active",
+                          "value": "Active"
+                        },
+                        {
+                          "label": "Onboarding",
+                          "value": "Onboarding"
+                        },
+                        {
+                          "label": "Inactive",
+                          "value": "Inactive"
+                        }
+                      ],
+                      "validate": false
+                    },
+                    {
+                      "name": "fldMl8lw9Cf18yOni",
+                      "spec": [
+                        {
+                          "help": "Unique user id",
+                          "name": "id",
+                          "type": "text",
+                          "label": "ID"
+                        },
+                        {
+                          "help": "User's email address",
+                          "name": "email",
+                          "type": "email",
+                          "label": "Email"
+                        }
+                      ],
+                      "type": "collection",
+                      "label": "Airtable User"
+                    },
+                    {
+                      "name": "fldzL9feKkz4PufmD",
+                      "spec": {
+                        "label": "Record ID"
+                      },
+                      "type": "array",
+                      "label": "Meetings"
+                    },
+                    {
+                      "name": "fldxXiZHRiVpKszM6",
+                      "type": "text",
+                      "label": "Prename"
+                    },
+                    {
+                      "name": "fldBxBm5QvWqYcsNg",
+                      "type": "text",
+                      "label": "Lastname"
+                    },
+                    {
+                      "name": "fldYxoy6SCynnUMgx",
+                      "type": "text",
+                      "label": "Email"
+                    },
+                    {
+                      "name": "fldq3AEE1cemrs39R",
+                      "type": "text",
+                      "label": "Slack ID"
+                    },
+                    {
+                      "mode": "edit",
+                      "name": "fld0USfkRcnXGScFB",
+                      "type": "select",
+                      "label": "Timezone",
+                      "dynamic": true,
+                      "options": [
+                        {
+                          "label": "Europe/Amsterdam",
+                          "value": "Europe/Amsterdam"
+                        }
+                      ],
+                      "validate": false
+                    },
+                    {
+                      "name": "fldeWZiGJW1XKSKxA",
+                      "spec": [
+                        {
+                          "help": "Airtable will download the file at the given url and keep its own copy of it.",
+                          "name": "url",
+                          "type": "text",
+                          "label": "File URL"
+                        },
+                        {
+                          "help": "If empty, Airtable will generate the name automatically.",
+                          "name": "filename",
+                          "type": "filename",
+                          "label": "File name"
+                        }
+                      ],
+                      "type": "array",
+                      "label": "Profile Picture",
+                      "editable": true
+                    },
+                    {
+                      "name": "fldozHkkEY73ULjYZ",
+                      "type": "text",
+                      "label": "Phone"
+                    },
+                    {
+                      "mode": "edit",
+                      "name": "fldWOkEF4MMNfct3D",
+                      "type": "select",
+                      "label": "Role",
+                      "dynamic": true,
+                      "options": [
+                        {
+                          "label": "Customer Success",
+                          "value": "Customer Success"
+                        },
+                        {
+                          "label": "Developer",
+                          "value": "Developer"
+                        }
+                      ],
+                      "validate": false
+                    },
+                    {
+                      "name": "fldm3VEUlEZOp8mjG",
+                      "spec": {
+                        "label": "Record ID"
+                      },
+                      "type": "array",
+                      "label": "Clients"
+                    },
+                    {
+                      "name": "fldbJdKMR8RY9fwU8",
+                      "spec": {
+                        "label": "Record ID"
+                      },
+                      "type": "array",
+                      "label": "Features"
+                    }
+                  ],
+                  "type": "collection",
+                  "label": "Record"
                 }
               ]
+            },
+            "record": {
+              "nested": {
+                "fld0USfkRcnXGScFB": {
+                  "mode": "edit"
+                },
+                "fldWOkEF4MMNfct3D": {
+                  "mode": "edit"
+                },
+                "fldbJdKMR8RY9fwU8": {
+                  "mode": "chose"
+                },
+                "fldeWZiGJW1XKSKxA": {
+                  "mode": "chose"
+                },
+                "fldkdKw2c3nBm9kGJ": {
+                  "mode": "edit"
+                },
+                "fldm3VEUlEZOp8mjG": {
+                  "mode": "chose"
+                },
+                "fldzL9feKkz4PufmD": {
+                  "mode": "chose"
+                }
+              }
+            },
+            "typecast": {
+              "mode": "chose"
+            },
+            "useColumnId": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
             }
           }
         },
+        "advanced": true,
         "designer": {
           "x": 0,
           "y": 0
         },
         "interface": [
           {
-            "name": "—",
+            "name": "id",
             "type": "text",
-            "label": "—"
+            "label": "ID"
+          },
+          {
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "fld8JSvFF9DHvyx8U",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "fldkdKw2c3nBm9kGJ",
+            "type": "text",
+            "label": "Status"
+          },
+          {
+            "name": "fldMl8lw9Cf18yOni",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              }
+            ],
+            "type": "collection",
+            "label": "Airtable User"
+          },
+          {
+            "name": "fldzL9feKkz4PufmD",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Meetings"
+          },
+          {
+            "name": "fldxXiZHRiVpKszM6",
+            "type": "text",
+            "label": "Prename"
+          },
+          {
+            "name": "fldBxBm5QvWqYcsNg",
+            "type": "text",
+            "label": "Lastname"
+          },
+          {
+            "name": "fldYxoy6SCynnUMgx",
+            "type": "text",
+            "label": "Email"
+          },
+          {
+            "name": "fldq3AEE1cemrs39R",
+            "type": "text",
+            "label": "Slack ID"
+          },
+          {
+            "name": "fld0USfkRcnXGScFB",
+            "type": "text",
+            "label": "Timezone"
+          },
+          {
+            "name": "fldeWZiGJW1XKSKxA",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Profile Picture"
+          },
+          {
+            "name": "fldozHkkEY73ULjYZ",
+            "type": "text",
+            "label": "Phone"
+          },
+          {
+            "name": "fldWOkEF4MMNfct3D",
+            "type": "text",
+            "label": "Role"
+          },
+          {
+            "name": "flddc9lk1X9XKHn2B",
+            "type": "date",
+            "label": "Created at"
+          },
+          {
+            "name": "fldyOChw50mZWwLyw",
+            "type": "date",
+            "label": "Upadted at"
+          },
+          {
+            "name": "fldMyEFUgTElWNWUk",
+            "type": "text",
+            "label": "Record ID"
+          },
+          {
+            "name": "fldm3VEUlEZOp8mjG",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Clients"
+          },
+          {
+            "name": "fldbJdKMR8RY9fwU8",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Features"
           }
         ],
         "parameters": [
           {
-            "name": "values",
-            "spec": [
-              {
-                "name": "spec",
-                "spec": [
-                  {
-                    "name": "name",
-                    "type": "text",
-                    "label": "Name",
-                    "required": true
-                  },
-                  {
-                    "name": "value",
-                    "type": "text",
-                    "label": "Value",
-                    "required": true
-                  }
-                ],
-                "type": "array",
-                "label": "Items",
-                "required": true
-              }
-            ],
-            "type": "array",
-            "label": "Bundles",
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
             "required": true
           }
         ]
       },
       "parameters": {
-        "values": [
-          {
-            "spec": [
-              {
-                "name": "—",
-                "value": "—"
-              }
-            ]
-          }
-        ]
+        "__IMTCONN__": 2419123
       }
     },
     {
-      "id": 32,
+      "id": 34,
       "mapper": {
-        "arrA": "{{emptystring}}",
-        "arrB": "{{emptystring}}",
-        "typeOfThing": "difference",
-        "singleOrBundles": "bundles"
+        "id": "{{35.id}}",
+        "base": "appmLkopsWumFkgXM",
+        "table": "tblMaSYop5fzqigPi"
       },
-      "module": "app#js-functions-jziwwh:Difference",
-      "version": 1,
+      "module": "airtable:ActionDeleteRecord",
+      "version": 3,
       "metadata": {
         "expect": [
           {
-            "name": "typeOfThing",
+            "name": "base",
             "type": "select",
-            "label": "Select the type of comparison you want to do",
-            "required": true,
-            "validate": {
-              "enum": [
-                "intersection",
-                "difference",
-                "symmetricalDifference"
-              ]
-            }
-          },
-          {
-            "name": "arrA",
-            "spec": {
-              "name": "value",
-              "type": "text"
-            },
-            "type": "array",
-            "label": "First Array (must be flat: Ex: `[1,2,3,4,5]`)",
+            "label": "Base",
             "required": true
           },
           {
-            "name": "arrB",
-            "spec": {
-              "name": "value",
-              "type": "text"
-            },
-            "type": "array",
-            "label": "Second Array (must be flat)",
+            "name": "table",
+            "type": "select",
+            "label": "Table",
             "required": true
           },
           {
-            "name": "singleOrBundles",
-            "type": "select",
-            "label": "Select Output Type",
-            "validate": {
-              "enum": [
-                "singleArray",
-                "bundles"
-              ]
-            }
+            "name": "id",
+            "type": "text",
+            "label": "Record ID",
+            "required": true
           }
         ],
         "restore": {
           "expect": {
-            "arrA": {
-              "mode": "edit"
-            },
-            "arrB": {
-              "mode": "edit"
-            },
-            "typeOfThing": {
+            "base": {
               "mode": "chose",
-              "label": "Difference"
+              "label": "Zynera OS"
             },
-            "singleOrBundles": {
+            "table": {
               "mode": "chose",
-              "label": "Bundles"
+              "label": "Team"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
             }
           }
         },
-        "advanced": true,
         "designer": {
           "x": 300,
           "y": 0
-        }
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
       },
-      "parameters": {}
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
+    },
+    {
+      "id": 33,
+      "mapper": {
+        "base": "appmLkopsWumFkgXM",
+        "table": "tblMaSYop5fzqigPi",
+        "formula": "{{35.fldWOkEF4MMNfct3D}}='Developer'",
+        "useColumnId": false
+      },
+      "module": "airtable:ActionSearchRecords",
+      "version": 3,
+      "metadata": {
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "useColumnId",
+            "type": "boolean",
+            "label": "Use Column ID",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "formula",
+            "type": "text",
+            "label": "Formula"
+          },
+          {
+            "name": "maxRecords",
+            "type": "integer",
+            "label": "Limit"
+          },
+          {
+            "name": "sort",
+            "spec": [
+              {
+                "name": "field",
+                "type": "select",
+                "label": "Field",
+                "dynamic": true,
+                "options": []
+              },
+              {
+                "name": "direction",
+                "type": "select",
+                "label": "Direction",
+                "options": [
+                  {
+                    "label": "Descending",
+                    "value": "desc"
+                  },
+                  {
+                    "label": "Ascending",
+                    "value": "asc"
+                  }
+                ]
+              }
+            ],
+            "type": "array",
+            "label": "Sort"
+          },
+          {
+            "name": "view",
+            "type": "select",
+            "label": "View"
+          },
+          {
+            "name": "fields",
+            "type": "select",
+            "label": "Output Fields",
+            "multiple": true
+          }
+        ],
+        "restore": {
+          "expect": {
+            "base": {
+              "mode": "chose",
+              "label": "Zynera OS"
+            },
+            "sort": {
+              "mode": "chose"
+            },
+            "view": {
+              "mode": "chose"
+            },
+            "table": {
+              "mode": "chose",
+              "label": "Team"
+            },
+            "fields": {
+              "mode": "chose"
+            },
+            "maxRecords": {
+              "empty": true
+            },
+            "useColumnId": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "Karim's Airtable connection (User ID: usryWvTaoddQVF23q)"
+            }
+          }
+        },
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "interface": [
+          {
+            "name": "__IMTLENGTH__",
+            "type": "uinteger",
+            "label": "Total number of bundles"
+          },
+          {
+            "name": "__IMTINDEX__",
+            "type": "uinteger",
+            "label": "Bundle order position"
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "label": "ID"
+          },
+          {
+            "name": "createdTime",
+            "type": "date",
+            "label": "Created Time"
+          },
+          {
+            "name": "Name",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "name": "Status",
+            "type": "text",
+            "label": "Status"
+          },
+          {
+            "name": "Airtable User",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "email",
+                "type": "email",
+                "label": "Email"
+              },
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              }
+            ],
+            "type": "collection",
+            "label": "Airtable User"
+          },
+          {
+            "name": "Meetings",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Meetings"
+          },
+          {
+            "name": "Prename",
+            "type": "text",
+            "label": "Prename"
+          },
+          {
+            "name": "Lastname",
+            "type": "text",
+            "label": "Lastname"
+          },
+          {
+            "name": "Email",
+            "type": "text",
+            "label": "Email"
+          },
+          {
+            "name": "Slack ID",
+            "type": "text",
+            "label": "Slack ID"
+          },
+          {
+            "name": "Timezone",
+            "type": "text",
+            "label": "Timezone"
+          },
+          {
+            "name": "Profile Picture",
+            "spec": [
+              {
+                "name": "id",
+                "type": "text",
+                "label": "ID"
+              },
+              {
+                "name": "width",
+                "type": "uinteger",
+                "label": "Width"
+              },
+              {
+                "name": "height",
+                "type": "uinteger",
+                "label": "Height"
+              },
+              {
+                "name": "url",
+                "type": "url",
+                "label": "URL"
+              },
+              {
+                "name": "filename",
+                "type": "filename",
+                "label": "File name"
+              },
+              {
+                "name": "size",
+                "type": "uinteger",
+                "label": "Size"
+              },
+              {
+                "name": "type",
+                "type": "text",
+                "label": "MIME type"
+              },
+              {
+                "name": "thumbnails",
+                "spec": [
+                  {
+                    "name": "small",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Small"
+                  },
+                  {
+                    "name": "large",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Large"
+                  },
+                  {
+                    "name": "full",
+                    "spec": [
+                      {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                      },
+                      {
+                        "name": "width",
+                        "type": "uinteger",
+                        "label": "Width"
+                      },
+                      {
+                        "name": "height",
+                        "type": "uinteger",
+                        "label": "Height"
+                      }
+                    ],
+                    "type": "collection",
+                    "label": "Full"
+                  }
+                ],
+                "type": "collection",
+                "label": "Thumbnails"
+              }
+            ],
+            "type": "array",
+            "label": "Profile Picture"
+          },
+          {
+            "name": "Phone",
+            "type": "text",
+            "label": "Phone"
+          },
+          {
+            "name": "Role",
+            "type": "text",
+            "label": "Role"
+          },
+          {
+            "name": "Created at",
+            "type": "date",
+            "label": "Created at"
+          },
+          {
+            "name": "Upadted at",
+            "type": "date",
+            "label": "Upadted at"
+          },
+          {
+            "name": "Record ID",
+            "type": "text",
+            "label": "Record ID"
+          },
+          {
+            "name": "Clients",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Clients"
+          },
+          {
+            "name": "Features",
+            "spec": {
+              "label": "Record ID"
+            },
+            "type": "array",
+            "label": "Features"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 2419123
+      }
     }
   ],
   "name": "Self Destructive Scenario V1",
@@ -168,8 +1058,19 @@
     "designer": {
       "orphans": [],
       "samples": {
-        "31": {
-          "—": "—"
+        "34": {
+          "id": "recdIN6dsmOanIIfE"
+        },
+        "35": {
+          "id": "recdIN6dsmOanIIfE",
+          "createdTime": "2025-01-28T16:17:50.000Z",
+          "fld8JSvFF9DHvyx8U": "Zacharia Test ",
+          "fldMyEFUgTElWNWUk": "recdIN6dsmOanIIfE",
+          "flddc9lk1X9XKHn2B": "2025-01-28",
+          "fldkdKw2c3nBm9kGJ": "Onboarding",
+          "fldq3AEE1cemrs39R": "Hi",
+          "fldxXiZHRiVpKszM6": "Zacharia Test",
+          "fldyOChw50mZWwLyw": "2025-01-28T16:17:50.000Z"
         }
       }
     },
