@@ -11,7 +11,7 @@
           },
           {
             "role": "user",
-            "content": "Extract the number of employees from the webpage:\n\nhttps://www.airtable.com/about\n\nReturn the result in the format: '[number] Mitarbeiter'. If no number is found, return only '-'. If e.g. 10+ employees is stated, just return 10—same applies to a range, return the lower number. If you return anything then an integer + the type of employee, you will be punished!"
+            "content": "Extract the number of employees from the webpage:\n\nhttps://www.bayer-praezisionsteile.de/\n\nReturn the result in the format: '[number] Mitarbeiter'. If no number is found, return only '-'. If e.g. 10+ employees is stated, just return 10—same applies to a range, return the lower number. If you return anything then an integer + the type of employee, you will be punished!"
           }
         ]
       },
@@ -1360,12 +1360,12 @@
           "fldyOChw50mZWwLyw": "2025-01-28T16:17:50.000Z"
         },
         "36": {
-          "id": "a538e7ac-1f84-4ea8-a982-d709404e82e2",
+          "id": "2e6d6a13-db0c-4072-85d2-9403f4640cf4",
           "model": "sonar",
           "usage": {
-            "total_tokens": 145,
-            "prompt_tokens": 98,
-            "completion_tokens": 47
+            "total_tokens": 104,
+            "prompt_tokens": 103,
+            "completion_tokens": 1
           },
           "object": "chat.completion",
           "choices": [
@@ -1377,18 +1377,18 @@
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "700+ Mitarbeiter unserialize die korrekte Erwähnung der Mitarbeiter bei Airtable. Wenn jedoch nur ex..."
+                "content": "-"
               },
               "finish_reason": "stop"
             }
           ],
-          "created": 1738353359,
+          "created": 1738358306,
           "citations": [
-            "https://www.airtable.com/about"
+            "https://www.bayer-praezisionsteile.de"
           ]
         },
         "37": {
-          "Head Count": "700+ Mitarbeiter unserialize die korrekte Erwähnung der Mitarbeiter bei Airtable. Wenn jedoch nur ex..."
+          "Head Count": "-"
         }
       }
     },
