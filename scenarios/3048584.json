@@ -1,0 +1,120 @@
+{
+  "flow": [
+    {
+      "id": 1,
+      "module": "pipedrive:watchLeads",
+      "version": 2,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "messages": [
+            {
+              "message": "Value must not be empty.",
+              "category": "setup",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "mapper": {
+        "id": 2235506,
+        "email": "{{emptystring}}",
+        "fields": {}
+      },
+      "module": "convertkit:addSubscriberToSequence",
+      "version": 1,
+      "metadata": {
+        "expect": [
+          {
+            "name": "id",
+            "type": "select",
+            "label": "Sequences ID",
+            "required": true
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "label": "Email",
+            "required": true
+          },
+          {
+            "name": "first_name",
+            "type": "text",
+            "label": "First Name"
+          },
+          {
+            "name": "tags",
+            "type": "select",
+            "label": "Tags",
+            "multiple": true
+          },
+          {
+            "name": "fields",
+            "spec": [],
+            "type": "collection",
+            "label": "Custom Fields"
+          }
+        ],
+        "restore": {
+          "expect": {
+            "id": {
+              "mode": "chose",
+              "label": "Sequence"
+            },
+            "tags": {
+              "mode": "chose"
+            }
+          },
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "convertkit"
+              },
+              "label": "Karim's ConvertKit connection"
+            }
+          }
+        },
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:convertkit",
+            "label": "Connection",
+            "required": true
+          }
+        ]
+      },
+      "parameters": {
+        "__IMTCONN__": 3067037
+      }
+    }
+  ],
+  "name": "Wärme-mit-Konzept Test",
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "slots": null,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
