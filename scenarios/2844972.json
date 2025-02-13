@@ -1289,7 +1289,7 @@
                 "variables": [
                   {
                     "name": "Notes",
-                    "value": "Add regex to get org id and look it up in the airtable client base to retrieve the correct client error channel"
+                    "value": "Add regex to get org id and look it up in the airtable client base to retrieve the correct client error channel\n\nImport from HDT"
                   }
                 ]
               },
